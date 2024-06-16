@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PRN221.ClinicDental.Business.Common.Interface
 {
-    internal interface IServiceService
+    public interface IServiceService
     {
     }
 }
