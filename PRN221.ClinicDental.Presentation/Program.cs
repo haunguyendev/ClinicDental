@@ -1,10 +1,30 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+
 using PRN221.ClinicDental.Presentation.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+
 builder.Services.AddInfrastructure(builder.Configuration);
+
+
+builder.Services.AddRazorPages();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie(options =>
+        {
+            options.LoginPath = "/Accounts/Login";
+            
+        });
+
+
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminPolicy", policy => policy.RequireRole("0"));
+    options.AddPolicy("StaffPolicy", policy => policy.RequireRole("1"));
+    options.AddPolicy("LecturePolicy", policy => policy.RequireRole("2"));
+});
 
 var app = builder.Build();
 
@@ -18,10 +38,12 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseCookiePolicy();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapRazorPages();
 

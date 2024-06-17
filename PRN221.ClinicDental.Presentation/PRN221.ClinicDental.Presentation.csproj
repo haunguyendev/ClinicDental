@@ -10,4 +10,8 @@
     <ProjectReference Include="..\PRN221.ClinicDental.Business\PRN221.ClinicDental.Business.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\NewFolder\" />
+  </ItemGroup>
+
 </Project>
