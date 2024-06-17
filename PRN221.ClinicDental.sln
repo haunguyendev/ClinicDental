@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRN221.ClinicDental.Data", "PRN221.ClinicDental.Data\PRN221.ClinicDental.Data.csproj", "{0A78A352-306D-416A-9007-634BEE1C47D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PRN221.ClinicDental.Data", "PRN221.ClinicDental.Data\PRN221.ClinicDental.Data.csproj", "{0A78A352-306D-416A-9007-634BEE1C47D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRN221.ClinicDental.Business", "PRN221.ClinicDental.Business\PRN221.ClinicDental.Business.csproj", "{2A723EC5-FFF7-4852-A23D-D92505DBF91D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PRN221.ClinicDental.Business", "PRN221.ClinicDental.Business\PRN221.ClinicDental.Business.csproj", "{2A723EC5-FFF7-4852-A23D-D92505DBF91D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRN221.ClinicDental.Presentation", "PRN221.ClinicDental.Presentation\PRN221.ClinicDental.Presentation.csproj", "{52F3DD5C-8268-412F-9F1A-FDAE051A966F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PRN221.ClinicDental.Presentation", "PRN221.ClinicDental.Presentation\PRN221.ClinicDental.Presentation.csproj", "{52F3DD5C-8268-412F-9F1A-FDAE051A966F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
