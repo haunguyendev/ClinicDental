@@ -4,47 +4,375 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - PRN221.ClinicDental.Presentation</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/PRN221.ClinicDental.Presentation.styles.css" asp-append-version="true" />
+    <!--== Favicon ==-->
+    <link rel="shortcut icon" href="~/img/favicon.ico" type="image/x-icon" />
+
+    <!--== Google Fonts ==-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@300;400;500;600;700;800&family=Roboto:wght@300&family=Shippori+Mincho:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <!--== Bootstrap CSS ==-->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <!--== Font Awesome Icon CSS ==-->
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+    <!--== Datetimepicker CSS ==-->
+    <link href="~/css/jquery.datetimepicker.css" rel="stylesheet" />
+    <!--== Swiper CSS ==-->
+    <link href="~/css/swiper.min.css" rel="stylesheet" />
+    <!--== Fancybox Min CSS ==-->
+    <link href="~/css/fancybox.min.css" rel="stylesheet" />
+    <!--== Aos Min CSS ==-->
+    <link href="~/css/aos.min.css" rel="stylesheet" />
+
+    <!--== Main Style CSS ==-->
+    <link href="~/css/style.css" rel="stylesheet" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">PRN221.ClinicDental.Presentation</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                        </li>
-                    </ul>
+    <!--== Start Preloader Content ==-->
+    <div class="preloader-wrap">
+        <div class="preloader">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!--== End Preloader Content ==-->
+    <header class="header-wrapper">
+        <div class="header-top-area">
+            <div class="header-top-align">
+                <div class="header-top-align-left">
+                    <div class="header-logo-area">
+                        <a href="index.html">
+                            <img class="logo-main" src="~/img/logo.webp" width="255" height="56" alt="Logo" />
+                            <img class="logo-light" src="~/img/logo-light.webp" width="237" height="78" alt="Logo" />
+                        </a>
+                    </div>
+                </div>
+                <div class="header-top-align-right">
+                    <div class="header-info-items">
+                        <div class="info-items">
+                            <div class="inner-content">
+                                <div class="icon">
+                                    <img src="~/img/icons/time1.webp" width="48" height="48" alt="Image-HasTech">
+                                </div>
+                                <div class="content">
+                                    <p>8 am to 6 pm (Mon - Fri)<br>10 am to 8 pm (Sat - Sun)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-items">
+                            <div class="inner-content">
+                                <div class="icon">
+                                    <img src="~/img/icons/map.webp" width="46" height="48" alt="Image-HasTech">
+                                </div>
+                                <div class="content">
+                                    <p>258C, Saintpatrick, Main Street <br>Notrth Town, New York</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="header-appointment-button">
+                        <a class="appointment-btn" href="contact.html">Appointment</a>
+                    </div>
                 </div>
             </div>
-        </nav>
+        </div>
+        <div class="header-area sticky-header header-default">
+            <div class="container">
+                <div class="row no-gutter align-items-center position-relative">
+                    <div class="col-12">
+                        <div class="header-align">
+                            <div class="header-align-left">
+                                <div class="mobile-header-logo">
+                                    <a href="index.html">
+                                        <img class="logo-light" src="~/img/logo-light.webp" width="170" height="78" alt="Logo" />
+                                    </a>
+                                </div>
+                                <div class="header-navigation-area">
+                                    <ul class="main-menu nav">
+                                        <li><a href="index.html"><span>Home</span></a></li>
+                                        <li class="has-submenu">
+                                            <a href="#/"><span>Services</span></a>
+                                            <ul class="submenu-nav">
+                                                <li><a href="services.html">Services</a></li>
+                                                <li><a href="service-details.html">Service Details</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="has-submenu">
+                                            <a href="#/"><span>Dentist</span></a>
+                                            <ul class="submenu-nav">
+                                                <li><a href="team.html">Dentist</a></li>
+                                                <li><a href="team-details.html">Dentist Details</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="has-submenu">
+                                            <a href="#/"><span>Pages</span></a>
+                                            <ul class="submenu-nav">
+                                                <li class="has-submenu">
+                                                    <a href="#">About Us</a>
+                                                    <ul class="submenu-nav">
+                                                        <li><a href="about-us.html">About Us One</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="has-submenu">
+                                            <a href="#/"><span>Blog</span></a>
+                                            <ul class="submenu-nav submenu-nav-mega">
+                                                <li class="mega-menu-item">
+                                                    <a href="#/" class="mega-title">Blog Layout</a>
+                                                    <ul>
+                                                        <li><a href="blog.html">Blog Grid</a></li>
+                                                        <li><a href="blog-left-sidebar.html">Blog Left Sidebar</a></li>
+                                                        <li><a href="blog-right-sidebar.html">Blog Right Sidebar</a></li>
+                                                    </ul>
+                                                </li>
+                                                <li class="mega-menu-item">
+                                                    <a href="#/" class="mega-title">Blog Single Layout</a>
+                                                    <ul>
+                                                        <li><a href="blog-details.html">Blog Details</a></li>
+                                                        <li><a href="blog-details-left-sidebar.html">Blog Details Left Sidebar</a></li>
+                                                        <li><a href="blog-details-right-sidebar.html">Blog Details Right Sidebar</a></li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="contact.html"><span>Contact</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="header-align-right">
+                                <div class="header-action-area">
+                                    <a class="btn-login-menu" href="account-login.html">Login</a>
+                                    <span>/</span>
+                                    <a class="btn-register-menu" href="account-register.html">Register</a>
+                                </div>
+                                <button class="btn-menu" type="button" data-bs-toggle="offcanvas" data-bs-target="#AsideOffcanvasMenu" aria-controls="AsideOffcanvasMenu">
+                                    <i class="fa fa-align-left"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    @* <div class="container"> *@
+        <main role="main" class="main-content">
             @RenderBody()
         </main>
+    @* </div> *@
+
+    <!--== Start Footer Area Wrapper ==-->
+    <footer class="footer-area">
+        <!--== Start Footer Main ==-->
+        <div class="footer-main">
+            <div class="container pt--0 pb--0">
+                <div class="row no-gutter">
+                    <div class="col-sm-6 col-lg-3">
+                        <!--== Start widget Item ==-->
+                        <div class="widget-item">
+                            <div class="about-widget-wrap">
+                                <div class="widget-logo-area">
+                                    <a href="index.html">
+                                        <img class="logo-main" src="~/img/logo-light.webp" width="237" height="78" alt="Logo" />
+                                    </a>
+                                </div>
+                                <p class="desc">Dental care is maintenance of healthy teeth and cleaning mouth for beautiful smile</p>
+                                <div class="social-icons">
+                                    <a href="#/"><i class="fa fa-facebook"></i></a>
+                                    <a href="#/"><i class="fa fa-instagram"></i></a>
+                                    <a href="#/"><i class="fa fa-twitter"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--== End widget Item ==-->
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <!--== Start widget Item ==-->
+                        <div class="widget-item widget-menu">
+                            <h4 class="widget-title">Our Services</h4>
+                            <div class="widget-menu-wrap">
+                                <ul class="nav-menu">
+                                    <li><a href="services.html">General Dentistry</a></li>
+                                    <li><a href="services.html">Oral Surgery</a></li>
+                                    <li><a href="services.html">Dental Bridge</a></li>
+                                    <li><a href="services.html">Root Canals</a></li>
+                                    <li><a href="services.html">Cosmetic Braces</a></li>
+                                    <li><a href="services.html">Pediatric Dentistry</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--== End widget Item ==-->
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <!--== Start widget Item ==-->
+                        <div class="widget-item widget-menu2">
+                            <h4 class="widget-title">Importance</h4>
+                            <div class="widget-menu-wrap">
+                                <ul class="nav-menu">
+                                    <li><a href="about-us.html">Abut us</a></li>
+                                    <li><a href="about-us.html">Comapay</a></li>
+                                    <li><a href="about-us.html">Terms & Conditions</a></li>
+                                    <li><a href="contact.html">24/7 Advance Care</a></li>
+                                    <li><a href="services.html">Emergency Centre</a></li>
+                                    <li><a href="contact.html">Payment System</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--== End widget Item ==-->
+                    </div>
+                    <div class="col-sm-6 col-lg-3">
+                        <!--== Start widget Item ==-->
+                        <div class="widget-item widget-contact">
+                            <h4 class="widget-title">Contact us</h4>
+                            <div class="widget-contact-wrap">
+                                <ul>
+                                    <li>256B, West Site House Main Town, New York</li>
+                                    <li><a href="tel:+98745612301">+98745 612 301</a><br><a href="tel:+95874102201">+95874 102 201</a></li>
+                                    <li><a href="mailto:info@example.com">info@example.com</a><br><a href="mailto:www.predent.com">www.predent.com</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--== End widget Item ==-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--== End Footer Main ==-->
+        <!--== Start Footer Bottom ==-->
+        <div class="footer-bottom">
+            <div class="container pt--0 pb--0">
+                <div class="row">
+                    <div class="col-12">
+                        <p class="copyright">© 2022 Made with <i class="fa fa-heart"></i> by <a target="_blank" href="https://www.hasthemes.com"> HasThemes</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--== End Footer Bottom ==-->
+    </footer>
+    <!--== Scroll Top Button ==-->
+    <div id="scroll-to-top" class="scroll-to-top"><span class="fa fa-angle-up"></span></div>
+
+    <!--== Start Aside Menu ==-->
+    <aside class="off-canvas-wrapper offcanvas offcanvas-start" tabindex="-1" id="AsideOffcanvasMenu" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h1 class="d-none" id="offcanvasExampleLabel">Aside Menu</h1>
+            <button class="btn-menu-close" data-bs-dismiss="offcanvas" aria-label="Close">menu <i class="fa fa-chevron-left"></i></button>
+        </div>
+        <div class="offcanvas-body">
+            <!-- Mobile Menu Start -->
+            <div class="mobile-menu-items">
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li>
+                        <a href="#">Services</a>
+                        <ul class="sub-menu">
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="service-details.html">Service Details</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Dentist</a>
+                        <ul class="sub-menu">
+                            <li><a href="team.html">Dentist</a></li>
+                            <li><a href="team-details.html">Dentist Details</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Pages</a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a href="#">About Us</a>
+                                <ul class="sub-menu">
+                                    <li><a href="about-us.html">About Us One</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Blog</a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a href="#" class="mega-title">Blog Layout</a>
+                                <ul class="sub-menu">
+                                    <li><a href="blog.html">Blog Grid</a></li>
+                                    <li><a href="blog-left-sidebar.html">Blog Left Sidebar</a></li>
+                                    <li><a href="blog-right-sidebar.html">Blog Right Sidebar</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="mega-title">Blog Single Layout</a>
+                                <ul class="sub-menu">
+                                    <li><a href="blog-details.html">Blog Details</a></li>
+                                    <li><a href="blog-details-left-sidebar.html">Blog Details Left Sidebar</a></li>
+                                    <li><a href="blog-details-right-sidebar.html">Blog Details Right Sidebar</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <!-- Mobile Menu End -->
+            <div class="mobile-menu-info">
+                <div class="info-item">
+                    <div class="icon">
+                        <img src="~/img/icons/time1.webp" width="35" height="35" alt="Image-HasTech">
+                    </div>
+                    <div class="content">
+                        <p>8 am to 6 pm (Mon - Fri)<br>10 am to 8 pm (Sat - Sun)</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="icon">
+                        <img src="~/img/icons/map.webp" width="35" height="37" alt="Image-HasTech">
+                    </div>
+                    <div class="content">
+                        <p>258C, Saintpatrick, Main Street Notrth Town, New York</p>
+                    </div>
+                </div>
+            </div>
+            <a class="mobile-menu-btn" href="contact.html">Appointment</a>
+            <div class="mobile-menu-action">
+                <a class="btn-login-menu" href="account-login.html">Login</a>
+                <span>/</span>
+                <a class="btn-register-menu" href="account-register.html">Register</a>
+            </div>
+        </div>
+    </aside>
+    <!--== End Aside Menu ==-->
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - PRN221.ClinicDental.Presentation - <a asp-area="" asp-page="/Privacy">Privacy</a>
-        </div>
-    </footer>
+    <!--=======================Javascript============================-->
+    <!--=== jQuery Modernizr Min Js ===-->
+    <script src="~/js/modernizr-3.5.0.js"></script>
+    <!--=== jQuery Min Js ===-->
+    <script src="~/js/jquery-3.6.0-main.js"></script>
+    <!--=== jQuery Migration Min Js ===-->
+    <script src="~/js/jquery-3.3.2-migrate.js"></script>
+    <!--=== jQuery Bootstrap Min Js ===-->
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <!--=== jQuery Swiper Min Js ===-->
+    <script src="~/js/swiper.min.js"></script>
+    <!--=== jQuery Fancybox Min Js ===-->
+    <script src="~/js/fancybox.min.js"></script>
+    <!--=== jQuery Waypoint Js ===-->
+    <script src="~/js/waypoint-4.0.1.js"></script>
+    <!--=== jQuery Aos Min Js ===-->
+    <script src="~/js/aos.min.js"></script>
+    <!--=== jQuery Counterup Min Js ===-->
+    <script src="~/js/counterup.js"></script>
+    <!--=== jQuery Datetimepicker Min Js ===-->
+    <script src="~/js/jquery.datetimepicker.min.js"></script>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <!--=== jQuery Custom Js ===-->
+    <script src="~/js/custom.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
