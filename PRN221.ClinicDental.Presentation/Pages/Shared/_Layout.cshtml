@@ -147,11 +147,23 @@
                                 </div>
                             </div>
                             <div class="header-align-right">
-                                <div class="header-action-area">
-                                    <a class="btn-login-menu" href="account-login.html">Login</a>
-                                    <span>/</span>
-                                    <a class="btn-register-menu" href="account-register.html">Register</a>
-                                </div>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <div class="header-action-area">
+                                        <a class="btn-login-menu" href="/Accounts/Profile">Hi, @User.Identity.Name</a>
+                                        <span>/</span>
+                                        <a class="btn-register-menu" asp-page-handler="Logout">Logout</a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="header-action-area">
+                                        <a class="btn-login-menu" href="/Accounts/Login">Login</a>
+                                        <span>/</span>
+                                        <a class="btn-register-menu" href="account-register.html">Register</a>
+                                    </div>
+                                }
+                               
                                 <button class="btn-menu" type="button" data-bs-toggle="offcanvas" data-bs-target="#AsideOffcanvasMenu" aria-controls="AsideOffcanvasMenu">
                                     <i class="fa fa-align-left"></i>
                                 </button>
