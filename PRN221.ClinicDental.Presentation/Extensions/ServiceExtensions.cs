@@ -7,6 +7,9 @@ using PRN221.ClinicDental.Services;
 using Microsoft.EntityFrameworkCore.Internal;
 using PRN221.ClinicDental.Business.Common.Interface;
 
+
+using PRN221.ClinicDental.Business.MapperApplication;
+
 namespace PRN221.ClinicDental.Presentation.Extensions
 {
     public static class ServiceExtensions
@@ -14,6 +17,8 @@ namespace PRN221.ClinicDental.Presentation.Extensions
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ClinicDentalDbContext>();
+
+            
             
             // Register Repositories
           
@@ -25,6 +30,7 @@ namespace PRN221.ClinicDental.Presentation.Extensions
             
             // Register UnitOfWorks
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddAutoMapper(typeof(MapperProfile));
             return services;
         }
 
