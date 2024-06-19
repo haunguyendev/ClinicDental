@@ -6,28 +6,25 @@ using PRN221.ClinicDental.Data.Common.Interface;
 using PRN221.ClinicDental.Data.Repositories;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+using PRN221.ClinicDental.Business.DTO.Request;
+using PRN221.ClinicDental.Services.Interfaces;
 
 namespace PRN221.ClinicDental.Presentation.Pages.Accounts
 {
     public class LoginModel : PageModel
     {
         private readonly ILogger<LoginModel> _logger;
-        private readonly IUnitOfWork _unitOfWork;
 
+        private IUserService _userService;
         [BindProperty]
-        [Required]
-        public string Username { get; set; }
+        public UserLoginRequest User { get; set; }
 
-        [BindProperty]
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
-        public LoginModel(ILogger<LoginModel> logger,IUnitOfWork unitOfWork)
+        public LoginModel(ILogger<LoginModel> logger,IUserService userService)
         {
             _logger = logger;
-            _unitOfWork = unitOfWork;
-        }
+            _userService = userService;
+          }
 
         public void OnGet()
         {
@@ -40,7 +37,7 @@ namespace PRN221.ClinicDental.Presentation.Pages.Accounts
                 return Page();
             }
 
-            var user = await _unitOfWork.UserRepository.GetUserByUserAndPassword(Username, Password);
+            var user = await _userService.Authenticate(User.Username,User.Password);
 
             if (user == null)
             {
@@ -53,7 +50,7 @@ namespace PRN221.ClinicDental.Presentation.Pages.Accounts
                  new Claim("UserId", user.UserId.ToString()),
                 new Claim(ClaimTypes.Name, user.Name),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Role.RoleName)
+                new Claim(ClaimTypes.Role, user.Role)
 
 
             };
