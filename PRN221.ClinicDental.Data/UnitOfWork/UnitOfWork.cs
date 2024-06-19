@@ -17,11 +17,11 @@ namespace PRN221.ClinicDental.Data.UnitOfWork
             IRoleRepository roleRepository,
             IUserRepository userRepository,
             IClinicRepository clinicRepository,
-            IDoctorDetailRepository doctorDetailRepository,
-            ICertificateRepository certificateRepository,
-            IPatientRepository patientRepository,
+            IDentistDetailRepository doctorDetailRepository,
+            
+            
             IServiceRepository serviceRepository,
-            IDoctorServiceRepository doctorServiceRepository,
+           
             IAppointmentRepository appointmentRepository)
         {
             _dbContext = dbContext;
@@ -29,21 +29,20 @@ namespace PRN221.ClinicDental.Data.UnitOfWork
             UserRepository = userRepository;
             ClinicRepository = clinicRepository;
             DoctorDetailRepository = doctorDetailRepository;
-            CertificateRepository = certificateRepository;
-            PatientRepository = patientRepository;
+            
+            
             ServiceRepository = serviceRepository;
-            DoctorServiceRepository = doctorServiceRepository;
+            
             AppointmentRepository = appointmentRepository;
         }
 
         public IRoleRepository RoleRepository { get; }
         public IUserRepository UserRepository { get; }
         public IClinicRepository ClinicRepository { get; }
-        public IDoctorDetailRepository DoctorDetailRepository { get; }
-        public ICertificateRepository CertificateRepository { get; }
-        public IPatientRepository PatientRepository { get; }
+        public IDentistDetailRepository DoctorDetailRepository { get; }
+     
         public IServiceRepository ServiceRepository { get; }
-        public IDoctorServiceRepository DoctorServiceRepository { get; }
+      
         public IAppointmentRepository AppointmentRepository { get; }
 
         public async Task<int> CommitAsync()

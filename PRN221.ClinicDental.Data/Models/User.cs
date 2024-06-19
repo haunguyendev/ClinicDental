@@ -6,41 +6,41 @@ using Microsoft.EntityFrameworkCore;
 
 namespace PRN221.ClinicDental.Data.Models;
 
-[Index("Username", Name = "UQ__Users__536C85E476385DEC", IsUnique = true)]
+[Index("Username", Name = "UQ__Users__536C85E417F46290", IsUnique = true)]
+[Index("Email", Name = "UQ__Users__A9D105347EAF180D", IsUnique = true)]
 public partial class User
 {
     [Key]
-    [Column("UserID")]
     public int UserId { get; set; }
+
+    [StringLength(100)]
+    public string Name { get; set; } = null!;
 
     [StringLength(50)]
     public string Username { get; set; } = null!;
 
+    [StringLength(100)]
+    public string Email { get; set; } = null!;
+    [StringLength(20)]
+    public string PhoneNumber { get; set; }
     [StringLength(255)]
-    public string Password { get; set; } = null!;
+    public string Address { get; set; }
+    [StringLength(255)]
+    public string PasswordHash { get; set; } = null!;
 
-    [Column("RoleID")]
     public int RoleId { get; set; }
 
-    [StringLength(255)]
-    public string Name { get; set; } = null!;
+    [InverseProperty("Customer")]
+    public virtual ICollection<Appointment> AppointmentCustomers { get; set; } = new List<Appointment>();
 
-    [StringLength(255)]
-    public string? Email { get; set; }
-
-    [StringLength(20)]
-    public string? Phone { get; set; }
-
-    public string? Address { get; set; }
+    [InverseProperty("Dentist")]
+    public virtual ICollection<Appointment> AppointmentDentists { get; set; } = new List<Appointment>();
 
     [InverseProperty("ClinicOwner")]
     public virtual ICollection<Clinic> Clinics { get; set; } = new List<Clinic>();
 
-    [InverseProperty("Doctor")]
-    public virtual ICollection<DoctorDetail> DoctorDetails { get; set; } = new List<DoctorDetail>();
-
     [InverseProperty("User")]
-    public virtual ICollection<Patient> Patients { get; set; } = new List<Patient>();
+    public virtual DentistDetail? DentistDetail { get; set; }
 
     [ForeignKey("RoleId")]
     [InverseProperty("Users")]

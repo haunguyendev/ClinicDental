@@ -12,11 +12,11 @@ namespace PRN221.ClinicDental.Data.Common.Interface
         IRoleRepository RoleRepository { get; }
         IUserRepository UserRepository { get; }
         IClinicRepository ClinicRepository { get; }
-        IDoctorDetailRepository DoctorDetailRepository { get; }
-        ICertificateRepository CertificateRepository { get; }
-        IPatientRepository PatientRepository { get; }
+        IDentistDetailRepository DoctorDetailRepository { get; }
+       
+        
         IServiceRepository ServiceRepository { get; }
-        IDoctorServiceRepository DoctorServiceRepository { get; }
+       
         IAppointmentRepository AppointmentRepository { get; }
 
         Task<int> CommitAsync();

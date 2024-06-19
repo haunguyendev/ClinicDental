@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace PRN221.ClinicDental.Data.Repositories
 {
-    public class PatientRepository : RepositoryBase<Patient>, IPatientRepository
+    public class DentistDetailRepository : RepositoryBase<DentistDetail>, IDentistDetailRepository
     {
-        public PatientRepository(ClinicDentalDbContext context) : base(context)
+        public DentistDetailRepository(ClinicDentalDbContext context) : base(context)
         {
         }
     }

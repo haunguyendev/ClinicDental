@@ -50,10 +50,11 @@ namespace PRN221.ClinicDental.Services
             var newUser = new User
             {
                 Username = request.Username,
-                Password = _authentication.Hash(request.Password),
+
+                PasswordHash = _authentication.Hash(request.Password), // Hash the password
                 Name = request.FullName,
                 Email = request.Email,
-                Phone = request.PhoneNumber,
+                PhoneNumber = request.PhoneNumber,
                 Address = request.Address,
                 RoleId = 2 // Assuming 2 is the RoleID for 'Customer'
             };
