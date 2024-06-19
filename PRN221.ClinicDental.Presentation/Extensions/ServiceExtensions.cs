@@ -9,6 +9,7 @@ using PRN221.ClinicDental.Business.Common.Interface;
 
 
 using PRN221.ClinicDental.Business.MapperApplication;
+using PRN221.ClinicDental.Business.Services;
 
 namespace PRN221.ClinicDental.Presentation.Extensions
 {
@@ -57,6 +58,7 @@ namespace PRN221.ClinicDental.Presentation.Extensions
             services.AddScoped<IServiceService, ServiceService>();
             services.AddScoped<IDoctorServiceService, DoctorServiceService>();
             services.AddScoped<IAppointmentService, AppointmentService>();
+            services.AddScoped<IAuthentication, Authentication>();
         }
     }
 }
