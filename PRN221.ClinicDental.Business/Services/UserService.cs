@@ -3,9 +3,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using PRN221.ClinicDental.Business.DTO.Request;
 using PRN221.ClinicDental.Business.DTO.Response;
 using PRN221.ClinicDental.Data.Common.Interface;
 using PRN221.ClinicDental.Data.Models;
+using PRN221.ClinicDental.Data.Repositories;
 using PRN221.ClinicDental.Services.Interfaces;
 
 namespace PRN221.ClinicDental.Services
@@ -27,6 +29,33 @@ namespace PRN221.ClinicDental.Services
         {
             var user = await _unitOfWork.UserRepository.GetUserByUserAndPassword(username, password);
             return _mapper.Map<UserLoginResponse>(user);       
+        }
+
+        public async Task RegisterUserAsync(UserRegisterRequest request)
+        {
+            var existingUser = await _unitOfWork.UserRepository.FindByUsernameAsync(request.Username);
+            if (existingUser != null)
+            {
+                throw new Exception("Username already exists.");
+            }
+
+            // Create new User entity
+            var newUser = new User
+            {
+                Username = request.Username,
+                Password = request.Password, // Hash the password
+                Name = request.FullName,
+                Email = request.Email,
+                Phone = request.PhoneNumber,
+                Address = request.Address,
+                RoleId = 2 // Assuming 2 is the RoleID for 'Customer'
+            };
+
+            // Add the user to the repository
+            await _unitOfWork.UserRepository.CreateAsync(newUser);
+
+            // Commit the transaction
+            await _unitOfWork.CommitAsync();
         }
     }
 }

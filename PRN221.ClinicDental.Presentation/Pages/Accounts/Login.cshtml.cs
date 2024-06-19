@@ -18,7 +18,7 @@ namespace PRN221.ClinicDental.Presentation.Pages.Accounts
 
         private IUserService _userService;
         [BindProperty]
-        public UserLoginRequest User { get; set; }
+        public UserLoginRequest UserLogin { get; set; }
 
         public LoginModel(ILogger<LoginModel> logger,IUserService userService)
         {
@@ -37,11 +37,12 @@ namespace PRN221.ClinicDental.Presentation.Pages.Accounts
                 return Page();
             }
 
-            var user = await _userService.Authenticate(User.Username,User.Password);
+            var user = await _userService.Authenticate(UserLogin.Username, UserLogin.Password);
+
 
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                ModelState.AddModelError(string.Empty, "Invalid username or password.");
                 return Page();
             }
 
