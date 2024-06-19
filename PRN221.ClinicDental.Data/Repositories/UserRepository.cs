@@ -17,7 +17,7 @@ namespace PRN221.ClinicDental.Data.Repositories
 
         public async Task<User> FindByUsernameAsync(string username)
         {
-           return await _context.Users.FirstOrDefaultAsync(x=>x.Username.Equals(username));
+           return await _context.Users.Include(u=>u.Role).FirstOrDefaultAsync(x=>x.Username.Equals(username));
         }
 
         public async Task<User> GetUserByUserAndPassword(string user, string password)
