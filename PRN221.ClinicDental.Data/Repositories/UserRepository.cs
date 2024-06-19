@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PRN221.ClinicDental.Data.Common.Interface;
+
 using PRN221.ClinicDental.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -20,9 +21,9 @@ namespace PRN221.ClinicDental.Data.Repositories
            return await _context.Users.FirstOrDefaultAsync(x=>x.Username.Equals(username));
         }
 
-        public async Task<User> GetUserByUserAndPassword(string user, string password)
+        public Task<User> GetUserByUserAndPassword(string user, string password)
         {
-            return await _context.Users.Include(u=>u.Role).FirstOrDefaultAsync(x=>x.Username==user&&x.Password==password);
+            throw new NotImplementedException();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PRN221.ClinicDental.Data.Common.Interface;
+
 using PRN221.ClinicDental.Data.Models;
 using System;
 using System.Collections.Generic;

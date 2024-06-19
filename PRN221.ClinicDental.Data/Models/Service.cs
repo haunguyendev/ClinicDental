@@ -9,17 +9,17 @@ namespace PRN221.ClinicDental.Data.Models;
 public partial class Service
 {
     [Key]
-    [Column("ServiceID")]
     public int ServiceId { get; set; }
 
-    [StringLength(255)]
-    public string Name { get; set; } = null!;
+    [StringLength(100)]
+    public string ServiceName { get; set; } = null!;
 
+    [StringLength(255)]
     public string? Description { get; set; }
 
     [InverseProperty("Service")]
     public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
 
     [InverseProperty("Service")]
-    public virtual ICollection<DoctorService> DoctorServices { get; set; } = new List<DoctorService>();
+    public virtual ICollection<ClinicService> ClinicServices { get; set; } = new List<ClinicService>();
 }

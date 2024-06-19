@@ -39,18 +39,18 @@ namespace PRN221.ClinicDental.Presentation.Extensions
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IClinicRepository, ClinicRepository>();
-            services.AddScoped<IDoctorDetailRepository, DoctorDetailRepository>();
-            services.AddScoped<ICertificateRepository, CertificateRepository>();
-            services.AddScoped<IPatientRepository, PatientRepository>();
+            services.AddScoped<IDentistDetailRepository, DentistDetailRepository>();
+            
+            
             services.AddScoped<IServiceRepository, ServiceRepository>();
-            services.AddScoped<IDoctorServiceRepository, DoctorServiceRepository>();
+          
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
         }
         private static void RegisterServices(IServiceCollection services)
         {
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IClinicService, ClinicService>();
+            services.AddScoped<IClinicService, Services.ClinicService>();
             services.AddScoped<IDoctorDetailService, DoctorDetailService>();
             services.AddScoped<ICertificateService, CertificateService>();
             services.AddScoped<IPatientService, PatientService>();

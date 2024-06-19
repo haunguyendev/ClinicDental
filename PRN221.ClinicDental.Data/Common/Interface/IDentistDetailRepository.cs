@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PRN221.ClinicDental.Data.Common.Interface
 {
-    public interface IDoctorServiceRepository:IRepositoryBase<DoctorService>
+    public interface IDentistDetailRepository:IRepositoryBase<DentistDetail>
     {
     }
 }
