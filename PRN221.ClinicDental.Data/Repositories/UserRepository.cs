@@ -25,5 +25,6 @@ namespace PRN221.ClinicDental.Data.Repositories
         {
             throw new NotImplementedException();
         }
+        
     }
 }

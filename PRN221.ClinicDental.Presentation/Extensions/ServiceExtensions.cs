@@ -52,11 +52,11 @@ namespace PRN221.ClinicDental.Presentation.Extensions
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IClinicService, Services.ClinicService>();
-            services.AddScoped<IDoctorDetailService, DoctorDetailService>();
+            services.AddScoped<IDentistDetailService, DentistDetailService>();
             services.AddScoped<ICertificateService, CertificateService>();
-            services.AddScoped<IPatientService, PatientService>();
+           
             services.AddScoped<IServiceService, ServiceService>();
-            services.AddScoped<IDoctorServiceService, DoctorServiceService>();
+            
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IAuthentication, Authentication>();
         }
