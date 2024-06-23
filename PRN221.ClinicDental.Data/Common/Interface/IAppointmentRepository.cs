@@ -9,5 +9,6 @@ namespace PRN221.ClinicDental.Data.Common.Interface
 {
     public interface IAppointmentRepository:IRepositoryBase<Appointment>
     {
+        Task<List<Appointment>> GetListAppointmentByCustomerIdAsync(int customerId);
     }
 }
