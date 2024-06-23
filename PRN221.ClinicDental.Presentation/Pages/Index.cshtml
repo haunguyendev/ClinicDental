@@ -6,6 +6,12 @@
 
 <!--== Start Hero Area Wrapper ==-->
 <section class="home-slider-area">
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["Message"]
+        </div>
+    }
     <div class="swiper-container home-slider-container default-slider-container">
         <div class="swiper-wrapper home-slider-wrapper slider-default">
             <div class="swiper-slide">

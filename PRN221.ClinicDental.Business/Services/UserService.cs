@@ -31,11 +31,17 @@ namespace PRN221.ClinicDental.Services
         public async Task<UserLoginResponse> Authenticate(string username, string password)
         {
             var user = await _unitOfWork.UserRepository.FindByUsernameAsync(username);
-            var check = _authentication.Verify(user.Password, password);
+            if(user == null)
+            {
+                return null;
+            }
+            else { 
+            var check = _authentication.Verify(user.PasswordHash, password);
             if(check == false) { 
                 return null;
             }
-             return _mapper.Map<UserLoginResponse>(user);       
+             return _mapper.Map<UserLoginResponse>(user);
+            }
         }
 
         public async Task RegisterUserAsync(UserRegisterRequest request)

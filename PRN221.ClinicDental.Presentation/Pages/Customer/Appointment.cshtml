@@ -1,0 +1,119 @@
+﻿@page "{id:int?}"
+@model PRN221.ClinicDental.Presentation.Pages.Customer.AppointmentModel
+@{
+}
+<section class="appointment-area appointment-default-area mr-3" style="margin-right:18em">
+    <div class="container" data-aos="fade-up">
+        <div class="row no-gutter">
+            <div class="col-lg-8">
+                <div class="appointment-form-wrap">
+                    <div class="column-left" data-bg-img="/img/photos/bg-con1.webp">
+                        <!--== Start Contact Form ==-->
+                        <div class="appointment-form">
+                            <div class="section-title text-center">
+                                <h5 class="sub-title">APPOINTMENT</h5>
+                                <h2 class="title mb--0">Book your <span>Dentist</span> for <span>Proper</span> Care</h2>
+                            </div>
+                            <form method="post">
+                                <div class="row row-gutter-30">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <input type="hidden" asp-for="AppointmentRequest.ServiceId" value="@Model.Service.ServiceId" />
+                                            <select class="form-control form-select" aria-label="service select example" disabled asp-for="AppointmentRequest.ServiceId">
+                                                <option value="@Model.Service.ServiceId" selected>@Model.Service.ServiceName</option>
+                                            </select>
+                                            <span asp-validation-for="AppointmentRequest.ServiceId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <select id="clinic-select" class="form-control form-select" aria-label="clinic select example" onchange="loadDentists()" asp-for="AppointmentRequest.ClinicId">
+                                                <option selected disabled>Select Clinic</option>
+                                                @foreach (var clinic in Model.Clinics)
+                                                {
+                                                    <option value="@clinic.ClinicId">@clinic.ClinicName</option>
+                                                }
+                                            </select>
+                                            <span asp-validation-for="AppointmentRequest.ClinicId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <select id="doctor-select" class="form-control form-select" aria-label="doctor select example" asp-for="AppointmentRequest.DentistId" disabled>
+                                                <option selected disabled>Select Doctor</option>
+                                            </select>
+                                            <span asp-validation-for="AppointmentRequest.DentistId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input class="form-control" type="text" placeholder="Notes" asp-for="AppointmentRequest.Notes">
+                                            <span asp-validation-for="AppointmentRequest.Notes" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input class="form-control" type="text" placeholder="Phone" asp-for="AppointmentRequest.PhoneNumber">
+                                            <span asp-validation-for="AppointmentRequest.PhoneNumber" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input class="form-control form-date" type="text" id="datepicker" placeholder="Date" asp-for="AppointmentRequest.AppointmentDate">
+                                            <span asp-validation-for="AppointmentRequest.AppointmentDate" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input class="form-control form-time timepicker" id="timepicker" type="text" placeholder="Time" asp-for="AppointmentRequest.AppointmentTime">
+                                            <span asp-validation-for="AppointmentRequest.AppointmentTime" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group text-center mb--0">
+                                            <button class="btn-theme" type="submit">Make Appointment</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!--== End Contact Form ==-->
+
+                    </div>
+                    <div class="column-right">
+                        <div class="thumb" data-bg-img="/img/photos/bg-con2.webp"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function loadDentists() {
+            var clinicId = document.getElementById("clinic-select").value;
+            fetch(`/Customer/Appointment?handler=Dentists&clinicId=${clinicId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    var dentistSelect = document.getElementById("doctor-select");
+                    
+                    dentistSelect.innerHTML = ""; // Clear current options
+                    data.forEach(dentist => {
+                        var option = document.createElement("option");
+                        option.value = dentist.userId;
+                        option.text = dentist.userName;
+                        dentistSelect.appendChild(option);
+                    });
+                    dentistSelect.disabled = false;
+                })
+                .catch(error => console.error('Error loading dentists:', error));
+        }
+    </script>
+}

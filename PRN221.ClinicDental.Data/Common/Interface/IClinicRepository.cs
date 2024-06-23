@@ -9,5 +9,7 @@ namespace PRN221.ClinicDental.Data.Common.Interface
 {
     public interface IClinicRepository:IRepositoryBase<Clinic>
     {
+        Task<List<Clinic>> GetAllClinics();
+        Task<List<Clinic>> GetClinicsByOnServiceId(int serviceId);
     }
 }

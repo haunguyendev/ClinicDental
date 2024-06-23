@@ -1,0 +1,188 @@
+﻿@page
+@model PRN221.ClinicDental.Presentation.Pages.Customer.ServicesModel
+@{
+    
+}
+
+<main class="main-content">
+    <!--== Start Page Header Area Wrapper ==-->
+    <div class="page-header-area" data-bg-img="/img/photos/bg3.webp">
+        <div class="container pt--0 pb--0">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="page-header-content">
+                        <h3 class="sub-title" data-aos="fade-down" data-aos-duration="800">SERVICES</h3>
+                        <h2 class="title" data-aos="fade-down" data-aos-duration="1000">Our Services</h2>
+                        <nav class="breadcrumb-area" data-aos="fade-down" data-aos-duration="1200">
+                            <ul class="breadcrumb">
+                                <li><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-sep"> / </li>
+                                <li>Services</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-header-layer-style">
+            <div class="layer-style mousemove-layer" data-speed=".7">
+                <img src="/img/icons/2.webp"
+                     alt="Image-HasTech">
+            </div>
+            <div class="layer-style2 mousemove-layer" data-speed=".2">
+                <img src="/img/icons/3.webp"
+                     alt="Image-HasTech">
+            </div>
+            <div class="layer-style3 mousemove-layer" data-speed=".5">
+                <img src="/img/icons/4.webp"
+                     alt="Image-HasTech">
+            </div>
+            <div class="layer-style4 mousemove-layer" data-speed=".3">
+                <img src="/img/icons/5.webp"
+                     alt="Image-HasTech">
+            </div>
+        </div>
+    </div>
+    <!--== End Page Header Area Wrapper ==-->
+    <!--== Start Team Area Wrapper ==-->
+    <section class="team-area team-inner-area">
+        <div class="container">
+            <div class="row">
+                @foreach (var service in Model.Services)
+                {
+                    <div class="col-sm-6 col-lg-4 col-xl-3">
+                        <!--== Start Team Item ==-->
+                        <div class="team-item">
+                            <div class="inner-content">
+                                <div class="thumb">
+                                    <a href="team-details.html">
+                                        <img src="/img/service/details2.webp" width="270" height="233" alt="Image-HasTech">
+                                    </a>
+                                </div>
+                                <div class="content">
+                                    <div class="staff-info">
+                                        <h4 class="title"><a href="team-details.html">@service.ServiceName</a></h4>
+                                        <h5 class="sub-title">@service.Description</h5>
+                                        <div class="social-icons">
+                                            <span>Book Now -</span>
+                                            <a href="/Customer/Appointment/@service.ServiceId"><i class="fa-solid fa-calendar-plus"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="content-footer">
+                                        <div class="meta-rating">
+                                            <i class="fa fa-heart"></i>
+                                            <span>5.0</span>
+                                        </div>
+                                    </div>
+                                    <a class="chat-btn" href="#/"><img src="/img/icons/chat1.webp" alt="Image-HasTech"></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!--== End Team Item ==-->
+                    </div>
+                }
+
+            </div>
+        </div>
+    </section>
+    <!--== End Team Area Wrapper ==-->
+    <!--== Start Brand Logo Area Wrapper ==-->
+    <div class="brand-logo-area brand-logo-team-area brand-logo-team-inner-area">
+        <div class="container">
+            <div class="row brand-logo-wrap">
+                <div class="col-lg-6" data-aos="fade-up">
+                    <div class="info-content">
+                        <div class="section-title">
+                            <h5 class="sub-title">PARTNERS</h5>
+                            <h2 class="title">Our <span>Partners <br>love to</span> work</h2>
+                            <div class="desc">
+                                <p>
+                                    Dental care is the maintenance of healthy teeth and the practice of keeping the mouth and teeth
+                                    clean pur sue pleasure rationally encounter consequence
+                                </p>
+                            </div>
+                        </div>
+                        <a class="th-btn-link" href="#/">View more</a>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-up">
+                    <div class="brand-logo2-content">
+                        <div class="grid-item text-center text-sm-start">
+                            <!--== Start Brand Logo Item ==-->
+                            <div class="brand-logo-item">
+                                <img src="/img/brand-logo/6.webp" width="124" height="124" alt="Image-HasTech">
+                            </div>
+                            <!--== End Brand Logo Item ==-->
+                        </div>
+                        <div class="grid-item text-center">
+                            <!--== Start Brand Logo Item ==-->
+                            <div class="brand-logo-item">
+                                <img src="/img/brand-logo/7.webp" width="125" height="124" alt="Image-HasTech">
+                            </div>
+                            <!--== End Brand Logo Item ==-->
+                        </div>
+                        <div class="grid-item text-center text-sm-end">
+                            <!--== Start Brand Logo Item ==-->
+                            <div class="brand-logo-item">
+                                <img src="/img/brand-logo/8.webp" width="125" height="124" alt="Image-HasTech">
+                            </div>
+                            <!--== End Brand Logo Item ==-->
+                        </div>
+                        <div class="grid-item text-center text-sm-start">
+                            <!--== Start Brand Logo Item ==-->
+                            <div class="brand-logo-item">
+                                <img src="/img/brand-logo/9.webp" width="124" height="125" alt="Image-HasTech">
+                            </div>
+                            <!--== End Brand Logo Item ==-->
+                        </div>
+                        <div class="grid-item text-center">
+                            <!--== Start Brand Logo Item ==-->
+                            <div class="brand-logo-item">
+                                <img src="/img/brand-logo/10.webp" width="125" height="125" alt="Image-HasTech">
+                            </div>
+                            <!--== End Brand Logo Item ==-->
+                        </div>
+                        <div class="grid-item text-center text-sm-end">
+                            <!--== Start Brand Logo Item ==-->
+                            <div class="brand-logo-item">
+                                <img src="/img/brand-logo/11.webp" width="125" height="125" alt="Image-HasTech">
+                            </div>
+                            <!--== End Brand Logo Item ==-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End Brand Logo Area Wrapper ==-->
+    <!--== Start News Letter Area Wrapper ==-->
+    <div class="newsletter-area bg-overlay bg-overlay-theme-color bg-img z-index-1"
+         data-bg-img="assets/img/photos/bg2.webp">
+        <div class="container pt--0 pb--0">
+            <div class="newsletter-content-wrap">
+                <div class="row align-items-center">
+                    <div class="col-md-5">
+                        <div class="newsletter-content">
+                            <div class="section-title section-title-light mb--0">
+                                <h5 class="sub-title">NEWSLETTER</h5>
+                                <h2 class="title mb--0">Subscribe our Newsletter</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="newsletter-form">
+                            <form>
+                                <input type="email" class="form-control" placeholder="Enter Your email address">
+                                <button class="btn-submit" type="submit">Subscribe</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End News Letter Area Wrapper ==-->
+</main>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

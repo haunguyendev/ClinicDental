@@ -28,7 +28,7 @@ namespace PRN221.ClinicDental.Data.UnitOfWork
             RoleRepository = roleRepository;
             UserRepository = userRepository;
             ClinicRepository = clinicRepository;
-            DoctorDetailRepository = doctorDetailRepository;
+            DentistDetailRepository = doctorDetailRepository;
             
             
             ServiceRepository = serviceRepository;
@@ -39,12 +39,13 @@ namespace PRN221.ClinicDental.Data.UnitOfWork
         public IRoleRepository RoleRepository { get; }
         public IUserRepository UserRepository { get; }
         public IClinicRepository ClinicRepository { get; }
-        public IDentistDetailRepository DoctorDetailRepository { get; }
+        
      
         public IServiceRepository ServiceRepository { get; }
       
         public IAppointmentRepository AppointmentRepository { get; }
 
+        public IDentistDetailRepository DentistDetailRepository { get; }
         public async Task<int> CommitAsync()
         {
             return await _dbContext.SaveChangesAsync();
