@@ -40,8 +40,8 @@
                                                 </div>
                                             </div>
                                             <div class="social-icons-wrap">
-                                                <a href="#/"><i class="fa-regular fa-calendar"></i></a>
-                                                <span><a href="#">View</a></span>
+                                                <a href="@Url.Page("/Customer/Services", new { clinicId = clinic.ClinicId })"><i class="fa-regular fa-calendar"></i></a>
+                                                <span><a href="@Url.Page("/Customer/Services", new { clinicId = clinic.ClinicId })">View</a></span>
                                             </div>
                                         </div>
                                     </div>
@@ -92,20 +92,15 @@
                     </div>
                     <!--== End Sidebar Item ==-->
                     <!--== Start Sidebar Item ==-->
-                    <div class="sidebar-item category-sidebar-item"
-                         data-bg-img="assets/img/photos/sidebar2.webp">
+                    <div class="sidebar-item category-sidebar-item" data-bg-img="/img/photos/sidebar2.webp">
                         <h4 class="sidebar-title">Locations</h4>
                         <div class="sidebar-body">
                             <div class="sidebar-category-sub-menu">
                                 <ul>
-                                    <li><a href="services.html">Ho Chi Minh <span>(35)</span></a></li>
-                                    <li><a href="services.html">Ho Chi Minh <span>(25)</span></a></li>
-                                    <li><a href="services.html">Ho Chi Minh <span>(18)</span></a></li>
-                                    <li><a href="services.html">Ho Chi Minh <span>(10)</span></a></li>
-                                    <li><a href="services.html">Ho Chi Minh <span>(39)</span></a></li>
-                                    <li>
-                                        <a href="services.html">Ho Chi Minh <span>(42)</span></a>
-                                    </li>
+                                    @foreach (var group in Model.DistrictGroups)
+                                    {
+                                        <li><a href="#">@group.District <span>(@group.ClinicCount)</span></a></li>
+                                    }
                                 </ul>
                             </div>
                         </div>
@@ -116,7 +111,7 @@
                         <div class="sidebar-body">
                             <div class="sidebar-offer-thumb">
                                 <a href="contact.html">
-                                    <img src="assets/img/photos/offers.webp" width="340"
+                                    <img src="/img/photos/offers.webp" width="340"
                                          height="381" alt="Image-HasTech">
                                 </a>
                             </div>

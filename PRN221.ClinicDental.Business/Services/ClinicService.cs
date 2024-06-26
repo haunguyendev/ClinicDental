@@ -50,5 +50,16 @@ namespace PRN221.ClinicDental.Services
                 District = c.Address.District
             }).ToList();
         }
+
+        public async Task<List<DistrictGroupModel>> GetClinicsGroupedByDistrict()
+        {
+            var clinics = await _unitOfWork.ClinicRepository.GetAllClinics();
+            return clinics.GroupBy(c => c.Address.District)
+                          .Select(g => new DistrictGroupModel
+                          {
+                              District = g.Key,
+                              ClinicCount = g.Count()
+                          }).ToList();
+        }
     }
 }

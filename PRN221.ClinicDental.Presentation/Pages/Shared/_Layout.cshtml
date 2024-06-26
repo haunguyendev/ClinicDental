@@ -96,13 +96,12 @@
                                 <div class="header-navigation-area">
                                     <ul class="main-menu nav">
                                         <li><a href="/Index"><span>Home</span></a></li>
-                                        <li class="has-submenu">
-                                            <a href="/Customer/Services/"><span>Services</span></a>
-                                            <ul class="submenu-nav">
-                                                <li><a href="/Customer/Services">Services</a></li>
-                                                <li><a href="service-details.html">Service Details</a></li>
-                                            </ul>
-                                        </li>
+                                        @if (User.IsInRole("Customer"))
+                                        {
+                                            <li class="has-submenu">
+                                                <a href="/Customer/Clinics"><span>Clinics</span></a>
+                                            </li>
+                                        }
                                         <li class="has-submenu">
                                             <a href="#/"><span>Dentist</span></a>
                                             <ul class="submenu-nav">

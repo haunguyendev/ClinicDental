@@ -10,6 +10,7 @@ namespace PRN221.ClinicDental.Services.Interfaces
         Task<List<ClinicResponseModel>> GetClinicsByServiceId(int serviceId);
         Task<List<ClinicResponseModel>> GetAllClinic();
         Task<List<ClinicResponseModel>> SearchClinicByName(string keyword);
+        Task<List<DistrictGroupModel>> GetClinicsGroupedByDistrict();
 
 
     }

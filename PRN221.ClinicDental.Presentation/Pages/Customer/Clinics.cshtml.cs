@@ -14,9 +14,11 @@ namespace PRN221.ClinicDental.Presentation.Pages.Customer
             
         }
         public IList<ClinicResponseModel> Clinics { get; set; }
+        public List<DistrictGroupModel> DistrictGroups { get; set; }
         public async Task OnGetAsync()
         {
             Clinics = await _clinicService.GetAllClinic();
+            DistrictGroups = await _clinicService.GetClinicsGroupedByDistrict();
         }
         public async Task<IActionResult> OnPostSearchAsync(string keyword)
         {
