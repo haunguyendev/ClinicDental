@@ -18,9 +18,6 @@ public partial class Clinic
 
     public int ClinicOwnerId { get; set; }
 
-    public TimeOnly OpeningTime { get; set; }
-
-    public TimeOnly ClosingTime { get; set; }
 
     [ForeignKey("AddressId")]
     [InverseProperty("Clinic")]
