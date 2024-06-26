@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using PRN221.ClinicDental.Business.DTO.Response.Clinic;
 using PRN221.ClinicDental.Data.Common.Interface;
 using PRN221.ClinicDental.Data.Models;
+using PRN221.ClinicDental.Data.Repositories;
 using PRN221.ClinicDental.Services.Interfaces;
 
 namespace PRN221.ClinicDental.Services
@@ -31,6 +32,23 @@ namespace PRN221.ClinicDental.Services
                 ClinicName = c.Name
             }).ToList();
 
+        }
+        public async Task<List<ClinicResponseModel>> GetAllClinic()
+        {
+            var listClinic = await _unitOfWork.ClinicRepository.GetAllClinics();
+            return _mapper.Map<List<ClinicResponseModel>>(listClinic);
+        }
+
+        public async Task<List<ClinicResponseModel>> SearchClinicByName(string keyword)
+        {
+            var clinics = await _unitOfWork.ClinicRepository.SearchClinics(c => c.Name.Contains(keyword));
+            return clinics.Select(c => new ClinicResponseModel
+            {
+                ClinicId = c.ClinicId,
+                ClinicName = c.Name,
+                StreetAddress = c.Address.StreetAddress,
+                District = c.Address.District
+            }).ToList();
         }
     }
 }

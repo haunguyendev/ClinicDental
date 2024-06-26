@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PRN221.ClinicDental.Business.DTO.Response;
+using PRN221.ClinicDental.Business.DTO.Response.Clinic;
 using PRN221.ClinicDental.Business.DTO.Response.Dentist;
 using PRN221.ClinicDental.Business.DTO.Response.ServiceResponse;
 using PRN221.ClinicDental.Data.Models;
@@ -21,6 +22,11 @@ namespace PRN221.ClinicDental.Business.MapperApplication
             CreateMap<DentistDetail, DentistResponseModel>()
                 .ForMember(dest=>dest.DentistId,src=>src.MapFrom(x=>x.UserId))
                 .ForMember(dest=>dest.DentistName,src=>src.MapFrom(x=>x.User.Name));
+
+            CreateMap<Clinic, ClinicResponseModel>()
+                .ForMember(dest => dest.StreetAddress, src => src.MapFrom(x => x.Address.StreetAddress))
+                .ForMember(dest => dest.District, src => src.MapFrom(x => x.Address.District))
+                .ForMember(dest=>dest.ClinicName,src=>src.MapFrom(x=>x.Name));
         }
     }
 }
