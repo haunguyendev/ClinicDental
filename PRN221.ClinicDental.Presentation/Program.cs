@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
-
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using PRN221.ClinicDental.Data.Models;
 using PRN221.ClinicDental.Presentation.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,8 +16,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         .AddCookie(options =>
         {
             options.LoginPath = "/Accounts/Login";
-            
         });
+builder.Services.AddDbContext<ClinicDentalDbContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
 

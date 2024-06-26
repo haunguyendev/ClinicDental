@@ -13,15 +13,19 @@ public partial class Clinic
 
     [StringLength(100)]
     public string Name { get; set; } = null!;
+    public int AddressId { get; set; }
 
-    [StringLength(255)]
-    public string Address { get; set; } = null!;
 
     public int ClinicOwnerId { get; set; }
 
     public TimeOnly OpeningTime { get; set; }
 
     public TimeOnly ClosingTime { get; set; }
+    public string ImageURL { get; set; }
+
+    [ForeignKey("AddressId")]
+    [InverseProperty("Clinic")]
+    public virtual Address Address { get; set; } = null!;
 
     [InverseProperty("Clinic")]
     public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();

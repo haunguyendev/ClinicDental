@@ -24,6 +24,8 @@ public partial class ClinicDentalDbContext : DbContext
     public virtual DbSet<ClinicService> ClinicServices { get; set; }
 
     public virtual DbSet<DentistDetail> DentistDetails { get; set; }
+    public virtual DbSet<DentistService> DentistServices { get; set; }
+    public virtual DbSet<Address> Addresses { get; set; }
 
     public virtual DbSet<Role> Roles { get; set; }
 
@@ -42,7 +44,7 @@ public partial class ClinicDentalDbContext : DbContext
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
-        => optionsBuilder.UseSqlServer(GetConnectionString());
+        => optionsBuilder.UseSqlServer("Data Source=flocalbrand.site,1444;Initial Catalog=DentalClinic;User ID=sa;Password=<YourStrong@Passw0rd>;TrustServerCertificate=True");
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Appointment>(entity =>
@@ -75,6 +77,11 @@ public partial class ClinicDentalDbContext : DbContext
             entity.HasOne(d => d.ClinicOwner).WithMany(p => p.Clinics)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Clinics_Users");
+            entity.HasOne(c => c.Address)
+           .WithOne(a => a.Clinic)
+           .HasForeignKey<Clinic>(c => c.AddressId)
+           .HasConstraintName("FK_Clinic_Address");
+
         });
 
         modelBuilder.Entity<ClinicService>(entity =>
@@ -119,6 +126,19 @@ public partial class ClinicDentalDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Users_Roles");
         });
+        modelBuilder.Entity<DentistService>()
+           .HasKey(ds => new { ds.DentistId, ds.ServiceId });
+
+        modelBuilder.Entity<DentistService>()
+            .HasOne(ds => ds.Dentist)
+            .WithMany(d => d.DentistServices)
+            .HasForeignKey(ds => ds.DentistId);
+
+        modelBuilder.Entity<DentistService>()
+            .HasOne(ds => ds.Service)
+            .WithMany(s => s.DentistServices)
+            .HasForeignKey(ds => ds.ServiceId);
+       
 
         OnModelCreatingPartial(modelBuilder);
     }

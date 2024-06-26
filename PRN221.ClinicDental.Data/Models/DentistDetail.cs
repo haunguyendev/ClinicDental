@@ -32,4 +32,6 @@ public partial class DentistDetail
     [ForeignKey("UserId")]
     [InverseProperty("DentistDetail")]
     public virtual User User { get; set; } = null!;
+    [InverseProperty("Dentist")]
+    public virtual ICollection<DentistService> DentistServices { get; set; } = new List<DentistService>();
 }

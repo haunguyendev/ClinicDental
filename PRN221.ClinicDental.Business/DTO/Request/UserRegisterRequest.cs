@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PRN221.ClinicDental.Business.Validate;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,10 +12,13 @@ namespace PRN221.ClinicDental.Business.DTO.Request
     {
         [Required]
         [StringLength(50)]
+        [UsernameContainsLetter]
         public string Username { get; set; }
 
         [Required]
         [StringLength(255)]
+        [PasswordComplexity]
+
         public string Password { get; set; }
 
         [Required]
@@ -24,6 +28,7 @@ namespace PRN221.ClinicDental.Business.DTO.Request
 
         [Required]
         [StringLength(255)]
+        [LettersOnly]
         public string FullName { get; set; }
 
         [EmailAddress]

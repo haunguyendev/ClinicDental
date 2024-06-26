@@ -16,10 +16,14 @@ public partial class Service
 
     [StringLength(255)]
     public string? Description { get; set; }
+    public string? ImageURL { get; set; }
 
     [InverseProperty("Service")]
     public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
 
     [InverseProperty("Service")]
     public virtual ICollection<ClinicService> ClinicServices { get; set; } = new List<ClinicService>();
+    [InverseProperty("Service")]
+    public virtual ICollection<DentistService> DentistServices { get; set; } = new List<DentistService>();
+
 }
