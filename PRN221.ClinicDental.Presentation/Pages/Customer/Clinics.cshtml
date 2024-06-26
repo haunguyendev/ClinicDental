@@ -1,0 +1,138 @@
+﻿@page
+@model PRN221.ClinicDental.Presentation.Pages.Customer.ClinicsModel
+@{
+   
+}
+
+<!--== Start Blog Area Wrapper ==-->
+<section class="blog-area blog-inner-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 order-0 order-lg-2">
+                <div class="row">
+                    @foreach (var clinic in Model.Clinics)
+                    {
+                        <div class="col-md-6 col-lg-6">
+                            <div class="post-item" data-aos="fade-up">
+                                <div class="inner-content">
+                                    <div class="thumb">
+                                        <img src="@clinic.ImageURL" width="370" height="280" alt="Clinic Image">
+                                    </div>
+                                    <div class="content">
+                                        <ul class="meta">
+                                            <li class="post-time"><a href="blog.html">8h - 10h</a></li>
+                                            <li class="post-sep"> | </li>
+                                            <li class="post-comment"><a href="blog.html">@clinic.District</a></li>
+                                        </ul>
+                                        <ul class="meta">
+                                            <li class="post-comment">
+                                                @clinic.StreetAddress
+                                            </li>
+                                        </ul>
+                                        <h4 class="title"><a href="blog-details.html">@clinic.ClinicName</a></h4>
+                                        <div class="footer-content">
+                                            <div class="social-icons-wrap staff-info">
+                                                <div class="content-footer">
+                                                    <div class="meta-rating">
+                                                        <i class="fa fa-heart" style="color: red;"></i>
+                                                        <span>5.0</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="social-icons-wrap">
+                                                <a href="#/"><i class="fa-regular fa-calendar"></i></a>
+                                                <span><a href="#">View</a></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="col-12">
+                        <!--== Start Pagination Wrap ==-->
+                        <div class="pagination-content-wrap mb-md-40">
+                            <nav class="pagination-nav">
+                                <ul class="pagination justify-content-center ">
+                                    <li>
+                                        <a class="prev icon" href="#/"><i class="fa fa-angle-left"></i></a>
+                                    </li>
+                                    <li><a class="active disabled" href="#/">01</a></li>
+                                    <li class="pagination-sep"> / </li>
+                                    <li><a href="#/">09</a></li>
+                                    <li>
+                                        <a class="next icon" href="#/"><i class="fa fa-angle-right"></i></a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <!--== End Pagination Wrap ==-->
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 order-2 order-md-1">
+                <!--== Start Sidebar Wrapper ==-->
+                <div class="sidebar-wrapper sidebar-right-margin">
+                    <!--== Start Sidebar Item ==-->
+                    <div class="sidebar-item" data-bg-img="assets/img/photos/sidebar1.webp">
+                        <h4 class="sidebar-title">Search</h4>
+                        <div class="sidebar-body">
+                            <div class="sidebar-search-form">
+                                <form method="post" asp-page-handler="Search">
+                                    <div class="form-group">
+                                        <input class="form-control" type="text" placeholder="Keywords" name="keyword">
+                                        <button type="submit" class="btn-src">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!--== End Sidebar Item ==-->
+                    <!--== Start Sidebar Item ==-->
+                    <div class="sidebar-item category-sidebar-item"
+                         data-bg-img="assets/img/photos/sidebar2.webp">
+                        <h4 class="sidebar-title">Locations</h4>
+                        <div class="sidebar-body">
+                            <div class="sidebar-category-sub-menu">
+                                <ul>
+                                    <li><a href="services.html">Ho Chi Minh <span>(35)</span></a></li>
+                                    <li><a href="services.html">Ho Chi Minh <span>(25)</span></a></li>
+                                    <li><a href="services.html">Ho Chi Minh <span>(18)</span></a></li>
+                                    <li><a href="services.html">Ho Chi Minh <span>(10)</span></a></li>
+                                    <li><a href="services.html">Ho Chi Minh <span>(39)</span></a></li>
+                                    <li>
+                                        <a href="services.html">Ho Chi Minh <span>(42)</span></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!--== End Sidebar Item ==-->
+                    <!--== Start Sidebar Item ==-->
+                    <div class="sidebar-item offer-sidebar-item">
+                        <div class="sidebar-body">
+                            <div class="sidebar-offer-thumb">
+                                <a href="contact.html">
+                                    <img src="assets/img/photos/offers.webp" width="340"
+                                         height="381" alt="Image-HasTech">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--== End Sidebar Item ==-->
+
+
+                </div>
+                <!--== End Sidebar Wrapper ==-->
+            </div>
+        </div>
+    </div>
+</section>
+<!--== End Blog Area Wrapper ==-->
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+   
+}
