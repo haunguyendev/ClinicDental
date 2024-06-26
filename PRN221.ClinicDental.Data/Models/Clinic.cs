@@ -21,7 +21,6 @@ public partial class Clinic
     public TimeOnly OpeningTime { get; set; }
 
     public TimeOnly ClosingTime { get; set; }
-    public string ImageURL { get; set; }
 
     [ForeignKey("AddressId")]
     [InverseProperty("Clinic")]
