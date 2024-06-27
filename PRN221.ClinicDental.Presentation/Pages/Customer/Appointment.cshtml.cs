@@ -5,6 +5,7 @@ using PRN221.ClinicDental.Business.DTO.Request.Appointment;
 using PRN221.ClinicDental.Business.DTO.Response.Clinic;
 using PRN221.ClinicDental.Business.DTO.Response.Dentist;
 using PRN221.ClinicDental.Business.DTO.Response.ServiceResponse;
+using PRN221.ClinicDental.Data.Models;
 using PRN221.ClinicDental.Services;
 using PRN221.ClinicDental.Services.Interfaces;
 using System.Security.Claims;
@@ -15,16 +16,14 @@ namespace PRN221.ClinicDental.Presentation.Pages.Customer
     public class AppointmentModel : PageModel
     {
         private readonly IServiceService _serviceService;
-        private readonly IClinicService _clinicService;
-        private readonly IDentistDetailService _dentistDetailService;
         private readonly IAppointmentService _appointmentService;
-        public List<DentistResponseModel> Dentists { get; set; }
 
-        public AppointmentModel(IServiceService serviceService, IClinicService clinicService, IDentistDetailService dentistDetailService, IAppointmentService appointmentService)
+
+
+
+        public AppointmentModel(IServiceService serviceService,IAppointmentService appointmentService)
         {
             _serviceService = serviceService;
-            _clinicService = clinicService;
-            _dentistDetailService = dentistDetailService;
             _appointmentService = appointmentService;
         }
 
@@ -32,42 +31,60 @@ namespace PRN221.ClinicDental.Presentation.Pages.Customer
         public AppointmentRequestModel AppointmentRequest { get; set; }
 
 
+        public List<DentistResponseModel> Dentists { get; set; }
 
-        public ServiceResponseModel Service { get; set; }
-        public List<ClinicResponseModel> Clinics { get; set; }
 
-        public async Task OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(int serviceId, int clinicId)
         {
-            Service = await _serviceService.GetServiceByIdAsync(id);
-            Clinics = await _clinicService.GetClinicsByServiceId(id);
-            Dentists = new List<DentistResponseModel>();
+            var service = await _serviceService.GetServiceById(serviceId);
 
+            if (service == null)
+            {
+                return NotFound();
+            }
+            AppointmentRequest = new AppointmentRequestModel
+            {
+                ServiceId = serviceId,
+                ClinicId = clinicId
+            };
+
+            Dentists = await _serviceService.GetDentistsByServiceAndClinic(serviceId, clinicId);
+            return Page();
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return Page();
-            }
+                if (!ModelState.IsValid)
+                {
+                    return Page();
+                }
 
-            // Assuming user ID is stored in cookies with key "UserId"
-            var userId = User.FindFirstValue("UserId");
-            if (int.TryParse(userId, out var customerId))
-            {
+                var userId = User.FindFirstValue("UserId");
+                if (!int.TryParse(userId, out var customerId))
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid user ID.");
+                    return Page();
+                }
+
+                // Ensure AppointmentRequest is initialized
+                if (AppointmentRequest == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Appointment request is null.");
+                    return Page();
+                }
+
                 await _appointmentService.CreateAppointmentAsync(AppointmentRequest, customerId);
                 TempData["Message"] = "Appointment successfully created.";
 
                 return RedirectToPage("/Index");
             }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"Error creating appointment: {ex.Message}");
+                return Page();
+            }
+        }
 
-            ModelState.AddModelError(string.Empty, "Unable to retrieve user ID from cookies.");
-            return Page();
-        }
-        public async Task<IActionResult> OnGetDentistsAsync(int clinicId)
-        {
-            var dentists = await _dentistDetailService.GetDentistsByClinicId(clinicId);
-            return new JsonResult(dentists.Select(d => new { userId = d.DentistId, userName = d.DentistName }));
-        }
     }
-
 }

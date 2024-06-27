@@ -1,6 +1,22 @@
-﻿@page "{id:int?}"
+﻿@page "{serviceId:int}/{clinicId:int}"
 @model PRN221.ClinicDental.Presentation.Pages.Customer.AppointmentModel
 @{
+    var morningSlots = new Dictionary<int, string>
+    {
+        { 1, "8:00 - 8:45" },
+        { 2, "8:45 - 9:30" },
+        { 3, "9:30 - 10:15" },
+        { 4, "10:15 - 11:00" },
+        { 5, "11:00 - 11:45" }
+    };
+    var afternoonSlots = new Dictionary<int, string>
+    {
+        { 6, "14:00 - 14:45" },
+        { 7, "14:45 - 15:30" },
+        { 8, "15:30 - 16:15" },
+        { 9, "16:15 - 17:00" },
+        { 10, "17:00 - 17:45" }
+    };
 }
 <section class="appointment-area appointment-default-area mr-3" style="margin-right:18em">
     <div class="container" data-aos="fade-up">
@@ -16,32 +32,25 @@
                             </div>
                             <form method="post">
                                 <div class="row row-gutter-30">
+                                    <input type="hidden" asp-for="AppointmentRequest.ServiceId" />
+                                    <input type="hidden" asp-for="AppointmentRequest.ClinicId" />
+
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <input type="hidden" asp-for="AppointmentRequest.ServiceId" value="@Model.Service.ServiceId" />
-                                            <select class="form-control form-select" aria-label="service select example" disabled asp-for="AppointmentRequest.ServiceId">
-                                                <option value="@Model.Service.ServiceId" selected>@Model.Service.ServiceName</option>
-                                            </select>
-                                            <span asp-validation-for="AppointmentRequest.ServiceId" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <select id="clinic-select" class="form-control form-select" aria-label="clinic select example" onchange="loadDentists()" asp-for="AppointmentRequest.ClinicId">
-                                                <option selected disabled>Select Clinic</option>
-                                                @foreach (var clinic in Model.Clinics)
-                                                {
-                                                    <option value="@clinic.ClinicId">@clinic.ClinicName</option>
-                                                }
-                                            </select>
-                                            <span asp-validation-for="AppointmentRequest.ClinicId" class="text-danger"></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <select id="doctor-select" class="form-control form-select" aria-label="doctor select example" asp-for="AppointmentRequest.DentistId" disabled>
-                                                <option selected disabled>Select Doctor</option>
-                                            </select>
+                                            @if (Model.Dentists != null)
+                                            {
+                                                <select id="doctor-select" class="form-control form-select" aria-label="doctor select example" asp-for="AppointmentRequest.DentistId">
+                                                    <option selected disabled>Select Doctor</option>
+                                                    @foreach (var dentist in Model.Dentists)
+                                                    {
+                                                        <option value="@dentist.DentistId">@dentist.DentistName</option>
+                                                    }
+                                                </select>
+                                            }
+                                            else
+                                            {
+                                                <p>No dentists available.</p>
+                                            }
                                             <span asp-validation-for="AppointmentRequest.DentistId" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -57,18 +66,31 @@
                                             <span asp-validation-for="AppointmentRequest.PhoneNumber" class="text-danger"></span>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-5">
                                         <div class="form-group">
                                             <input class="form-control form-date" type="text" id="datepicker" placeholder="Date" asp-for="AppointmentRequest.AppointmentDate">
                                             <span asp-validation-for="AppointmentRequest.AppointmentDate" class="text-danger"></span>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <input class="form-control form-time timepicker" id="timepicker" type="text" placeholder="Time" asp-for="AppointmentRequest.AppointmentTime">
-                                            <span asp-validation-for="AppointmentRequest.AppointmentTime" class="text-danger"></span>
+                                            <select class="form-control form-select" asp-for="AppointmentRequest.Slot">
+                                                <option selected disabled>Select Slot</option>
+                                                <optgroup label="Morning">
+                                                    @foreach (var slot in morningSlots)
+                                                    {
+                                                        <option value="@slot.Key">@slot.Value</option>
+                                                    }
+                                                </optgroup>
+                                                <optgroup label="Afternoon">
+                                                    @foreach (var slot in afternoonSlots)
+                                                    {
+                                                        <option value="@slot.Key">@slot.Value</option>
+                                                    }
+                                                </optgroup>
+                                            </select>
+                                            <span asp-validation-for="AppointmentRequest.Slot" class="text-danger"></span>
                                         </div>
-                                    </div>
                                     <div class="col-md-12">
                                         <div class="form-group text-center mb--0">
                                             <button class="btn-theme" type="submit">Make Appointment</button>
@@ -91,29 +113,14 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-        function loadDentists() {
-            var clinicId = document.getElementById("clinic-select").value;
-            fetch(`/Customer/Appointment?handler=Dentists&clinicId=${clinicId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    var dentistSelect = document.getElementById("doctor-select");
-                    
-                    dentistSelect.innerHTML = ""; // Clear current options
-                    data.forEach(dentist => {
-                        var option = document.createElement("option");
-                        option.value = dentist.userId;
-                        option.text = dentist.userName;
-                        dentistSelect.appendChild(option);
-                    });
-                    dentistSelect.disabled = false;
-                })
-                .catch(error => console.error('Error loading dentists:', error));
-        }
+        $(function () {
+            $("#datepicker").datepicker({
+                dateFormat: 'yy-mm-dd',
+                
+            }).datepicker("setDate", new Date());
+        });
     </script>
+    
 }

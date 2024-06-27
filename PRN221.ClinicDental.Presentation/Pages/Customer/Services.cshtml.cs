@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PRN221.ClinicDental.Business.Common.Interface;
 using PRN221.ClinicDental.Business.DTO.Response.ServiceResponse;
+using PRN221.ClinicDental.Data.Models;
 
 namespace PRN221.ClinicDental.Presentation.Pages.Customer
 {
@@ -14,9 +15,11 @@ namespace PRN221.ClinicDental.Presentation.Pages.Customer
             
         }
         public List<ServiceResponseModel> Services { get; set; }
-        public async Task OnGetAsync()
+        public int ClinicId { get; set; }
+        public async Task OnGetAsync(int clinicId)
         {
-            Services = await _serviceService.GetAllListServices();
+            ClinicId = clinicId;
+            Services = await _serviceService.GetServicesByClinicId(clinicId);
         }
     }
 }

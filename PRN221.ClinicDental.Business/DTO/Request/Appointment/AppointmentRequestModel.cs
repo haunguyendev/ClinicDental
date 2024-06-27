@@ -21,10 +21,8 @@ namespace PRN221.ClinicDental.Business.DTO.Request.Appointment
         [Required]
         [DataType(DataType.Date)]
         public DateTime AppointmentDate { get; set; }
-
         [Required]
-        [DataType(DataType.Time)]
-        public TimeSpan AppointmentTime { get; set; }
+        public int Slot { get; set; }
 
         [StringLength(20)]
         [Phone]
@@ -33,7 +31,7 @@ namespace PRN221.ClinicDental.Business.DTO.Request.Appointment
         [StringLength(255)]
         public string? Notes { get; set; }
 
-        public DateTime CombinedAppointmentDateTime => AppointmentDate.Add(AppointmentTime);
+      
 
     }
 }

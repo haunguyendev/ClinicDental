@@ -7,6 +7,6 @@ namespace PRN221.ClinicDental.Services.Interfaces
 {
     public interface IAppointmentService
     {
-        Task CreateAppointmentAsync(AppointmentRequestModel model, int customerId);
+        Task CreateAppointmentAsync(AppointmentRequestModel? model, int customerId);
     }
 }
