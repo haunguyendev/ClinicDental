@@ -18,4 +18,8 @@
     <ProjectReference Include="..\PRN221.ClinicDental.Data\PRN221.ClinicDental.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTO\Response\Address\" />
+  </ItemGroup>
+
 </Project>

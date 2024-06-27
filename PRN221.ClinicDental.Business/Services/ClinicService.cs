@@ -4,6 +4,7 @@ using System.Numerics;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using PRN221.ClinicDental.Business.DTO.Request.ClinicReqModel;
 using PRN221.ClinicDental.Business.DTO.Response.Clinic;
 using PRN221.ClinicDental.Data.Common.Interface;
 using PRN221.ClinicDental.Data.Models;
@@ -60,6 +61,36 @@ namespace PRN221.ClinicDental.Services
                               District = g.Key,
                               ClinicCount = g.Count()
                           }).ToList();
+        }
+
+        public async Task<List<ClinicResponseModel>> GetClinicsByClinicOwnerId(int userId)
+        {
+            var clinics = await _unitOfWork.ClinicRepository.GetAllClinics();
+            var listClinic = clinics.Where(x=> x.ClinicOwnerId == userId).ToList();
+            return _mapper.Map<List<ClinicResponseModel>>(listClinic);
+        }
+
+        public async Task<bool> AddClinic(ClinicReqModel model, int customerId)
+        {
+            var address = new Address()
+            {
+                StreetAddress = model.StreetAddress,
+                District = model.District,
+            };
+
+            var clinic = new Clinic()
+            {
+                ClinicOwnerId = customerId,
+                Name = model.Name,
+                AddressId = address.AddressId,
+                Address = address,
+                
+                ImageURL = "123"
+            };
+
+            await _unitOfWork.ClinicRepository.CreateAsync(clinic) ;
+            await _unitOfWork.CommitAsync();
+            return true;
         }
     }
 }
