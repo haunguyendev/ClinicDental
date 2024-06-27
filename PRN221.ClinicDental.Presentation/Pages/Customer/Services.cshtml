@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{clinicId:int}"
 @model PRN221.ClinicDental.Presentation.Pages.Customer.ServicesModel
 @{
     
@@ -51,7 +51,6 @@
                 @foreach (var service in Model.Services)
                 {
                     <div class="col-sm-6 col-lg-4 col-xl-3">
-                        <!--== Start Team Item ==-->
                         <div class="team-item">
                             <div class="inner-content">
                                 <div class="thumb">
@@ -63,9 +62,10 @@
                                     <div class="staff-info">
                                         <h4 class="title"><a href="team-details.html">@service.ServiceName</a></h4>
                                         <h5 class="sub-title">@service.Description</h5>
+                                        <p>Price: @service.Price</p>
                                         <div class="social-icons">
                                             <span>Book Now -</span>
-                                            <a href="/Customer/Appointment/@service.ServiceId"><i class="fa-solid fa-calendar-plus"></i></a>
+                                            <a href="/Customer/Appointment/@service.ServiceId/@Model.ClinicId"><i class="fa-solid fa-calendar-plus"></i></a>
                                         </div>
                                     </div>
                                     <div class="content-footer">
@@ -78,7 +78,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!--== End Team Item ==-->
                     </div>
                 }
 

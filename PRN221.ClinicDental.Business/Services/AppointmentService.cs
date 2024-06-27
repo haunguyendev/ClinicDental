@@ -18,18 +18,21 @@ namespace PRN221.ClinicDental.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task CreateAppointmentAsync(AppointmentRequestModel model, int customerId)
+        public async Task CreateAppointmentAsync(AppointmentRequestModel? model, int customerId)
         {
+           
             var appointment = new Appointment
             {
                 CustomerId = customerId,
                 ServiceId = model.ServiceId,
                 ClinicId = model.ClinicId,
                 DentistId = model.DentistId,
-                AppointmentTime = model.CombinedAppointmentDateTime,
+                AppointmentTime = model.AppointmentDate,
+                Slot=model.Slot,
                 PhoneNumber = model.PhoneNumber,
                 Notes = model.Notes,
-                Status = "Scheduled"
+                Status = "Scheduled",
+                
             };
 
             await _unitOfWork.AppointmentRepository.CreateAsync(appointment);
