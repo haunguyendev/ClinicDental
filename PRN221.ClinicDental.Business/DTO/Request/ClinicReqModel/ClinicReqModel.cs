@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using PRN221.ClinicDental.Business.Validate;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -17,6 +18,7 @@ namespace PRN221.ClinicDental.Business.DTO.Request.ClinicReqModel
         public string Address { get; set; }
 
         [Required]
+        [AllowedExtensions(new string[] { ".jpg", ".png" })]
         public IFormFile ImageURL { get; set; }
 
         [Required]

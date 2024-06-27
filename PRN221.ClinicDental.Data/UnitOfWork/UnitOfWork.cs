@@ -46,6 +46,9 @@ namespace PRN221.ClinicDental.Data.UnitOfWork
         public IAppointmentRepository AppointmentRepository { get; }
 
         public IDentistDetailRepository DentistDetailRepository { get; }
+
+        public IAddressRepository AddressRepository => throw new NotImplementedException();
+
         public async Task<int> CommitAsync()
         {
             return await _dbContext.SaveChangesAsync();

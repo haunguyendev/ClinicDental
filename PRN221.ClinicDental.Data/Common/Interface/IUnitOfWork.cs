@@ -14,7 +14,7 @@ namespace PRN221.ClinicDental.Data.Common.Interface
         IClinicRepository ClinicRepository { get; }
         IDentistDetailRepository DentistDetailRepository { get; }
        
-        
+        IAddressRepository AddressRepository { get; }
         IServiceRepository ServiceRepository { get; }
        
         IAppointmentRepository AppointmentRepository { get; }

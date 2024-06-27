@@ -1,0 +1,266 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PRN221.ClinicDental.Presentation</title>
+    <!--== Favicon ==-->
+    <link rel="shortcut icon" href="~/img/favicon.ico" type="image/x-icon" />
+
+    <!--== Google Fonts ==-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@300;400;500;600;700;800&family=Roboto:wght@300&family=Shippori+Mincho:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <!--== Bootstrap CSS ==-->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <!--== Font Awesome Icon CSS ==-->
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+    <!--== Datetimepicker CSS ==-->
+    <link href="~/css/jquery.datetimepicker.css" rel="stylesheet" />
+    <!--== Swiper CSS ==-->
+    <link href="~/css/swiper.min.css" rel="stylesheet" />
+    <!--== Fancybox Min CSS ==-->
+    <link href="~/css/fancybox.min.css" rel="stylesheet" />
+    <!--== Aos Min CSS ==-->
+    <link href="~/css/aos.min.css" rel="stylesheet" />
+
+    <!--== Main Style CSS ==-->
+    <link href="~/css/style.css" rel="stylesheet" />
+</head>
+<body>
+    <!--== Start Preloader Content ==-->
+    <div class="preloader-wrap">
+        <div class="preloader">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!--== End Preloader Content ==-->
+    <header class="header-wrapper">
+        <div class="header-top-area">
+            <div class="header-top-align">
+                <div class="header-top-align-left">
+                    <div class="header-logo-area">
+                        <a href="index.html">
+                            <img class="logo-main" src="~/img/logo.webp" width="255" height="56" alt="Logo" />
+                            <img class="logo-light" src="~/img/logo-light.webp" width="237" height="78" alt="Logo" />
+                        </a>
+                    </div>
+                </div>
+                <div class="header-top-align-right">
+                    <div class="header-info-items">
+                        <div class="info-items">
+                            <div class="inner-content">
+                                <div class="icon">
+                                    <img src="~/img/icons/time1.webp" width="48" height="48" alt="Image-HasTech">
+                                </div>
+                                <div class="content">
+                                    <p>8 am to 6 pm (Mon - Fri)<br>10 am to 8 pm (Sat - Sun)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-items">
+                            <div class="inner-content">
+                                <div class="icon">
+                                    <img src="~/img/icons/map.webp" width="46" height="48" alt="Image-HasTech">
+                                </div>
+                                <div class="content">
+                                    <p>258C, Saintpatrick, Main Street <br>Notrth Town, New York</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="header-appointment-button">
+                        <a class="appointment-btn" href="contact.html">Appointment</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-area sticky-header header-default">
+            <div class="container">
+                <div class="row no-gutter align-items-center position-relative">
+                    <div class="col-12">
+                        <div class="header-align">
+                            <div class="header-align-left">
+                                <div class="mobile-header-logo">
+                                    <a href="index.html">
+                                        <img class="logo-light" src="~/img/logo-light.webp" width="170" height="78" alt="Logo" />
+                                    </a>
+                                </div>
+                                <div class="header-navigation-area">
+                                    <ul class="main-menu nav">
+                                        <li><a href="/ClinicOwner"><span>Home</span></a></li>
+                                        <li class="has-submenu">
+                                            <a href="/ClinicOwner/ManageClinic"><span>Clinic</span></a>
+                                        </li>
+                                        <li class="has-submenu">
+                                            <a href="#/"><span></span></a>
+                                        </li>
+                                        <li class="has-submenu">
+                                            <a href="#/"><span>Blog</span></a>
+                                        </li>
+                                        <li><a href="contact.html"><span>Contact</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="header-align-right">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <div class="header-action-area">
+                                        <a class="btn-login-menu" href="/Accounts/Profile">Hi, @User.Identity.Name</a>
+                                        <span>/</span>
+                                        <a class="btn-register-menu" asp-page-handler="Logout">Logout</a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="header-action-area">
+                                        <a class="btn-login-menu" href="/Accounts/Login">Login</a>
+                                        <span>/</span>
+                                        <a class="btn-register-menu" href="/Accounts/Register">Register</a>
+                                    </div>
+                                }
+
+                                <button class="btn-menu" type="button" data-bs-toggle="offcanvas" data-bs-target="#AsideOffcanvasMenu" aria-controls="AsideOffcanvasMenu">
+                                    <i class="fa fa-align-left"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    @* <div class="container"> *@
+    <main role="main" class="main-content">
+        @RenderBody()
+    </main>
+    @* </div> *@
+
+    <!--== Scroll Top Button ==-->
+    <div id="scroll-to-top" class="scroll-to-top"><span class="fa fa-angle-up"></span></div>
+
+    <!--== Start Aside Menu ==-->
+    <aside class="off-canvas-wrapper offcanvas offcanvas-start" tabindex="-1" id="AsideOffcanvasMenu" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h1 class="d-none" id="offcanvasExampleLabel">Aside Menu</h1>
+            <button class="btn-menu-close" data-bs-dismiss="offcanvas" aria-label="Close">menu <i class="fa fa-chevron-left"></i></button>
+        </div>
+        <div class="offcanvas-body">
+            <!-- Mobile Menu Start -->
+            <div class="mobile-menu-items">
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li>
+                        <a href="/Customer/Services">Services</a>
+                        <ul class="sub-menu">
+                            <li><a asp-page="/Customer/Services">Services</a></li>
+                            <li><a href="service-details.html">Service Details</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Dentist</a>
+                        <ul class="sub-menu">
+                            <li><a href="team.html">Dentist</a></li>
+                            <li><a href="team-details.html">Dentist Details</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Pages</a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a href="#">About Us</a>
+                                <ul class="sub-menu">
+                                    <li><a href="about-us.html">About Us One</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Blog</a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a href="#" class="mega-title">Blog Layout</a>
+                                <ul class="sub-menu">
+                                    <li><a href="blog.html">Blog Grid</a></li>
+                                    <li><a href="blog-left-sidebar.html">Blog Left Sidebar</a></li>
+                                    <li><a href="blog-right-sidebar.html">Blog Right Sidebar</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="mega-title">Blog Single Layout</a>
+                                <ul class="sub-menu">
+                                    <li><a href="blog-details.html">Blog Details</a></li>
+                                    <li><a href="blog-details-left-sidebar.html">Blog Details Left Sidebar</a></li>
+                                    <li><a href="blog-details-right-sidebar.html">Blog Details Right Sidebar</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <!-- Mobile Menu End -->
+            <div class="mobile-menu-info">
+                <div class="info-item">
+                    <div class="icon">
+                        <img src="~/img/icons/time1.webp" width="35" height="35" alt="Image-HasTech">
+                    </div>
+                    <div class="content">
+                        <p>8 am to 6 pm (Mon - Fri)<br>10 am to 8 pm (Sat - Sun)</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="icon">
+                        <img src="~/img/icons/map.webp" width="35" height="37" alt="Image-HasTech">
+                    </div>
+                    <div class="content">
+                        <p>258C, Saintpatrick, Main Street Notrth Town, New York</p>
+                    </div>
+                </div>
+            </div>
+            <a class="mobile-menu-btn" href="contact.html">Appointment</a>
+            <div class="mobile-menu-action">
+                <a class="btn-login-menu" asp-page="/Accounts/Login">Login</a>
+                <span>/</span>
+                <a class="btn-register-menu" href="account-register.html">Register</a>
+            </div>
+        </div>
+    </aside>
+    <!--== End Aside Menu ==-->
+    </div>
+
+    <!--=======================Javascript============================-->
+    <!--=== jQuery Modernizr Min Js ===-->
+    <script src="~/js/modernizr-3.5.0.js"></script>
+    <!--=== jQuery Min Js ===-->
+    <script src="~/js/jquery-3.6.0-main.js"></script>
+    <!--=== jQuery Migration Min Js ===-->
+    <script src="~/js/jquery-3.3.2-migrate.js"></script>
+    <!--=== jQuery Bootstrap Min Js ===-->
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <!--=== jQuery Swiper Min Js ===-->
+    <script src="~/js/swiper.min.js"></script>
+    <!--=== jQuery Fancybox Min Js ===-->
+    <script src="~/js/fancybox.min.js"></script>
+    <!--=== jQuery Waypoint Js ===-->
+    <script src="~/js/waypoint-4.0.1.js"></script>
+    <!--=== jQuery Aos Min Js ===-->
+    <script src="~/js/aos.min.js"></script>
+    <!--=== jQuery Counterup Min Js ===-->
+    <script src="~/js/counterup.js"></script>
+    <!--=== jQuery Datetimepicker Min Js ===-->
+    <script src="~/js/jquery.datetimepicker.min.js"></script>
+
+    <!--=== jQuery Custom Js ===-->
+    <script src="~/js/custom.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

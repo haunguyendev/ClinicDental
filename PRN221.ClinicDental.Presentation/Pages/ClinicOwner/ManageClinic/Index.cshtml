@@ -8,28 +8,22 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="CreateClinic">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Clinic[0].Name)
+                @Html.DisplayNameFor(model => model.Clinic[0].ClinicName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Clinic[0].ImageURL)
+                @Html.DisplayNameFor(model => model.Clinic[0].StreetAddress)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Clinic[0].OpeningTime)
+                @Html.DisplayNameFor(model => model.Clinic[0].District)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Clinic[0].ClosingTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Clinic[0].Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Clinic[0].ClinicOwner)
+               Image
             </th>
             <th></th>
         </tr>
@@ -38,23 +32,17 @@
 @foreach (var item in Model.Clinic) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.ClinicName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ImageURL)
+                @Html.DisplayFor(modelItem => item.StreetAddress)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.OpeningTime)
+                @Html.DisplayFor(modelItem => item.District)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClosingTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address.District)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClinicOwner.Email)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImageURL)
+                </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ClinicId">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.ClinicId">Details</a> |

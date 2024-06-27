@@ -15,9 +15,9 @@ public partial class Clinic
     public string Name { get; set; } = null!;
     public int AddressId { get; set; }
 
-
     public int ClinicOwnerId { get; set; }
 
+    public string? ImageURL { get; set; }
 
     [ForeignKey("AddressId")]
     [InverseProperty("Clinic")]
