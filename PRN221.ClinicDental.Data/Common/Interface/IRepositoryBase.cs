@@ -12,6 +12,7 @@ namespace PRN221.ClinicDental.Data.Common.Interface
         Task<IQueryable<T>> FindAllAsync();
         Task<IQueryable<T>> FindByConditionAsync(Expression<Func<T, bool>> expression);
         Task CreateAsync(T entity);
+        Task CreateRange(List<T> entities);
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
         Task SaveAsync();

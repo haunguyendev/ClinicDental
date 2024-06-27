@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Azure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -31,7 +32,7 @@ namespace PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageClinic
         public async  Task<IActionResult> OnGet()
         {
             var service = await _serviceService.GetAllListServices();
-            ViewData["Service"] = new SelectList(service, "ServiceId", "ServiceName");
+            ViewData["Services"] = new SelectList(service, "ServiceId", "ServiceName");
 
             return Page();
         }
@@ -46,6 +47,20 @@ namespace PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageClinic
             {
                 return Page();
             }
+            List<Service> selectedServices = await _serviceService.GetServiceByListIdAsync(Clinic.ServiceId);
+
+            var initClinic = new ClinicReqModel()
+            {
+                Address = Clinic.Address,
+                District = Clinic.District,
+                Name = Clinic.Name,
+                ClinicServices = selectedServices,
+                ServiceId = Clinic.ServiceId,
+                StreetAddress = Clinic.StreetAddress,
+                ImageURL = Clinic.ImageURL
+            };
+
+
 
             var userId = User.FindFirstValue("UserId");
             if (int.TryParse(userId, out var customerId))

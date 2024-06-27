@@ -64,5 +64,16 @@ namespace PRN221.ClinicDental.Services
             }).ToList();
             return serviceResponseModels;
         }
+
+        public async Task<List<Service>> GetServiceByListIdAsync(List<int> ids)
+        {
+            var service = await _unitOfWork.ServiceRepository.GetServiceByListId(ids);
+            if (service == null)
+            {
+                throw new Exception("Service not found!");
+            }
+            return service;
+
+        }
     }
 }

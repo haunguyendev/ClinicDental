@@ -35,6 +35,11 @@ namespace PRN221.ClinicDental.Data.Repositories
             await this._context.Set<T>().AddAsync(entity);
         }
 
+        public async Task CreateRange(List<T> entities)
+        {
+            await _context.Set<T>().AddRangeAsync(entities);
+        }
+
         public async Task UpdateAsync(T entity)
         {
             await Task.Run(() => this._context.Set<T>().Update(entity));

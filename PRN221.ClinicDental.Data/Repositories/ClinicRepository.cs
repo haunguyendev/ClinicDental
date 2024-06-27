@@ -16,9 +16,20 @@ namespace PRN221.ClinicDental.Data.Repositories
         {
         }
 
+        public async Task<bool> AddNewClinic(Clinic clinic, List<Service> service)
+        {
+            var serviceValues = service.Select(x => x.ServiceId);
+            var selectedService = _context.ClinicServices.Where(x=> serviceValues.Contains(x.ServiceId)).ToList();
+
+            clinic.ClinicServices = selectedService;
+            _context.Clinics.Add(clinic);
+           await _context.SaveChangesAsync();
+            return true;
+        }
+
         public Task<List<Clinic>> GetAllClinics()
         {
-            return _context.Clinics.Include(x=>x.Address).ToListAsync();
+            return _context.Clinics.Include(x=>x.Address).Include(x=> x.ClinicServices).ToListAsync();
         }
 
         public async Task<List<Clinic>> GetClinicsByOnServiceId(int serviceId)

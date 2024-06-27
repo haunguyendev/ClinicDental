@@ -19,6 +19,8 @@ namespace PRN221.ClinicDental.Data.Common.Interface
        
         IAppointmentRepository AppointmentRepository { get; }
 
+        IClinicServicesRepository ClinicServicesRepository { get; }
+
         Task<int> CommitAsync();
     }
 }
