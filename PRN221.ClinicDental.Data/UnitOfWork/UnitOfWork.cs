@@ -18,31 +18,33 @@ namespace PRN221.ClinicDental.Data.UnitOfWork
             IUserRepository userRepository,
             IClinicRepository clinicRepository,
             IDentistDetailRepository doctorDetailRepository,
-            
-            
+
+
             IServiceRepository serviceRepository,
-           
-            IAppointmentRepository appointmentRepository)
+
+            IAppointmentRepository appointmentRepository,
+            IClinicServicesRepository clinicServicesRepository)
         {
             _dbContext = dbContext;
             RoleRepository = roleRepository;
             UserRepository = userRepository;
             ClinicRepository = clinicRepository;
             DentistDetailRepository = doctorDetailRepository;
-            
-            
+
+
             ServiceRepository = serviceRepository;
-            
+
             AppointmentRepository = appointmentRepository;
+            ClinicServicesRepository = clinicServicesRepository;
         }
 
         public IRoleRepository RoleRepository { get; }
         public IUserRepository UserRepository { get; }
         public IClinicRepository ClinicRepository { get; }
-        
-     
+
+        public IClinicServicesRepository ClinicServicesRepository { get; }
         public IServiceRepository ServiceRepository { get; }
-      
+
         public IAppointmentRepository AppointmentRepository { get; }
 
         public IDentistDetailRepository DentistDetailRepository { get; }

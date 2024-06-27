@@ -21,7 +21,7 @@ namespace PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageClinic
             _clinicService = clinicService;
         }
 
-        public IList<ClinicResponseModel> Clinic { get; set; } = default!;
+        public IList<Clinic> Clinic { get; set; } = default!;
 
         public async Task OnGetAsync()
         {

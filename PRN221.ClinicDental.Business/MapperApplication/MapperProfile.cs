@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PRN221.ClinicDental.Business.DTO.Request.ClinicReqModel;
 using PRN221.ClinicDental.Business.DTO.Response;
 using PRN221.ClinicDental.Business.DTO.Response.Clinic;
 using PRN221.ClinicDental.Business.DTO.Response.Dentist;
@@ -27,6 +28,14 @@ namespace PRN221.ClinicDental.Business.MapperApplication
                 .ForMember(dest => dest.StreetAddress, src => src.MapFrom(x => x.Address.StreetAddress))
                 .ForMember(dest => dest.District, src => src.MapFrom(x => x.Address.District))
                 .ForMember(dest=>dest.ClinicName,src=>src.MapFrom(x=>x.Name));
+            CreateMap<ClinicReqModel, Clinic>()
+                .ForMember(dest=>dest.Address, src=>src.MapFrom(x=>new Address
+                {
+                    StreetAddress = x.StreetAddress,
+                    District = x.District
+                }))
+                .ForMember(dest => dest.ClinicServices, src => src.MapFrom(x => x.Name));
+
         }
     }
 }

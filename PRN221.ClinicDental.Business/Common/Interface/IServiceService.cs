@@ -1,4 +1,5 @@
 ﻿using PRN221.ClinicDental.Business.DTO.Response.ServiceResponse;
+using PRN221.ClinicDental.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,6 @@ namespace PRN221.ClinicDental.Business.Common.Interface
     {
         Task<List<ServiceResponseModel>> GetAllListServices();
         Task<ServiceResponseModel> GetServiceByIdAsync(int id);
-
+        Task<List<Service>> GetServiceByListIdAsync(List<int> ids);
     }
 }
