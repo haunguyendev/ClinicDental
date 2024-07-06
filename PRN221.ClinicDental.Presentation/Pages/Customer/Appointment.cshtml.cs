@@ -73,6 +73,13 @@ namespace PRN221.ClinicDental.Presentation.Pages.Customer
                     ModelState.AddModelError(string.Empty, "Appointment request is null.");
                     return Page();
                 }
+                
+                if ( _appointmentService.CustomerHasAppointment(customerId, AppointmentRequest.ClinicId, AppointmentRequest.AppointmentDate, AppointmentRequest.Slot))
+
+                {
+                    ModelState.AddModelError(string.Empty, "You already have an appointment in this slot on the same date.");
+                    return Page();
+                }
 
                 await _appointmentService.CreateAppointmentAsync(AppointmentRequest, customerId);
                 TempData["Message"] = "Appointment successfully created.";
@@ -85,6 +92,7 @@ namespace PRN221.ClinicDental.Presentation.Pages.Customer
                 return Page();
             }
         }
+
 
     }
 }

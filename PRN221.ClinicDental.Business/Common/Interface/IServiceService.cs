@@ -19,6 +19,7 @@ namespace PRN221.ClinicDental.Business.Common.Interface
         Task<List<ServiceResponseModel>> GetServicesByClinicId(int clinicId);
         Task<List<DentistResponseModel>> GetDentistsByServiceAndClinic(int serviceId, int clinicId);
         Task<ServiceResponseModel> GetServiceById(int serviceId);
+        
 
 
     }

@@ -18,6 +18,7 @@ namespace PRN221.ClinicDental.Presentation.Extensions
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ClinicDentalDbContext>();
+            services.AddHttpContextAccessor();
 
             
             
@@ -32,6 +33,7 @@ namespace PRN221.ClinicDental.Presentation.Extensions
             // Register UnitOfWorks
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(MapperProfile));
+            
             return services;
         }
 

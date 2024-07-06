@@ -24,7 +24,7 @@ public partial class Appointment
 
     [StringLength(20)]
     public string? PhoneNumber { get; set; }
-    public int? Slot { get; set; }
+    public int Slot { get; set; }
 
     [StringLength(255)]
     public string? Notes { get; set; }

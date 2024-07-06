@@ -14,6 +14,6 @@ namespace PRN221.ClinicDental.Business.DTO.Response.Clinic
         public string ImageURL { get; set; }
         public string StreetAddress { get; set; }
         public string District { get; set; }
-        public string Services { get; set; }
+        
     }
 }

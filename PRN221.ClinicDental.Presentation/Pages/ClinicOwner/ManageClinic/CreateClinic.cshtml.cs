@@ -66,9 +66,8 @@ namespace PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageClinic
             if (int.TryParse(userId, out var customerId))
             {
                 var result = await _clinicService.AddClinic( Clinic , customerId);
-                TempData["Message"] = "Appointment successfully created.";
 
-                return RedirectToPage("/Index");
+                return RedirectToPage("/ClinicOwner/Index");
             }
 
             ModelState.AddModelError(string.Empty, "Unable to retrieve user ID from cookies.");

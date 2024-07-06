@@ -91,16 +91,27 @@
                                             </select>
                                             <span asp-validation-for="AppointmentRequest.Slot" class="text-danger"></span>
                                         </div>
+                                    </div>
                                     <div class="col-md-12">
                                         <div class="form-group text-center mb--0">
                                             <button class="btn-theme" type="submit">Make Appointment</button>
+                                            @if (!ModelState.IsValid)
+                                            {
+                                                <div class="alert alert-danger mt-3">
+                                                    <ul>
+                                                        @foreach (var modelStateError in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                                        {
+                                                            <li>@modelStateError.ErrorMessage</li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            }
                                         </div>
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <!--== End Contact Form ==-->
-
                     </div>
                     <div class="column-right">
                         <div class="thumb" data-bg-img="/img/photos/bg-con2.webp"></div>
@@ -118,9 +129,7 @@
         $(function () {
             $("#datepicker").datepicker({
                 dateFormat: 'yy-mm-dd',
-                
             }).datepicker("setDate", new Date());
         });
     </script>
-    
 }

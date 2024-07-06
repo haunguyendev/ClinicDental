@@ -32,6 +32,16 @@ namespace PRN221.ClinicDental.Data.Repositories
             return _context.Clinics.Include(x=>x.Address).Include(x=> x.ClinicServices).ToListAsync();
         }
 
+        public async Task<List<Clinic>> GetClinicsByDistrict(string district)
+        {
+
+            return await _context.Clinics
+                                 .Include(c => c.Address)
+                                 .Where(c => c.Address.District == district)
+                                 .ToListAsync();
+        }
+    
+
         public async Task<List<Clinic>> GetClinicsByOnServiceId(int serviceId)
         {
             return await _context.ClinicServices.Include(x=>x.Clinic).Where(x=>x.ServiceId == serviceId).Select(x=>x.Clinic).ToListAsync();

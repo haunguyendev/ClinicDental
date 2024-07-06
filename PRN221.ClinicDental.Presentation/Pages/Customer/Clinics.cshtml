@@ -1,7 +1,7 @@
 ﻿@page
 @model PRN221.ClinicDental.Presentation.Pages.Customer.ClinicsModel
 @{
-   
+    ViewData["Title"] = "Clinics";
 }
 
 <!--== Start Blog Area Wrapper ==-->
@@ -10,7 +10,7 @@
         <div class="row">
             <div class="col-lg-8 order-0 order-lg-2">
                 <div class="row">
-                    @foreach (var clinic in Model.Clinics)
+                    @foreach (var clinic in Model.Clinics.Items)
                     {
                         <div class="col-md-6 col-lg-6">
                             <div class="post-item" data-aos="fade-up">
@@ -20,16 +20,16 @@
                                     </div>
                                     <div class="content">
                                         <ul class="meta">
-                                            <li class="post-time"><a href="blog.html">8h - 10h</a></li>
+                                            <li class="post-time"><a href="@Url.Page("/Customer/Services", new { clinicId = clinic.ClinicId })">8h - 10h</a></li>
                                             <li class="post-sep"> | </li>
-                                            <li class="post-comment"><a href="blog.html">@clinic.District</a></li>
+                                            <li class="post-comment"><a href="@Url.Page("/Customer/Services", new { clinicId = clinic.ClinicId })">@clinic.District</a></li>
                                         </ul>
                                         <ul class="meta">
                                             <li class="post-comment">
                                                 @clinic.StreetAddress
                                             </li>
                                         </ul>
-                                        <h4 class="title"><a href="blog-details.html">@clinic.ClinicName</a></h4>
+                                        <h4 class="title"><a href="@Url.Page("/Customer/Services", new { clinicId = clinic.ClinicId })">@clinic.ClinicName</a></h4>
                                         <div class="footer-content">
                                             <div class="social-icons-wrap staff-info">
                                                 <div class="content-footer">
@@ -54,16 +54,48 @@
                         <!--== Start Pagination Wrap ==-->
                         <div class="pagination-content-wrap mb-md-40">
                             <nav class="pagination-nav">
-                                <ul class="pagination justify-content-center ">
+                                <ul class="pagination justify-content-center">
+                                    @if (Model.Clinics.HasPreviousPage)
+                                    {
+                                        <li>
+                                            <a class="prev icon" href="?pageNumber=@(Model.Clinics.CurrentPage - 1)&pageSize=@Model.Clinics.PageSize">
+                                                <i class="fa fa-angle-left"></i>
+                                            </a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="disabled">
+                                            <a class="prev icon">
+                                                <i class="fa fa-angle-left"></i>
+                                            </a>
+                                        </li>
+                                    }
+
                                     <li>
-                                        <a class="prev icon" href="#/"><i class="fa fa-angle-left"></i></a>
+                                        <a class="active disabled">@Model.Clinics.CurrentPage</a>
                                     </li>
-                                    <li><a class="active disabled" href="#/">01</a></li>
                                     <li class="pagination-sep"> / </li>
-                                    <li><a href="#/">09</a></li>
                                     <li>
-                                        <a class="next icon" href="#/"><i class="fa fa-angle-right"></i></a>
+                                        <a>@Model.Clinics.TotalPages</a>
                                     </li>
+
+                                    @if (Model.Clinics.HasNextPage)
+                                    {
+                                        <li>
+                                            <a class="next icon" href="?pageNumber=@(Model.Clinics.CurrentPage + 1)&pageSize=@Model.Clinics.PageSize">
+                                                <i class="fa fa-angle-right"></i>
+                                            </a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="disabled">
+                                            <a class="next icon">
+                                                <i class="fa fa-angle-right"></i>
+                                            </a>
+                                        </li>
+                                    }
                                 </ul>
                             </nav>
                         </div>
@@ -99,7 +131,7 @@
                                 <ul>
                                     @foreach (var group in Model.DistrictGroups)
                                     {
-                                        <li><a href="#">@group.District <span>(@group.ClinicCount)</span></a></li>
+                                        <li><a asp-page-handler="FilterByDistrict" asp-route-district="@group.District">@group.District <span>(@group.ClinicCount)</span></a></li>
                                     }
                                 </ul>
                             </div>
@@ -118,8 +150,6 @@
                         </div>
                     </div>
                     <!--== End Sidebar Item ==-->
-
-
                 </div>
                 <!--== End Sidebar Wrapper ==-->
             </div>
@@ -129,5 +159,4 @@
 <!--== End Blog Area Wrapper ==-->
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-   
 }

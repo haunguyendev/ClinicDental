@@ -7,6 +7,7 @@ using Azure.Core;
 using Microsoft.EntityFrameworkCore;
 using PRN221.ClinicDental.Business.DTO.Request.ClinicReqModel;
 using PRN221.ClinicDental.Business.DTO.Response.Clinic;
+using PRN221.ClinicDental.Business.Helper;
 using PRN221.ClinicDental.Business.Services;
 using PRN221.ClinicDental.Data.Common.Interface;
 using PRN221.ClinicDental.Data.Models;
@@ -37,24 +38,10 @@ namespace PRN221.ClinicDental.Services
             }).ToList();
 
         }
-        public async Task<List<ClinicResponseModel>> GetAllClinic()
-        {
-            var listClinic = await _unitOfWork.ClinicRepository.GetAllClinics();
-            return _mapper.Map<List<ClinicResponseModel>>(listClinic);
-        }
+    
 
-        public async Task<List<ClinicResponseModel>> SearchClinicByName(string keyword)
-        {
-            var clinics = await _unitOfWork.ClinicRepository.SearchClinics(c => c.Name.Contains(keyword));
-            return clinics.Select(c => new ClinicResponseModel
-            {
-                ClinicId = c.ClinicId,
-                ClinicName = c.Name,
-                StreetAddress = c.Address.StreetAddress,
-                District = c.Address.District
-            }).ToList();
-        }
-
+       
+      
         public async Task<List<DistrictGroupModel>> GetClinicsGroupedByDistrict()
         {
             var clinics = await _unitOfWork.ClinicRepository.GetAllClinics();
@@ -106,6 +93,53 @@ namespace PRN221.ClinicDental.Services
             await _unitOfWork.ClinicServicesRepository.CreateRange(listClinicServices);
             await _unitOfWork.CommitAsync();
             return true;
+        }
+
+        public async Task<PaginatedList<ClinicResponseModel>> GetAllClinic(int pageNumber, int pageSize)
+        {
+            var clinics = await _unitOfWork.ClinicRepository.GetAllClinics(); // This should return an IQueryable<Clinic>
+            var clinicResponseModels = clinics.Select(c => new ClinicResponseModel
+            {
+                ClinicId = c.ClinicId,
+                ClinicName = c.Name,
+                ImageURL = c.ImageURL,
+                StreetAddress = c.Address.StreetAddress,
+                District = c.Address.District
+               
+            }).AsQueryable();
+
+            return PaginatedList<ClinicResponseModel>.Create(clinicResponseModels, pageNumber, pageSize);
+        }
+
+        public async Task<PaginatedList<ClinicResponseModel>> SearchClinicByName(string keyword, int pageNumber, int pageSize)
+        {
+            var clinics = await _unitOfWork.ClinicRepository.SearchClinics(x=>x.Name.Contains(keyword)); // This should return an IQueryable<Clinic>
+            var clinicResponseModels = clinics.Select(c => new ClinicResponseModel
+            {
+                ClinicId = c.ClinicId,
+                ClinicName = c.Name,
+                ImageURL = c.ImageURL,
+                StreetAddress = c.Address.StreetAddress,
+                District = c.Address.District,
+               
+            }).AsQueryable();
+
+            return PaginatedList<ClinicResponseModel>.Create(clinicResponseModels, pageNumber, pageSize);
+        }
+
+        public async Task<PaginatedList<ClinicResponseModel>> GetClinicsByDistrict(string district, int pageNumber, int pageSize)
+        {
+            var clinics = await _unitOfWork.ClinicRepository.GetClinicsByDistrict(district); 
+            var clinicResponseModels = clinics.Select(c => new ClinicResponseModel
+            {
+                ClinicId = c.ClinicId,
+                ClinicName = c.Name,
+                ImageURL = c.ImageURL,
+                StreetAddress = c.Address.StreetAddress,
+                District = c.Address.District               
+            }).AsQueryable();
+
+            return PaginatedList<ClinicResponseModel>.Create(clinicResponseModels, pageNumber, pageSize);
         }
     }
 }

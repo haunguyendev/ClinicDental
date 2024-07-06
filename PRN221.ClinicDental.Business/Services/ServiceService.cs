@@ -75,5 +75,10 @@ namespace PRN221.ClinicDental.Services
             return service;
 
         }
+
+        public Task<ServiceResponseModel> GetServiceByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
