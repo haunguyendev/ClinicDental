@@ -12,6 +12,7 @@ namespace PRN221.ClinicDental.Business.DTO.Response.Appointment
         public string DentistName { get; set; }
         public DateTime AppointmentDate { get; set; }
         public string ClinicName { get; set; }
+        public string ServiceName { get; set; }
         public string TimeRange { get; set; }
         public string Address { get; set; }
         public string Status { get; set; }

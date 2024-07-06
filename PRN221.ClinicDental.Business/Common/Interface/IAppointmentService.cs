@@ -14,6 +14,7 @@ namespace PRN221.ClinicDental.Services.Interfaces
         bool CustomerHasAppointment(int customerId, int clinicId, DateTime appointmentDate, int slot);
         Task<int?> GetClinicIdByAppointmentId(int id);
         Task<int?> GetDentistIdByAppoimentId(int id);
+        Task<AppointmentResponseModel> GetAppointmentByIdAsync(int appointmentId);
 
         Task<List<AppointmentResponseModel>> GetUpcomingAppointmentsAsync(int customerId);
         Task<List<AppointmentResponseModel>> GetPastAppointmentsAsync(int customerId);

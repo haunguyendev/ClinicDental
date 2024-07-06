@@ -45,7 +45,11 @@ namespace PRN221.ClinicDental.Data.Repositories
 
         public async Task<Appointment?> GetById(int id)
         {
-            return await _context.Appointments.FirstOrDefaultAsync(x => x.AppointmentId == id);
+            return await _context.Appointments.Include(x=>x.Dentist)
+                .Include(x=>x.Clinic)
+                .ThenInclude(x=>x.Address)
+                .Include(x=>x.Service)
+                .FirstOrDefaultAsync(x => x.AppointmentId == id);
         }
 
         public async Task<List<Appointment>> GetListAppointmentByCustomerIdAsync(int customerId)
@@ -55,6 +59,8 @@ namespace PRN221.ClinicDental.Data.Repositories
           .Include(a => a.Dentist)
           .Include(a => a.Clinic)
           .ThenInclude(x => x.Address)
+          .Include(a => a.Service)
+          
           .ToListAsync();
         }
 

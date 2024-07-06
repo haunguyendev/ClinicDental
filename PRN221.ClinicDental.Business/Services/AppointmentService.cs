@@ -113,6 +113,7 @@ namespace PRN221.ClinicDental.Services
                 TimeRange = TimeSlotHelper.GetTimeRange((int)appointment.Slot), // Get the time range for the slot
                 ClinicName = appointment.Clinic.Name,
                 Status = appointment.Status,
+                ServiceName = appointment.Service.ServiceName,
                 Address=appointment.Clinic.Address.StreetAddress+", "+ appointment.Clinic.Address.District,
                 PhoneNumber = appointment.PhoneNumber,
                 Notes = appointment.Notes
@@ -160,6 +161,18 @@ namespace PRN221.ClinicDental.Services
         {
             return await _unitOfWork.AppointmentRepository.CancelAppointmentAsync(appointmentId, AppointmentStatusTypeEnum.Canceled);
 
+        }
+
+        public async Task<AppointmentResponseModel> GetAppointmentByIdAsync(int appointmentId)
+        {
+            var appointment = await _unitOfWork.AppointmentRepository.GetById(appointmentId);
+
+            if (appointment == null)
+            {
+                return null;
+            }
+
+            return MapToResponseModel(appointment);
         }
     }
 }

@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Newtonsoft.Json;
 using PRN221.ClinicDental.Business.DTO.Request.Appointment;
 using PRN221.ClinicDental.Business.DTO.Response.Appointment;
 using PRN221.ClinicDental.Business.Helper;
@@ -101,6 +104,48 @@ namespace PRN221.ClinicDental.Presentation.Pages.Customer
                 TempData["ErrorMessage"] = "Failed to cancel appointment. Please try again.";
             }
             return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnGetAppointmentDetailsAsync(int appointmentId)
+        {
+            try
+            {
+                var appointment = await _appointmentService.GetAppointmentByIdAsync(appointmentId);
+                if (appointment == null)
+                {
+                    Console.WriteLine($"Appointment not found for ID: {appointmentId}");
+                    return new NotFoundObjectResult(new { success = false, message = "Appointment not found." });
+                }
+                var dateOnly = appointment.AppointmentDate.Date;
+                var details = new AppointmentResponseModel
+                {
+                    AppointmentId = appointment.AppointmentId,
+                    DentistName = appointment.DentistName,
+                    AppointmentDate = dateOnly,
+                    ClinicName = appointment.ClinicName,
+                    ServiceName = appointment.ServiceName,
+                    TimeRange = appointment.TimeRange,
+                    Address = appointment.Address,
+                    Status = appointment.Status,
+                    PhoneNumber = appointment.PhoneNumber,
+                    Notes = appointment.Notes
+                };
+
+                // Log appointment details
+                Console.WriteLine($"Appointment Details: {JsonConvert.SerializeObject(details)}");
+
+                return new OkObjectResult(new { success = true, data = details });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error fetching appointment details: {ex.Message}");
+                return new StatusCodeResult(500); // Internal Server Error
+            }
+        }
+        public async Task<IActionResult> OnGetLogout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToPage("/Accounts/Login");
         }
 
 

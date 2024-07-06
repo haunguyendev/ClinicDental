@@ -216,10 +216,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p><strong>Doctor:</strong> <span id="detailDoctor">Dr. John Smith</span></p>
-                <p><strong>Date:</strong> <span id="detailDate">June 15, 2024</span></p>
-                <p><strong>Time:</strong> <span id="detailTime">8:00 - 8:45 AM</span></p>
-                <p><strong>Clinic:</strong> <span id="detailClinic">Downtown Clinic</span></p>
+                <p><strong>Doctor:</strong> <span id="detailDoctor"></span></p>
+                <p><strong>Date:</strong> <span id="detailDate"></span></p>
+                <p><strong>Time:</strong> <span id="detailTime"></span></p>
+                <p><strong>Clinic:</strong> <span id="detailClinic"></span></p>
+                <p><strong>Service:</strong> <span id="detailService"></span></p>
+                <p><strong>Status:</strong> <span id="detailStatus"></span></p>
+                <p><strong>Phone Number:</strong> <span id="detailPhoneNumber"></span></p>
+                <p><strong>Notes:</strong> <span id="detailNotes"></span></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -254,21 +258,37 @@
             var button = $(event.relatedTarget); // Button that triggered the modal
             var appointmentId = button.data('id'); // Extract info from data-* attributes
 
-            // Example: fetching appointment details via AJAX and updating modal content
             $.ajax({
-                url: '/Customer/GetAppointmentDetails',
+                url: '/Customer/ViewAppointment?handler=appointmentDetails',
                 method: 'GET',
                 data: { appointmentId: appointmentId },
                 success: function (data) {
-                    $('#detailDoctor').text(data.doctorName);
-                    $('#detailDate').text(data.date);
-                    $('#detailTime').text(data.time);
-                    $('#detailClinic').text(data.clinic);
+                    if (data.success) {
+                        console.log(data.data);
+                        var appointmentDate = new Date(data.data.appointmentDate);
+                        var formattedDate = appointmentDate.toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        });
+                        $('#detailDoctor').text(data.data.dentistName);
+                        $('#detailDate').text(formattedDate);
+                        $('#detailTime').text(data.data.timeRange);
+                        $('#detailClinic').text(data.data.clinicName);
+                        $('#detailService').text(data.data.serviceName);
+                        $('#detailStatus').text(data.data.status);
+                        $('#detailPhoneNumber').text(data.data.phoneNumber);
+                        $('#detailNotes').text(data.data.notes);
+                    } else {
+                        console.log(data.data)
+                        console.log('Failed to fetch appointment details.');
+                    }
                 },
                 error: function () {
                     console.log('Failed to fetch appointment details.');
                 }
             });
         });
+
     </script>
 }
