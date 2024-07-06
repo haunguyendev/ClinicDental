@@ -8,7 +8,10 @@ namespace PRN221.ClinicDental.Services.Interfaces
 {
     public interface IUserService
     {
+        Task<UserProfileResponse> GetUserProfileAsync(int userId);
         Task<UserLoginResponse> Authenticate(string username, string password);
         Task RegisterUserAsync(UserRegisterRequest request);
+        Task UpdateUserProfileAsync(UserProfileUpdateRequest request);
+        Task<bool> ChangeUserPasswordAsync(int userId, string currentPassword, string newPassword);
     }
 }

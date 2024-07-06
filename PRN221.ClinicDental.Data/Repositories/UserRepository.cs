@@ -25,6 +25,16 @@ namespace PRN221.ClinicDental.Data.Repositories
         {
             throw new NotImplementedException();
         }
-        
+        public async Task<User> GetUserByIdAsync(int userId)
+        {
+            return await _context.Users.Include(u => u.Role)
+                                       .FirstOrDefaultAsync(u => u.UserId == userId);
+        }
+
+        public async Task UpdateUserAsync(User user)
+        {
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+        }
     }
 }

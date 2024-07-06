@@ -12,6 +12,7 @@ namespace PRN221.ClinicDental.Data.Common.Interface
         Task<User> GetUserByUserAndPassword(string user, string password);
 
         Task<User> FindByUsernameAsync(string username);
-       
+        Task<User> GetUserByIdAsync(int userId);
+        Task UpdateUserAsync(User user);
     }
 }
