@@ -20,5 +20,12 @@ namespace PRN221.ClinicDental.Services.Interfaces
         Task<List<AppointmentResponseModel>> GetPastAppointmentsAsync(int customerId);
         Task<bool> RescheduleAppointmentAsync(int appointmentId, DateTime newDate, int newSlot);
         Task<bool> CancelAppointmentAsync(int appointmentId);
+
+        Task<List<AppointmentDentistResponseModel>> GetUpcomingAppointmentsByDentistAsync(int dentistId);
+        Task<List<AppointmentDentistResponseModel>> GetPastAppointmentsByDentistAsync(int dentistId);
+
+        Task<bool> UpdateAppointmentStatusAsync(int appointmentId, string status);
+
+
     }
 }

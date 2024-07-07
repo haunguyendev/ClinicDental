@@ -64,6 +64,16 @@ namespace PRN221.ClinicDental.Data.Repositories
           .ToListAsync();
         }
 
-        
+        public async Task<List<Appointment>> GetListAppointmentByDentistIdAsync(int dentistId)
+        {
+          return await _context.Appointments
+         .Where(a => a.DentistId == dentistId)
+         .Include (a=>a.Customer)
+         .Include(a => a.Dentist)
+         .Include(a => a.Clinic)
+         .ThenInclude(x => x.Address)
+         .Include(a => a.Service)
+         .ToListAsync();
+        }
     }
 }
