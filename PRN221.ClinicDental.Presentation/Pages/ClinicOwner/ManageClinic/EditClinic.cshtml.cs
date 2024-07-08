@@ -1,86 +1,78 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using Azure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using PRN221.ClinicDental.Business.Common.Interface;
 using PRN221.ClinicDental.Business.DTO.Request.ClinicReqModel;
-using PRN221.ClinicDental.Business.DTO.Response.Clinic;
+using PRN221.ClinicDental.Business.DTO.Response.ServiceResponse;
 using PRN221.ClinicDental.Data.Models;
-using PRN221.ClinicDental.Services;
 using PRN221.ClinicDental.Services.Interfaces;
 
 namespace PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageClinic
 {
-    public class CreateClinicModel : PageModel
+    public class EditClinicModel : PageModel
     {
         private readonly IClinicService _clinicService;
-        private readonly IUserService _userService;
         private readonly IServiceService _serviceService;
-
-        public CreateClinicModel(IClinicService clinicService, IUserService userService, IServiceService serviceService)
+        public EditClinicModel(IClinicService clinicService, IServiceService serviceService)
         {
             _clinicService = clinicService;
-            _userService = userService;
             _serviceService = serviceService;
-        }
-
-        public async Task<IActionResult> OnGet()
-        {
-            var service = await _serviceService.GetAllListServices();
-            ViewData["Services"] = new SelectList(service, "ServiceId", "ServiceName");
-            ViewData["Districts"] = GetDistricts();
-            return Page();
         }
 
         [BindProperty]
         public ClinicReqModel Clinic { get; set; } = default!;
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+        public async Task<IActionResult> OnGetAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var service = await _serviceService.GetAllListServices();
+            var clinic = await _clinicService.GetClinicByClinicId(id);
+
+            Clinic = new ClinicReqModel();
+            Clinic.Name = clinic.Name;
+            Clinic.StreetAddress = clinic.Address.StreetAddress;
+            Clinic.District = clinic.Address.District;
+            Clinic.ClinicServices = clinic.ClinicServices.Select(x=> x.Service).ToList();
+
+            ViewData["Districts"] = GetDistricts(Clinic.District);
+            ViewData["Services"] = GetService(Clinic.ClinicServices, service);
+
+            if (clinic == null)
+            {
+                return NotFound();
+            }
+            return Page();
+        }
+
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
                 var service = await _serviceService.GetAllListServices();
-                ViewData["Services"] = new SelectList(service, "ServiceId", "ServiceName");
-                ViewData["Districts"] = GetDistricts();
+                ViewData["Districts"] = GetDistricts(Clinic.District);
+                ViewData["Services"] = GetService(Clinic.ClinicServices, service);
                 return Page();
             }
-            List<Service> selectedServices = await _serviceService.GetServiceByListIdAsync(Clinic.ServiceId);
 
-            var initClinic = new ClinicReqModel()
-            {
-                Address = Clinic.Address,
-                District = Clinic.District,
-                Name = Clinic.Name,
-                ClinicServices = selectedServices,
-                ServiceId = Clinic.ServiceId,
-                StreetAddress = Clinic.StreetAddress,
-                ImageURL = Clinic.ImageURL
-            };
-            var userId = User.FindFirstValue("UserId");
-            if (int.TryParse(userId, out var customerId))
-            {
-                var result = await _clinicService.AddClinic(Clinic, customerId);
-               
-                return RedirectToPage("/ClinicOwner/Index");
-            }
-            //error
-        
-            ModelState.AddModelError(string.Empty, "Unable to retrieve user ID from cookies.");
-
-            return RedirectToPage(".ManageClinic/Index");
+     
+            return RedirectToPage("./Index");
         }
 
-        private List<SelectListItem> GetDistricts()
+        private List<SelectListItem> GetDistricts(string selectedValue)
         {
-            return new List<SelectListItem>
-        {
-            new SelectListItem { Value = "1", Text = "Quận 1" },
+            var list = new List<SelectListItem>
+    {
+        new SelectListItem { Value = "1", Text = "Quận 1" },
         new SelectListItem { Value = "2", Text = "Quận 2" },
         new SelectListItem { Value = "3", Text = "Quận 3" },
         new SelectListItem { Value = "4", Text = "Quận 4" },
@@ -104,8 +96,33 @@ namespace PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageClinic
         new SelectListItem { Value = "CuChi", Text = "Huyện Củ Chi" },
         new SelectListItem { Value = "HocMon", Text = "Huyện Hóc Môn" },
         new SelectListItem { Value = "NhaBe", Text = "Huyện Nhà Bè" }
-            // Thêm các quận khác ở đây
-        };
+    };
+            foreach (var item in list)
+            {
+                if (item.Value == selectedValue)
+                {
+                    item.Selected = true;
+                    break;
+                }
+            }
+
+            return list;
+        }
+
+        public List<SelectListItem> GetService(List<Service> selectedValues, List<ServiceResponseModel> services)
+        {
+            var selectedServiceIds = selectedValues.Select(s => s.ServiceId).ToList();
+
+            var list = services.Select(service => new SelectListItem
+            {
+                Value = service.ServiceId.ToString(),
+                Text = service.ServiceName,
+                Selected = selectedServiceIds.Contains(service.ServiceId)
+            }).ToList();
+
+            return list;
         }
     }
+
+
 }

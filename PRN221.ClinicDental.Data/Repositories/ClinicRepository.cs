@@ -29,7 +29,16 @@ namespace PRN221.ClinicDental.Data.Repositories
 
         public Task<List<Clinic>> GetAllClinics()
         {
-            return _context.Clinics.Include(x=>x.Address).Include(x=> x.ClinicServices).ToListAsync();
+            return _context.Clinics.Include(x=>x.Address).Include(x=> x.ClinicServices).ThenInclude(x=> x.Service).ToListAsync();
+        }
+
+        public async Task<Clinic> GetClinicById(int? id)
+        {
+            return await _context.Clinics
+                .Include(x=>x.Address)
+                .Include(x=>x.ClinicServices)
+                .ThenInclude(x=> x.Service)
+                                 .FirstOrDefaultAsync(x => x.ClinicId == id);
         }
 
         public async Task<List<Clinic>> GetClinicsByDistrict(string district)

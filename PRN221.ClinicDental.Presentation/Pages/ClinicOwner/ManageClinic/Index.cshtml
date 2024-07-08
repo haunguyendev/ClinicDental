@@ -32,7 +32,7 @@
                 Image
             </th>
             <th>Edit</th>
-            <th>Delete</th>
+            <th>Manage Doctor</th>
         </tr>
     </thead>
     <tbody>
@@ -49,18 +49,25 @@
                     @Html.DisplayFor(modelItem => item.Address.District)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ClinicServices)
+                    @foreach (var i in item.ClinicServices)
+                    {
+                        <div>
+                            @Html.DisplayFor(modelItem => i.Service.ServiceName)
+                        </div>
+                       
+                    }
+                @*     @Html.DisplayFor(modelItem => item.ClinicServices) *@
                 </td>
                 <td>
                     <img src="@item.ImageURL" class="img-thumbnail" style="width: 100px; height: 100px">
                 </td>
                 <td>
                     <button class="btn btn-primary">
-                        <a style="text-decoration: none; color: inherit " asp-page="./Edit" asp-route-id="@item.ClinicId">Edit</a>
+                        <a style="text-decoration: none; color: inherit " asp-page="./EditClinic" asp-route-id="@item.ClinicId">Edit</a>
                     </button>
                  </td>
                  <td>
-                    <button class="btn btn-danger"> <a style="text-decoration: none; color: inherit " asp-page="./Delete" asp-route-id="@item.ClinicId">Delete</a></button>
+                    <button class="btn btn-warning"> <a style="text-decoration: none; color: inherit " asp-page="./Delete" asp-route-id="@item.ClinicId">Manage</a></button>
                 </td>
             </tr>
         }

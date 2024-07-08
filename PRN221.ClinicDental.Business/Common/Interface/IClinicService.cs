@@ -16,5 +16,7 @@ namespace PRN221.ClinicDental.Services.Interfaces
         Task<List<Clinic>> GetClinicsByClinicOwnerId(int userId);
         Task <bool> AddClinic (ClinicReqModel clinic, int customerId);
         Task<PaginatedList<ClinicResponseModel>> GetClinicsByDistrict(string district, int pageNumber, int pageSize);
+
+        Task<Clinic> GetClinicByClinicId(int? id);
     }
 }
