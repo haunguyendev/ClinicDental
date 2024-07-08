@@ -34,7 +34,8 @@ namespace PRN221.ClinicDental.Data.Repositories
             .Any(a => a.CustomerId == customerId
                    && a.ClinicId == clinicId
                    && a.AppointmentTime.Date == appointmentDate.Date
-                   && a.Slot == slot);
+                   && a.Slot == slot
+                   && a.Status== "Scheduled");
         }
 
         public int GetAppointmentsCountForSlot(int clinicId, int dentistId, DateTime appointmentDate, int slot)
