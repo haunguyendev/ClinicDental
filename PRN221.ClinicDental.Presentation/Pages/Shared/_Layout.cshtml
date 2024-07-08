@@ -313,7 +313,15 @@
 
                                             </li>
                                         }
-                                       
+                                        @if (User.IsInRole("Dentist"))
+                                        {
+                                           
+                                            <li class="has-submenu">
+                                                <a href="/Dentist/ViewDentistAppointments  "><span>Appointment</span></a>
+
+                                            </li>
+                                        }
+
                                         <li class="has-submenu">
                                             <a href="#/"><span>Pages</span></a>
                                             <ul class="submenu-nav">

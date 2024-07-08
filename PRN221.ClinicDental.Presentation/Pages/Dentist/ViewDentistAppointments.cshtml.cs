@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PRN221.ClinicDental.Business.DTO.Response.Appointment;
@@ -35,6 +37,11 @@ namespace PRN221.ClinicDental.Presentation.Pages.Dentist
         {
             await _appointmentService.UpdateAppointmentStatusAsync(appointmentId, "Missed");
             return RedirectToPage();
+        }
+        public async Task<IActionResult> OnGetLogout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToPage("/Accounts/Login");
         }
     }
 }
