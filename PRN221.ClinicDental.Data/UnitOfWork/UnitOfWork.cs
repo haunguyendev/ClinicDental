@@ -21,7 +21,6 @@ namespace PRN221.ClinicDental.Data.UnitOfWork
 
 
             IServiceRepository serviceRepository,
-
             IAppointmentRepository appointmentRepository,
             IClinicServicesRepository clinicServicesRepository)
         {

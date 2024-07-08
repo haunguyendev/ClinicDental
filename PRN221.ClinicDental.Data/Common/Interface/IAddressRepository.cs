@@ -10,5 +10,7 @@ namespace PRN221.ClinicDental.Data.Common.Interface
     public interface IAddressRepository:IRepositoryBase<Address>
     {
        Task <List<Address>> GetAll();
+
+       Task<Address> GetAddressById(int id);
     }
 }

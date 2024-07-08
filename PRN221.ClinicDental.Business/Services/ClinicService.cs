@@ -38,10 +38,6 @@ namespace PRN221.ClinicDental.Services
             }).ToList();
 
         }
-    
-
-       
-      
         public async Task<List<DistrictGroupModel>> GetClinicsGroupedByDistrict()
         {
             var clinics = await _unitOfWork.ClinicRepository.GetAllClinics();
@@ -113,7 +109,7 @@ namespace PRN221.ClinicDental.Services
 
         public async Task<PaginatedList<ClinicResponseModel>> SearchClinicByName(string keyword, int pageNumber, int pageSize)
         {
-            var clinics = await _unitOfWork.ClinicRepository.SearchClinics(x=>x.Name.Contains(keyword)); // This should return an IQueryable<Clinic>
+            var clinics = await _unitOfWork.ClinicRepository.SearchClinics(x=>x.Name.Contains(keyword)); 
             var clinicResponseModels = clinics.Select(c => new ClinicResponseModel
             {
                 ClinicId = c.ClinicId,
@@ -140,6 +136,11 @@ namespace PRN221.ClinicDental.Services
             }).AsQueryable();
 
             return PaginatedList<ClinicResponseModel>.Create(clinicResponseModels, pageNumber, pageSize);
+        }
+
+        public async Task<Clinic> GetClinicByClinicId(int? id)
+        {
+           return await _unitOfWork.ClinicRepository.GetClinicById(id);
         }
     }
 }
