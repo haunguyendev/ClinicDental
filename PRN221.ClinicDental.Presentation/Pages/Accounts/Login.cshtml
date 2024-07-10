@@ -4,16 +4,126 @@
     ViewData["Title"] = "Login";
 }
 
-<h1>Login</h1>
-
-<form method="post">
-    <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" class="form-control" id="username" name="username" asp-for="Username" />
+<main class="main-content">
+    <!--== Start Page Header Area Wrapper ==-->
+    <div class="page-header-area" data-bg-img="/img/photos/bg2.webp">
+        <div class="container pt--0 pb--0">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="page-header-content">
+                        <h3 class="sub-title" data-aos="fade-down" data-aos-duration="800">Login/Register</h3>
+                        <h2 class="title" data-aos="fade-down" data-aos-duration="1000">Account Login</h2>
+                        <nav class="breadcrumb-area" data-aos="fade-down" data-aos-duration="1200">
+                            <ul class="breadcrumb">
+                                <li><a asp-page="/Index">Home</a></li>
+                                <li class="breadcrumb-sep"> / </li>
+                                <li>Account Login</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-header-layer-style">
+            <div class="layer-style mousemove-layer" data-speed=".7"><img src="/img/icons/2.webp" alt="Image-HasTech"></div>
+            <div class="layer-style2 mousemove-layer" data-speed=".2"><img src="/img/icons/3.webp" alt="Image-HasTech"></div>
+            <div class="layer-style3 mousemove-layer" data-speed=".5"><img src="/img/icons/4.webp" alt="Image-HasTech"></div>
+            <div class="layer-style4 mousemove-layer" data-speed=".3"><img src="/img/icons/5.webp" alt="Image-HasTech"></div>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" class="form-control" id="password" name="password" asp-for="Password" />
+    <!--== End Page Header Area Wrapper ==-->
+    <!--== Start My Account Area Wrapper ==-->
+    <section class="account-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 m-auto">
+                    <div class="section-title text-center">
+                        <h2 class="title">Login</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="login-form-content">
+                        <form method="post" asp-page-handler="Login">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label asp-for="UserLogin.Username">Username or email address <span class="required">*</span></label>
+                                        <input asp-for="UserLogin.Username" class="form-control">
+                                        <span asp-validation-for="UserLogin.Username" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label asp-for="UserLogin.Password">Password <span class="required">*</span></label>
+                                        <input asp-for="UserLogin.Password" class="form-control" type="password">
+                                        <span asp-validation-for="UserLogin.Password" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-login">Login</button>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group account-info-group mb--0">
+                                        <div class="rememberme-account">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                <label class="form-check-label" for="defaultCheck1">Remember me</label>
+                                            </div>
+                                        </div>
+                                        <a class="lost-password" href="#/">Lost your password?</a>
+                                    </div>
+                                </div>
+                            </div>
+                            @if (!Model.ModelState.IsValid)
+                            {
+                                <div class="alert alert-danger" role="alert">
+                                    @foreach (var modelState in Model.ModelState.Values)
+                                    {
+                                        foreach (var error in modelState.Errors)
+                                        {
+                                            <p>@error.ErrorMessage</p>
+                                        }
+                                    }
+                                </div>
+                            }
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--== End My Account Area Wrapper ==-->
+    <!--== Start News Letter Area Wrapper ==-->
+    <div class="newsletter-area bg-overlay bg-overlay-theme-color bg-img z-index-1" data-bg-img="assets/img/photos/bg2.webp">
+        <div class="container pt--0 pb--0">
+            <div class="newsletter-content-wrap">
+                <div class="row align-items-center">
+                    <div class="col-md-5">
+                        <div class="newsletter-content">
+                            <div class="section-title section-title-light mb--0">
+                                <h5 class="sub-title">NEWSLETTER</h5>
+                                <h2 class="title mb--0">Subscribe our Newsletter</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="newsletter-form">
+                            <form>
+                                <input type="email" class="form-control" placeholder="Enter Your email address">
+                                <button class="btn-submit" type="submit">Subscribe</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary">Login</button>
-</form>
+    <!--== End News Letter Area Wrapper ==-->
+</main>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

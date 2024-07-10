@@ -1,0 +1,141 @@
+﻿@page
+@model PRN221.ClinicDental.Presentation.Pages.Accounts.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<main class="main-content">
+    <!--== Start Page Header Area Wrapper ==-->
+    <div class="page-header-area" data-bg-img="/img/photos/bg3.webp">
+        <div class="container pt--0 pb--0">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <div class="page-header-content">
+                        <h3 class="sub-title" data-aos="fade-down" data-aos-duration="800">Login/Register</h3>
+                        <h2 class="title" data-aos="fade-down" data-aos-duration="1000">Account Register</h2>
+                        <nav class="breadcrumb-area" data-aos="fade-down" data-aos-duration="1200">
+                            <ul class="breadcrumb">
+                                <li><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-sep"> / </li>
+                                <li>Account Register</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-header-layer-style">
+            <div class="layer-style mousemove-layer" data-speed=".7"><img src="/img/icons/2.webp" alt="Image-HasTech"></div>
+            <div class="layer-style2 mousemove-layer" data-speed=".2"><img src="/img/icons/3.webp" alt="Image-HasTech"></div>
+            <div class="layer-style3 mousemove-layer" data-speed=".5"><img src="/img/icons/4.webp" alt="Image-HasTech"></div>
+            <div class="layer-style4 mousemove-layer" data-speed=".3"><img src="/img/icons/5.webp" alt="Image-HasTech"></div>
+        </div>
+    </div>
+    <!--== End Page Header Area Wrapper ==-->
+    <!--== Start My Account Area Wrapper ==-->
+    <section class="account-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 m-auto">
+                    <div class="section-title text-center">
+                        <h2 class="title">Register</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="register-form-content">
+                        <form method="post">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label asp-for="RegisterRequest.FullName">Full Name <span class="required">*</span></label>
+                                        <input asp-for="RegisterRequest.FullName" class="form-control">
+                                        <span asp-validation-for="RegisterRequest.FullName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label asp-for="RegisterRequest.Username">Username <span class="required">*</span></label>
+                                        <input asp-for="RegisterRequest.Username" class="form-control">
+                                        <span asp-validation-for="RegisterRequest.Username" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label asp-for="RegisterRequest.Email">Email address <span class="required">*</span></label>
+                                        <input asp-for="RegisterRequest.Email" class="form-control" type="email">
+                                        <span asp-validation-for="RegisterRequest.Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label asp-for="RegisterRequest.Password">Password <span class="required">*</span></label>
+                                        <input asp-for="RegisterRequest.Password" class="form-control" type="password">
+                                        <span asp-validation-for="RegisterRequest.Password" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label asp-for="RegisterRequest.ConfirmPassword">Confirm Password <span class="required">*</span></label>
+                                        <input asp-for="RegisterRequest.ConfirmPassword" class="form-control" type="password">
+                                        <span asp-validation-for="RegisterRequest.ConfirmPassword" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label asp-for="RegisterRequest.PhoneNumber">Phone Number <span class="required">*</span></label>
+                                        <input asp-for="RegisterRequest.PhoneNumber" class="form-control">
+                                        <span asp-validation-for="RegisterRequest.PhoneNumber" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label asp-for="RegisterRequest.Address">Address</label>
+                                        <input asp-for="RegisterRequest.Address" class="form-control">
+                                        <span asp-validation-for="RegisterRequest.Address" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group mb--0">
+                                        <button type="submit" class="btn btn-register">Register</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--== End My Account Area Wrapper ==-->
+    <!--== Start News Letter Area Wrapper ==-->
+    <div class="newsletter-area bg-overlay bg-overlay-theme-color bg-img z-index-1" data-bg-img="assets/img/photos/bg2.webp">
+        <div class="container pt--0 pb--0">
+            <div class="newsletter-content-wrap">
+                <div class="row align-items-center">
+                    <div class="col-md-5">
+                        <div class="newsletter-content">
+                            <div class="section-title section-title-light mb--0">
+                                <h5 class="sub-title">NEWSLETTER</h5>
+                                <h2 class="title mb--0">Subscribe our Newsletter</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="newsletter-form">
+                            <form>
+                                <input type="email" class="form-control" placeholder="Enter Your email address">
+                                <button class="btn-submit" type="submit">Subscribe</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--== End News Letter Area Wrapper ==-->
+</main>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "dentistclinic-prn221",
+  "private_key_id": "db8bb54608cedeca4632968671ad3ff206ccd863",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCus55n2x3bkSy9\nggFDxmPN++7DxRh/Ajv7i5Qdap1IVmUN7ReFDt8GPwDx/jjzbRXBXhjzv8OsWGkn\nbiyzqPOZRSSeh5GfI9R+QVyTbrD5biF7CQmWo0i//zbEChhRYaNacnwrZCVPHrXv\nLNyr4aN1QMRwYmtbqPnc0alm0oRPT8UeOOfwgdrxWPK3E+QOZELSFmGemIH924qz\nOi4gZZV4m+9aGi+6uKSCrH43OhwNeEu7SQxXLHqAXx1ArBmhZBXfgkU0UyGsW62J\nfo3/A8hokSVRpJ/OknwPbwW/f4tUcKOvUUXnIyu1emmxDfFnzp1hQ1UPJaKtzB9e\nS6V52YtpAgMBAAECggEAGs4NfoLkvGU0d6lEV2lPs/G1S01o+kfV+z0Jz0+l7Uzw\nOWhI5Q4IkzVEiFzI0TTKEz7EVlX0iHOSQs4JRtGj+r7cpQRJCCFfv7V4plhkCAlp\nUq7qzTWlemwGs6KW45m3DjAltCSsAs1D/fwkqay3v0xeN54qOcid+c8jjla7nU1v\nNczES8AG0hiUF5nDBH+TQf5ZABjlXVRFa2Hd+63FDIups/NSsfMKdBV9hd4liqiB\nWE+PJAE/0MFcRt7vWmgP+xbwbk5HB1rLEGm4Ht7kG2XnIs0Jdwf6JkpXNyAgKXdw\n9By6Gtq5WRu7/gasJ6ELIhoF35jisal5jCF7HEt7uQKBgQDsTCpnRtx5NLJi+PVT\nCIv3uELo1w7M2YO1atKvgN6GrrzTOWyn/mmsmarLVixShxR81PlE2YRM6tiHPBiW\nplGxJaHNo0/j9H5b8I5j0vl5BG1fMou9OpaZulEdKsVWJaSRBXsRtrBsvZ1RyQkN\nHCt7AukfeW1PAssGzYl164P3rQKBgQC9RKwdb9v55oUhIfwhbkLrrg6CvDYgrH4n\nposTmzf26bpKTo3ES360uLM+ujZYYPOf1MknpZD23EihpYiSSRRYCzTpvhT9ccF7\nUajHFZ+jgxjm9UBdYFrqtt2jS8RLeDRnmuNL/bagXwHqteMAa24cHWC28z+rrXGr\nRMA4JCtKLQKBgAORyvowadgy4Zb5J8uPT334fJpD1WdmycSNzoz0J2hlb1jJf0iy\nYSpIT/ouXREKFVclaHaPyp3W1lqEn+J2tLk2VlFi7CwHX3lIEv6TC022sWhEvTOo\nlOnRlLQaF00L2IaQTKGh3txlqOC5ZreZ+1YqXxcooGwXILYDmNX9LsspAoGAGwXM\nASPwZ1ynU1Sz194TRe0C+1196OpX1Ldtke4Obn1ucJ+IlCcnPwxD40fY7INjJUXP\nNo7oBKbs489rkV9HvU5UTq8p9gmg00eUbmBC+6iDDK6lcu+H640SVfdCXngaG1S8\n8SOXSIxoDKfNckjkXrU/Er/mLk/EM+zL+PgJCj0CgYEA3NNVdE9ERdGdoWKHckXp\n7cvnBVFZfu8he+w1FkoJP+iuLHCNrdVMXwoWC6/REMGtamBvjsE1QR4Nl1ixi16b\nnJ1m1jkwlCVj5EvRaWSXQO7cEcn7nN49ADiU0cX42+1uscH0hWq1u3vd9VteUz2O\nfpKFObqFWSBDHOyQv9Nhlug=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-g207w@dentistclinic-prn221.iam.gserviceaccount.com",
+  "client_id": "100377679222081207784",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-g207w%40dentistclinic-prn221.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

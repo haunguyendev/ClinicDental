@@ -1,38 +1,74 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PRN221.ClinicDental.Data.Common.Interface;
+using PRN221.ClinicDental.Data.Repositories;
+using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+using PRN221.ClinicDental.Business.DTO.Request;
+using PRN221.ClinicDental.Services.Interfaces;
 
 namespace PRN221.ClinicDental.Presentation.Pages.Accounts
 {
     public class LoginModel : PageModel
     {
         private readonly ILogger<LoginModel> _logger;
-        private readonly IUnitOfWork _unitOfWork;
 
+        private IUserService _userService;
         [BindProperty]
-        public string Username { get; set; }
+        public UserLoginRequest UserLogin { get; set; }
 
-        [BindProperty]
-        public string Password { get; set; }
-
-        public LoginModel(ILogger<LoginModel> logger,IUnitOfWork unitOfWork)
+        public LoginModel(ILogger<LoginModel> logger,IUserService userService)
         {
             _logger = logger;
-            _unitOfWork = unitOfWork;
-        }
+            _userService = userService;
+          }
 
         public void OnGet()
         {
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostLoginAsync()
         {
-            var user = await _unitOfWork.UserRepository.GetUserByUserAndPassword(Username, Password);
-            if(user!=null)
-                return RedirectToPage("/Index");
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
 
-            return NotFound();
+            var user = await _userService.Authenticate(UserLogin.Username, UserLogin.Password);
+
+
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid username or password.");
+                return Page();
+            }
+
+            var claims = new List<Claim>
+            {
+                 new Claim("UserId", user.UserId.ToString()),
+                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.Role)
+            };
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var authProperties = new AuthenticationProperties { IsPersistent = true };
+            foreach (var claim in claimsIdentity.Claims)
+            {
+                Console.WriteLine($"{claim.Type}: {claim.Value}");
+            }
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                                          new ClaimsPrincipal(claimsIdentity),
+                                          authProperties);
+            if (user.Role.Equals("ClinicOwner"))
+            {
+                return Redirect("/ClinicOwner/Index");
+            }
+            return Redirect("/Index");
         }
-        
+
     }
 }

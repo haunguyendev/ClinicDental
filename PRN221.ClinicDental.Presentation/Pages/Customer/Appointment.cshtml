@@ -1,0 +1,149 @@
+﻿@page "{serviceId:int}/{clinicId:int}"
+@model PRN221.ClinicDental.Presentation.Pages.Customer.AppointmentModel
+@{ 
+    var errorMessage = ViewData["error"] as string;
+    var morningSlots = new Dictionary<int, string>
+    {
+        { 1, "8:00 - 8:45" },
+        { 2, "8:45 - 9:30" },
+        { 3, "9:30 - 10:15" },
+        { 4, "10:15 - 11:00" },
+        { 5, "11:00 - 11:45" }
+    };
+    var afternoonSlots = new Dictionary<int, string>
+    {
+        { 6, "14:00 - 14:45" },
+        { 7, "14:45 - 15:30" },
+        { 8, "15:30 - 16:15" },
+        { 9, "16:15 - 17:00" },
+        { 10, "17:00 - 17:45" }
+    };
+}
+<section class="appointment-area appointment-default-area mr-3" style="margin-right:18em">
+    <div class="container" data-aos="fade-up">
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger">
+                @errorMessage
+            </div>
+        }
+        <div class="row no-gutter">
+            <div class="col-lg-8">
+                <div class="appointment-form-wrap">
+                    <div class="column-left" data-bg-img="/img/photos/bg-con1.webp">
+                        <!--== Start Contact Form ==-->
+                        <div class="appointment-form">
+                            <div class="section-title text-center">
+                                <h5 class="sub-title">APPOINTMENT</h5>
+                                <h2 class="title mb--0">Book your <span>Dentist</span> for <span>Proper</span> Care</h2>
+                            </div>
+                            <form method="post">
+                                <div class="row row-gutter-30">
+                                    <input type="hidden" asp-for="AppointmentRequest.ServiceId" />
+                                    <input type="hidden" asp-for="AppointmentRequest.ClinicId" />
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @if (Model.Dentists != null)
+                                            {
+                                                <select id="doctor-select" class="form-control form-select" aria-label="doctor select example" asp-for="AppointmentRequest.DentistId">
+                                                    <option selected disabled>Select Doctor</option>
+                                                    @foreach (var dentist in Model.Dentists)
+                                                    {
+                                                        <option value="@dentist.DentistId">@dentist.DentistName</option>
+                                                    }
+                                                </select>
+                                            }
+                                            else
+                                            {
+                                                <p>No dentists available.</p>
+                                            }
+                                            <span asp-validation-for="AppointmentRequest.DentistId" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input class="form-control" type="text" placeholder="Notes" asp-for="AppointmentRequest.Notes">
+                                            <span asp-validation-for="AppointmentRequest.Notes" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input class="form-control" type="text" placeholder="Phone" asp-for="AppointmentRequest.PhoneNumber">
+                                            <span asp-validation-for="AppointmentRequest.PhoneNumber" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <input class="form-control form-date" type="text" id="datepicker" placeholder="Date" asp-for="AppointmentRequest.AppointmentDate">
+                                            <span asp-validation-for="AppointmentRequest.AppointmentDate" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <select class="form-control form-select" asp-for="AppointmentRequest.Slot">
+                                                <option selected disabled>Select Slot</option>
+                                                <optgroup label="Morning">
+                                                    @foreach (var slot in morningSlots)
+                                                    {
+                                                        <option value="@slot.Key">@slot.Value</option>
+                                                    }
+                                                </optgroup>
+                                                <optgroup label="Afternoon">
+                                                    @foreach (var slot in afternoonSlots)
+                                                    {
+                                                        <option value="@slot.Key">@slot.Value</option>
+                                                    }
+                                                </optgroup>
+                                            </select>
+                                            <span asp-validation-for="AppointmentRequest.Slot" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group text-center mb--0">
+                                            <button class="btn-theme" type="submit">Make Appointment</button>
+                                            @if (!ModelState.IsValid)
+                                            {
+                                                <div class="alert alert-danger mt-3">
+                                                    <ul>
+                                                        @foreach (var modelStateError in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                                                        {
+                                                            <li>@modelStateError.ErrorMessage</li>
+                                                        }
+                                                       
+                                                    </ul>
+                                                </div>
+                                            }
+                                            @if (!string.IsNullOrEmpty(errorMessage))
+                                            {
+                                                <div class="alert alert-danger">
+                                                    @errorMessage
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!--== End Contact Form ==-->
+                    </div>
+                    <div class="column-right">
+                        <div class="thumb" data-bg-img="/img/photos/bg-con2.webp"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+            $("#datepicker").datepicker({
+                dateFormat: 'yy-mm-dd',
+            }).datepicker("setDate", new Date());
+        });
+    </script>
+}

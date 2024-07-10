@@ -9,28 +9,40 @@ namespace PRN221.ClinicDental.Data.Models;
 public partial class Appointment
 {
     [Key]
-    [Column("AppointmentID")]
     public int AppointmentId { get; set; }
 
-    [Column("PatientID")]
-    public int PatientId { get; set; }
+    public int CustomerId { get; set; }
 
-    [Column("DoctorID")]
-    public int DoctorId { get; set; }
-
-    [Column("ServiceID")]
     public int ServiceId { get; set; }
 
+    public int ClinicId { get; set; }
+
+    public int DentistId { get; set; }
+
     [Column(TypeName = "datetime")]
-    public DateTime AppointmentDateTime { get; set; }
+    public DateTime AppointmentTime { get; set; }
 
-    [ForeignKey("DoctorId")]
-    [InverseProperty("Appointments")]
-    public virtual DoctorDetail Doctor { get; set; } = null!;
+    [StringLength(20)]
+    public string? PhoneNumber { get; set; }
+    public int Slot { get; set; }
 
-    [ForeignKey("PatientId")]
+    [StringLength(255)]
+    public string? Notes { get; set; }
+
+    [StringLength(50)]
+    public string? Status { get; set; }
+
+    [ForeignKey("ClinicId")]
     [InverseProperty("Appointments")]
-    public virtual Patient Patient { get; set; } = null!;
+    public virtual Clinic Clinic { get; set; } = null!;
+
+    [ForeignKey("CustomerId")]
+    [InverseProperty("AppointmentCustomers")]
+    public virtual User Customer { get; set; } = null!;
+
+    [ForeignKey("DentistId")]
+    [InverseProperty("AppointmentDentists")]
+    public virtual User Dentist { get; set; } = null!;
 
     [ForeignKey("ServiceId")]
     [InverseProperty("Appointments")]

@@ -1,0 +1,52 @@
+﻿@page
+@model PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageClinic.CreateClinicModel
+
+@{
+    ViewData["Title"] = "CreateClinic";
+}
+
+<h1>CreateClinic</h1>
+
+<hr />
+<div class="row m-lg-5 border border-secondary">
+    <div class="col-md-4 d-flex justify-content-between">
+        <form method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Clinic.Name" class="control-label"></label>
+                <input asp-for="Clinic.Name" class="form-control" />
+                <span asp-validation-for="Clinic.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clinic.ImageURL" class="control-label"></label>
+                <input asp-for="Clinic.ImageURL" class="form-control-file" type="file" />
+                <span asp-validation-for="Clinic.ImageURL" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clinic.StreetAddress" class="control-label"></label>
+                <input asp-for="Clinic.StreetAddress" class="form-control" />
+                <span asp-validation-for="Clinic.StreetAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clinic.District" class="control-label"></label>
+                <select asp-for="Clinic.District" class="form-control" asp-items="ViewBag.Districts"></select>
+                <span asp-validation-for="Clinic.District" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clinic.ServiceId" class="control-label"></label>
+                <select asp-for="Clinic.ServiceId" class="form-control" asp-items="ViewBag.Services" multiple="multiple"></select>
+            </div>
+            <div class="form-group mt-3">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

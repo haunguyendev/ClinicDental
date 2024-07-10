@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -27,6 +28,305 @@
 
     <!--== Main Style CSS ==-->
     <link href="~/css/style.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .header {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            color: #fff;
+            background-color: #3f4199;
+            
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .booking-container {
+            margin-top: 30px;
+        }
+
+        .booking-header {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #3f4199;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            border: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #3f4199;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle;
+        }
+
+        .btn-primary {
+            background-color: #3f4199;
+            border: none;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+        }
+
+            .btn-primary:hover,
+            .btn-secondary:hover {
+                opacity: 0.9;
+            }
+
+        .badge {
+            display: inline-block;
+            padding: 0.35em 0.65em;
+            font-size: 0.75em;
+            font-weight: 700;
+            line-height: 1;
+            color: #fff;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 0.25rem;
+        }
+
+        .badge-success {
+            background-color: #28a745;
+        }
+
+        .badge-warning {
+            background-color: #ffc107;
+        }
+
+        .badge-danger {
+            background-color: red;
+        }
+
+        .badge-primary {
+            background-color: #3f4199;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+            .profile-header img {
+                width: 150px;
+                height: 150px;
+                border-radius: 50%;
+                border: 5px solid #3f4199;
+            }
+
+            .profile-header h2 {
+                margin-top: 10px;
+                font-size: 24px;
+                color: #333;
+            }
+
+        .profile-info {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+            .profile-info .info-label {
+                font-weight: bold;
+                color: #3f4199;
+            }
+
+            .profile-info .info-value {
+                color: #333;
+            }
+
+        .profile-actions {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+            .profile-actions button {
+                margin: 5px;
+            }
+
+        .card {
+            border: none;
+        }
+
+        .modal-header {
+            background-color: #3f4199;
+            color: #fff;
+        }
+
+        .modal-footer .btn-primary {
+            background-color: #3f4199;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+            .modal-body .form-group {
+                margin-bottom: 1.5rem;
+            }
+
+            .modal-body label {
+                font-weight: bold;
+                color: #3f4199;
+            }
+
+            .modal-body .form-control {
+                border-radius: 0.5rem;
+                padding: 0.75rem;
+                border: 1px solid #ced4da;
+            }
+
+                .modal-body .form-control:focus {
+                    border-color: #3f4199;
+                    box-shadow: none;
+                }
+
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+        }
+
+        .success-message {
+            color: green;
+            font-size: 1em;
+        }
+
+        .modal-footer {
+            justify-content: center;
+        }
+
+        .btn {
+            border-radius: 30px;
+            padding: 0.5rem 2rem;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: #3f4199;
+            border: none;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+        }
+
+            .btn-primary:hover,
+            .btn-secondary:hover {
+                opacity: 0.9;
+            }
+
+        .management-container {
+            margin-top: 30px;
+        }
+
+        .management-header {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #3f4199;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            border: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #3f4199;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .table th,
+        .table td {
+            vertical-align: middle;
+        }
+
+        .btn-primary,
+        .btn-secondary {
+            border: none;
+        }
+
+            .btn-primary:hover,
+            .btn-secondary:hover {
+                opacity: 0.9;
+            }
+
+        .modal-content {
+            border-radius: 10px;
+        }
+
+        .modal-header {
+            border-bottom: none;
+        }
+
+        .modal-footer {
+            border-top: none;
+        }
+
+        .form-control:focus {
+            border-color: #3f4199;
+            box-shadow: none;
+        }
+
+        .btn-primary {
+            background-color: #3f4199;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+        }
+
+        .btn-info {
+            background-color: #17a2b8;
+        }
+
+        .stat-card {
+            margin-bottom: 20px;
+            border: none;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+        }
+
+            .stat-card i {
+                font-size: 50px;
+                color: #3f4199;
+                margin-bottom: 10px;
+            }
+
+            .stat-card h3 {
+                font-size: 28px;
+                margin-bottom: 10px;
+            }
+
+            .stat-card p {
+                font-size: 16px;
+                color: #6c757d;
+            }
+    </style>
 </head>
 <body>
     <!--== Start Preloader Content ==-->
@@ -94,21 +394,26 @@
                                 </div>
                                 <div class="header-navigation-area">
                                     <ul class="main-menu nav">
-                                        <li><a href="index.html"><span>Home</span></a></li>
-                                        <li class="has-submenu">
-                                            <a href="#/"><span>Services</span></a>
-                                            <ul class="submenu-nav">
-                                                <li><a href="services.html">Services</a></li>
-                                                <li><a href="service-details.html">Service Details</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="has-submenu">
-                                            <a href="#/"><span>Dentist</span></a>
-                                            <ul class="submenu-nav">
-                                                <li><a href="team.html">Dentist</a></li>
-                                                <li><a href="team-details.html">Dentist Details</a></li>
-                                            </ul>
-                                        </li>
+                                        <li><a href="/Index"><span>Home</span></a></li>
+                                        @if (User.IsInRole("Customer"))
+                                        {
+                                            <li class="has-submenu">
+                                                <a href="/Customer/Clinics"><span>Clinics</span></a>
+                                            </li>
+                                            <li class="has-submenu">
+                                                <a href="/Customer/ViewAppointment  "><span>Appointment</span></a>
+
+                                            </li>
+                                        }
+                                        @if (User.IsInRole("Dentist"))
+                                        {
+                                           
+                                            <li class="has-submenu">
+                                                <a href="/Dentist/ViewDentistAppointments  "><span>Appointment</span></a>
+
+                                            </li>
+                                        }
+
                                         <li class="has-submenu">
                                             <a href="#/"><span>Pages</span></a>
                                             <ul class="submenu-nav">
@@ -146,11 +451,23 @@
                                 </div>
                             </div>
                             <div class="header-align-right">
-                                <div class="header-action-area">
-                                    <a class="btn-login-menu" href="account-login.html">Login</a>
-                                    <span>/</span>
-                                    <a class="btn-register-menu" href="account-register.html">Register</a>
-                                </div>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <div class="header-action-area">
+                                        <a class="btn-login-menu" href="/Accounts/Profile">Hi, @User.Identity.Name</a>
+                                        <span>/</span>
+                                        <a class="btn-register-menu" asp-page-handler="Logout">Logout</a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="header-action-area">
+                                        <a class="btn-login-menu" href="/Accounts/Login">Login</a>
+                                        <span>/</span>
+                                        <a class="btn-register-menu" href="/Accounts/Register">Register</a>
+                                    </div>
+                                }
+                               
                                 <button class="btn-menu" type="button" data-bs-toggle="offcanvas" data-bs-target="#AsideOffcanvasMenu" aria-controls="AsideOffcanvasMenu">
                                     <i class="fa fa-align-left"></i>
                                 </button>
@@ -271,9 +588,9 @@
                 <ul class="nav-menu">
                     <li><a href="index.html">Home</a></li>
                     <li>
-                        <a href="#">Services</a>
+                        <a href="/Customer/Services">Services</a>
                         <ul class="sub-menu">
-                            <li><a href="services.html">Services</a></li>
+                            <li><a asp-page="/Customer/Services">Services</a></li>
                             <li><a href="service-details.html">Service Details</a></li>
                         </ul>
                     </li>
@@ -340,7 +657,7 @@
             </div>
             <a class="mobile-menu-btn" href="contact.html">Appointment</a>
             <div class="mobile-menu-action">
-                <a class="btn-login-menu" href="account-login.html">Login</a>
+                <a class="btn-login-menu" asp-page="/Accounts/Login">Login</a>
                 <span>/</span>
                 <a class="btn-register-menu" href="account-register.html">Register</a>
             </div>

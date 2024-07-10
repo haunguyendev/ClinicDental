@@ -17,34 +17,38 @@ namespace PRN221.ClinicDental.Data.UnitOfWork
             IRoleRepository roleRepository,
             IUserRepository userRepository,
             IClinicRepository clinicRepository,
-            IDoctorDetailRepository doctorDetailRepository,
-            ICertificateRepository certificateRepository,
-            IPatientRepository patientRepository,
+            IDentistDetailRepository doctorDetailRepository,
+
+
             IServiceRepository serviceRepository,
-            IDoctorServiceRepository doctorServiceRepository,
-            IAppointmentRepository appointmentRepository)
+            IAppointmentRepository appointmentRepository,
+            IClinicServicesRepository clinicServicesRepository)
         {
             _dbContext = dbContext;
             RoleRepository = roleRepository;
             UserRepository = userRepository;
             ClinicRepository = clinicRepository;
-            DoctorDetailRepository = doctorDetailRepository;
-            CertificateRepository = certificateRepository;
-            PatientRepository = patientRepository;
+            DentistDetailRepository = doctorDetailRepository;
+
+
             ServiceRepository = serviceRepository;
-            DoctorServiceRepository = doctorServiceRepository;
+
             AppointmentRepository = appointmentRepository;
+            ClinicServicesRepository = clinicServicesRepository;
         }
 
         public IRoleRepository RoleRepository { get; }
         public IUserRepository UserRepository { get; }
         public IClinicRepository ClinicRepository { get; }
-        public IDoctorDetailRepository DoctorDetailRepository { get; }
-        public ICertificateRepository CertificateRepository { get; }
-        public IPatientRepository PatientRepository { get; }
+
+        public IClinicServicesRepository ClinicServicesRepository { get; }
         public IServiceRepository ServiceRepository { get; }
-        public IDoctorServiceRepository DoctorServiceRepository { get; }
+
         public IAppointmentRepository AppointmentRepository { get; }
+
+        public IDentistDetailRepository DentistDetailRepository { get; }
+
+        public IAddressRepository AddressRepository => throw new NotImplementedException();
 
         public async Task<int> CommitAsync()
         {

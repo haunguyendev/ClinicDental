@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PRN221.ClinicDental.Data.Common.Interface;
+
 using PRN221.ClinicDental.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -32,6 +33,11 @@ namespace PRN221.ClinicDental.Data.Repositories
         public async Task CreateAsync(T entity)
         {
             await this._context.Set<T>().AddAsync(entity);
+        }
+
+        public async Task CreateRange(List<T> entities)
+        {
+            await _context.Set<T>().AddRangeAsync(entities);
         }
 
         public async Task UpdateAsync(T entity)

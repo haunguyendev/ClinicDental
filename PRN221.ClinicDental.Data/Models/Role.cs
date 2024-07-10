@@ -6,16 +6,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace PRN221.ClinicDental.Data.Models;
 
+[Index("RoleName", Name = "UQ__Roles__8A2B61609ADB6310", IsUnique = true)]
 public partial class Role
 {
     [Key]
-    [Column("RoleID")]
     public int RoleId { get; set; }
 
     [StringLength(50)]
     public string RoleName { get; set; } = null!;
-
-    public string? Description { get; set; }
 
     [InverseProperty("Role")]
     public virtual ICollection<User> Users { get; set; } = new List<User>();
