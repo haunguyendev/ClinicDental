@@ -27,6 +27,7 @@ public partial class User
     public string? Address { get; set; }
     [StringLength(255)]
     public string PasswordHash { get; set; } = null!;
+    
 
     public int RoleId { get; set; }
 

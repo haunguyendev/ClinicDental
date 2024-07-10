@@ -79,8 +79,8 @@ namespace PRN221.ClinicDental.Presentation.Pages.Customer
                 if ( _appointmentService.CustomerHasAppointment(customerId, AppointmentRequest.ClinicId, AppointmentRequest.AppointmentDate, AppointmentRequest.Slot))
 
                 {
-                    ModelState.AddModelError(string.Empty, "You already have an appointment in this slot on the same date.");
-                    return Page();
+                    var errorMessage = "You already have an appointment in this slot on the same date.";
+                    return RedirectToPage("/Customer/Appointment", new { clinicId = AppointmentRequest.ClinicId, serviceId = AppointmentRequest.ServiceId, error = errorMessage });
                 }
 
                 await _appointmentService.CreateAppointmentAsync(AppointmentRequest, customerId);

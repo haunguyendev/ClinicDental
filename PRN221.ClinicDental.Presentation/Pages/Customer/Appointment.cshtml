@@ -1,6 +1,7 @@
 ﻿@page "{serviceId:int}/{clinicId:int}"
 @model PRN221.ClinicDental.Presentation.Pages.Customer.AppointmentModel
-@{
+@{ 
+    var errorMessage = ViewData["error"] as string;
     var morningSlots = new Dictionary<int, string>
     {
         { 1, "8:00 - 8:45" },
@@ -20,6 +21,12 @@
 }
 <section class="appointment-area appointment-default-area mr-3" style="margin-right:18em">
     <div class="container" data-aos="fade-up">
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger">
+                @errorMessage
+            </div>
+        }
         <div class="row no-gutter">
             <div class="col-lg-8">
                 <div class="appointment-form-wrap">
@@ -103,7 +110,14 @@
                                                         {
                                                             <li>@modelStateError.ErrorMessage</li>
                                                         }
+                                                       
                                                     </ul>
+                                                </div>
+                                            }
+                                            @if (!string.IsNullOrEmpty(errorMessage))
+                                            {
+                                                <div class="alert alert-danger">
+                                                    @errorMessage
                                                 </div>
                                             }
                                         </div>
