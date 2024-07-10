@@ -84,13 +84,13 @@ namespace PRN221.ClinicDental.Services
             var user = await _unitOfWork.UserRepository.GetUserByIdAsync(request.UserId);
             if (user == null) throw new Exception("User not found");
 
-            // Update user properties
             user.Name = request.Name;
             user.Email = request.Email;
             user.PhoneNumber = request.PhoneNumber;
             user.Address = request.Address;
 
             await _unitOfWork.UserRepository.UpdateUserAsync(user);
+            await _unitOfWork.CommitAsync();
         }
 
         public async Task<bool> ChangeUserPasswordAsync(int userId, string currentPassword, string newPassword)
@@ -98,15 +98,14 @@ namespace PRN221.ClinicDental.Services
             var user = await _unitOfWork.UserRepository.GetUserByIdAsync(userId);
             if (user == null) throw new Exception("User not found");
 
-            // Verify current password
             if (!_authentication.Verify(user.PasswordHash, currentPassword))
             {
                 throw new Exception("Current password is incorrect");
             }
 
-            // Hash new password and update
             user.PasswordHash = _authentication.Hash(newPassword);
             await _unitOfWork.UserRepository.UpdateUserAsync(user);
+            await _unitOfWork.CommitAsync();
 
             return true;
         }

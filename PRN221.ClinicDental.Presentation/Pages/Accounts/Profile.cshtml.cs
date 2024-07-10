@@ -1,4 +1,3 @@
-// Profile.cshtml.cs
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PRN221.ClinicDental.Business.DTO.Request;
@@ -11,83 +10,69 @@ namespace PRN221.ClinicDental.Presentation.Pages.Accounts
     public class ProfileModel : PageModel
     {
         private readonly IUserService _userService;
+        public UserProfileResponse UserProfile { get; set; }
 
         public ProfileModel(IUserService userService)
         {
             _userService = userService;
         }
 
-        [BindProperty]
-        public UserProfileResponse UserProfile { get; set; }
-
-        [BindProperty]
-        public UserProfileUpdateRequest ProfileUpdateRequest { get; set; }
-
-        [BindProperty]
-        public ChangePasswordRequest ChangePasswordRequest { get; set; }
-
-        public async Task<IActionResult> OnGetAsync(int userId)
+        public async Task<IActionResult> OnGetAsync()
         {
-            try
+            var userId = 1; // Replace with actual logic to get the logged-in user ID
+            UserProfile = await _userService.GetUserProfileAsync(userId);
+            if (UserProfile == null)
             {
-                UserProfile = await _userService.GetUserProfileAsync(userId); ;
-                return Page();
+                return NotFound();
             }
-            catch (Exception ex)
-            {
-                ModelState.AddModelError(string.Empty, $"Error loading profile: {ex.Message}");
-                return Page();
-            }
+
+            return Page();
         }
 
-        public async Task<IActionResult> OnPostUpdateProfileAsync()
+        public async Task<IActionResult> OnPostEditProfileAsync(UserProfileUpdateRequest request)
         {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return Page();
-                }
-
-                await _userService.UpdateUserProfileAsync(ProfileUpdateRequest);
+                await _userService.UpdateUserProfileAsync(request);
                 TempData["SuccessMessage"] = "Profile updated successfully.";
-                return RedirectToPage();
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
-                ModelState.AddModelError(string.Empty, $"Error updating profile: {ex.Message}");
+                ModelState.AddModelError(string.Empty, ex.Message);
                 return Page();
             }
+
+            return RedirectToPage();
         }
 
-        public async Task<IActionResult> OnPostChangePasswordAsync()
+        public async Task<IActionResult> OnPostChangePasswordAsync(int userId, string currentPassword, string newPassword, string confirmPassword)
         {
+            if (!ModelState.IsValid || newPassword != confirmPassword)
+            {
+                ModelState.AddModelError(string.Empty, "Passwords do not match.");
+                return Page();
+            }
+
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return Page();
-                }
-
-                var userId = int.Parse(User.FindFirst("UserId").Value);
-                var success = await _userService.ChangeUserPasswordAsync(userId, ChangePasswordRequest.CurrentPassword, ChangePasswordRequest.NewPassword);
-
-                if (success)
+                var result = await _userService.ChangeUserPasswordAsync(userId, currentPassword, newPassword);
+                if (result)
                 {
                     TempData["SuccessMessage"] = "Password changed successfully.";
                 }
-                else
-                {
-                    TempData["ErrorMessage"] = "Failed to change password.";
-                }
-
-                return RedirectToPage();
             }
-            catch (Exception ex)
+            catch (System.Exception ex)
             {
-                ModelState.AddModelError(string.Empty, $"Error changing password: {ex.Message}");
+                ModelState.AddModelError(string.Empty, ex.Message);
                 return Page();
             }
+
+            return RedirectToPage();
         }
     }
 }

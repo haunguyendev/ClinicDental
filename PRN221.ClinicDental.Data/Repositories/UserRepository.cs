@@ -27,8 +27,7 @@ namespace PRN221.ClinicDental.Data.Repositories
         }
         public async Task<User> GetUserByIdAsync(int userId)
         {
-            return await _context.Users.Include(u => u.Role)
-                                       .FirstOrDefaultAsync(u => u.UserId == userId);
+            return await _context.Users.FindAsync(userId);
         }
 
         public async Task UpdateUserAsync(User user)
