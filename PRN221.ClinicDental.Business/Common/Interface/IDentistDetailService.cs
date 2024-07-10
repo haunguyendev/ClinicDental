@@ -8,5 +8,7 @@ namespace PRN221.ClinicDental.Services.Interfaces
     public interface IDentistDetailService
     {
         Task<List<DentistResponseModel>> GetDentistsByClinicId(int clinicId);
+
+        Task<List<DentistDetail>> GetDentistDetailsByClinicId(int clinicId);
     }
 }
