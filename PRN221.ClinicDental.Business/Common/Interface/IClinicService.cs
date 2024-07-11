@@ -18,5 +18,6 @@ namespace PRN221.ClinicDental.Services.Interfaces
         Task<PaginatedList<ClinicResponseModel>> GetClinicsByDistrict(string district, int pageNumber, int pageSize);
 
         Task<Clinic> GetClinicByClinicId(int? id);
+        Task<int> GetTotalClinicsAsync();
     }
 }

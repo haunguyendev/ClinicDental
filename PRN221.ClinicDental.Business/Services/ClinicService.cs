@@ -142,5 +142,11 @@ namespace PRN221.ClinicDental.Services
         {
            return await _unitOfWork.ClinicRepository.GetClinicById(id);
         }
+
+        public async Task<int> GetTotalClinicsAsync()
+        {
+            var clinics = await _unitOfWork.ClinicRepository.GetAllClinics();
+            return clinics.Count();
+        }
     }
 }

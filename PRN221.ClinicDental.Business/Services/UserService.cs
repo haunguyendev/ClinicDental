@@ -94,6 +94,22 @@ namespace PRN221.ClinicDental.Services
             await _unitOfWork.CommitAsync();
         }
 
-       
+        public async Task<int> GetTotalPatientsAsync()
+        {
+            var query = await _unitOfWork.UserRepository.GetAllUserAsync();
+            return query.Count(u => u.RoleId == 4);
+        }
+
+        public async Task<int> GetTotalClinicOwnersAsync()
+        {
+            var query = await _unitOfWork.UserRepository.GetAllUserAsync();
+            return query.Count(u => u.RoleId == 2);
+        }
+
+        public async Task<int> GetTotalDentistsAsync()
+        {
+            var query = await _unitOfWork.UserRepository.GetAllUserAsync();
+            return query.Count(u => u.RoleId == 3);
+        }
     }
 }

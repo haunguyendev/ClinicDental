@@ -14,5 +14,8 @@ namespace PRN221.ClinicDental.Services.Interfaces
         Task RegisterUserAsync(UserRegisterRequest request);
         Task<PaginatedList<UserResponseModel>> GetPaginatedUsersAsync(int pageNumber, int pageSize);
         Task<PaginatedList<UserResponseModel>> SearchUsersAsync(string searchString, int pageNumber, int pageSize);
+        Task<int> GetTotalPatientsAsync();
+        Task<int> GetTotalClinicOwnersAsync();
+        Task<int> GetTotalDentistsAsync();
     }
 }

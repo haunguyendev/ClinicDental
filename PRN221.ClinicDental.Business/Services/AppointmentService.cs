@@ -254,5 +254,36 @@ namespace PRN221.ClinicDental.Services
             await _unitOfWork.CommitAsync(); 
             return true;
         }
+
+        public async Task<int> GetTotalCompletedAppointmentsThisWeekAsync()
+        {
+            var startOfWeek = DateTime.UtcNow.AddDays(-(int)DateTime.UtcNow.DayOfWeek);
+            var endOfWeek = startOfWeek.AddDays(7);
+
+            var query = await _unitOfWork.AppointmentRepository.GetAllAppointmentsAsync();
+            return query.Count(a => a.Status == AppointmentStatusTypeEnum.Completed && a.AppointmentTime >= startOfWeek && a.AppointmentTime < endOfWeek);
+        }
+
+        public async Task<decimal> GetMonthlyRevenueAsync()
+        {
+            var startOfMonth = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1);
+            var endOfMonth = startOfMonth.AddMonths(1);
+
+            var appointments = await _unitOfWork.AppointmentRepository.GetAllAppointmentsAsync();
+            var completedAppointments = appointments
+                .Where(a => a.Status == AppointmentStatusTypeEnum.Completed && a.AppointmentTime >= startOfMonth && a.AppointmentTime < endOfMonth);
+
+            decimal totalRevenue = 0;
+            foreach (var appointment in completedAppointments)
+            {
+                var clinicService = await _unitOfWork.ClinicServicesRepository.GetClinicServiceByIdAndClinicIdAsync(appointment.ServiceId,appointment.ClinicId);
+                if (clinicService != null)
+                {
+                    totalRevenue += clinicService.Price;
+                }
+            }
+
+            return totalRevenue;
+        }
     }
 }

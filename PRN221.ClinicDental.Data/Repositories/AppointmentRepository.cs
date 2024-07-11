@@ -38,6 +38,11 @@ namespace PRN221.ClinicDental.Data.Repositories
                    && a.Status== "Scheduled");
         }
 
+        public async Task<IEnumerable<Appointment>> GetAllAppointmentsAsync()
+        {
+            return await _context.Appointments.ToListAsync();
+        }
+
         public int GetAppointmentsCountForSlot(int clinicId, int dentistId, DateTime appointmentDate, int slot)
         {
             return _context.Appointments

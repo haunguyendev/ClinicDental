@@ -14,43 +14,43 @@
             <div class="col-md-4">
                 <div class="stat-card">
                     <i class="fas fa-user-friends"></i>
-                    <h3>200</h3>
+                    <h3>@Model.TotalPatients</h3>
                     <p>Total Patients</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="stat-card">
                     <i class="fas fa-calendar-alt"></i>
-                    <h3>50</h3>
-                    <p>Appointments This Week</p>
+                    <h3>@Model.TotalCompletedAppointmentsThisWeek</h3>
+                    <p>Completed Appointments This Week</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="stat-card">
-                    <i class="fas fa-user-plus"></i>
-                    <h3>10</h3>
-                    <p>New Patients</p>
+                    <i class="fas fa-user-o"></i>
+                    <h3>@Model.TotalClinicOwners</h3>
+                    <p>Number of Clinic Owner</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="stat-card">
                     <i class="fas fa-dollar-sign"></i>
-                    <h3>$5000</h3>
+                    <h3>@Model.TotalMonthlyRevenue</h3>
                     <p>Monthly Revenue</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="stat-card">
                     <i class="fas fa-user-md"></i>
-                    <h3>5</h3>
-                    <p>Number of Doctors</p>
+                    <h3>@Model.TotalDentists</h3>
+                    <p>Number of Dentists</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="stat-card">
-                    <i class="fas fa-star"></i>
-                    <h3>4.5</h3>
-                    <p>Patient Ratings</p>
+                    <i class="fas fa-home"></i>
+                    <h3>@Model.TotalClinics</h3>
+                    <p>Number of Clinics</p>
                 </div>
             </div>
         </div>

@@ -25,6 +25,8 @@ namespace PRN221.ClinicDental.Services.Interfaces
         Task<List<AppointmentDentistResponseModel>> GetPastAppointmentsByDentistAsync(int dentistId);
 
         Task<bool> UpdateAppointmentStatusAsync(int appointmentId, string status);
+        Task<int> GetTotalCompletedAppointmentsThisWeekAsync();
+        Task<decimal> GetMonthlyRevenueAsync();
 
 
     }
