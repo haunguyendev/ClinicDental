@@ -79,7 +79,7 @@ namespace PRN221.ClinicDental.Services
             return _mapper.Map<UserProfileResponse>(user);
         }
 
-        public async Task UpdateUserProfileAsync(UserProfileUpdateRequest request)
+        public async Task<bool> UpdateUserProfileAsync(UserProfileUpdateRequest request)
         {
             var user = await _unitOfWork.UserRepository.GetUserByIdAsync(request.UserId);
             if (user == null) throw new Exception("User not found");
@@ -91,6 +91,8 @@ namespace PRN221.ClinicDental.Services
 
             await _unitOfWork.UserRepository.UpdateUserAsync(user);
             await _unitOfWork.CommitAsync();
+
+            return true;
         }
 
         public async Task<bool> ChangeUserPasswordAsync(int userId, string currentPassword, string newPassword)

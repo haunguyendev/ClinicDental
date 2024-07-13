@@ -11,7 +11,7 @@ namespace PRN221.ClinicDental.Services.Interfaces
         Task<UserProfileResponse> GetUserProfileAsync(int userId);
         Task<UserLoginResponse> Authenticate(string username, string password);
         Task RegisterUserAsync(UserRegisterRequest request);
-        Task UpdateUserProfileAsync(UserProfileUpdateRequest request);
+        Task<bool> UpdateUserProfileAsync(UserProfileUpdateRequest request);
         Task<bool> ChangeUserPasswordAsync(int userId, string currentPassword, string newPassword);
     }
 }

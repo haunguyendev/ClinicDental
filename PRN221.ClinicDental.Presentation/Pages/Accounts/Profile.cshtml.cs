@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PRN221.ClinicDental.Business.DTO.Request;
 using PRN221.ClinicDental.Business.DTO.Response;
 using PRN221.ClinicDental.Services.Interfaces;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace PRN221.ClinicDental.Presentation.Pages.Accounts
@@ -19,60 +20,109 @@ namespace PRN221.ClinicDental.Presentation.Pages.Accounts
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var userId = 1; // Replace with actual logic to get the logged-in user ID
-            UserProfile = await _userService.GetUserProfileAsync(userId);
-            if (UserProfile == null)
+            var userIdString = User.FindFirstValue("UserId");
+            if (int.TryParse(userIdString, out int userId))
             {
-                return NotFound();
-            }
+                UserProfile = await _userService.GetUserProfileAsync(userId);
+                if (UserProfile == null)
+                {
+                    // Log the userId to verify it
+                    Console.WriteLine($"User ID: {userId}");
+                    return NotFound();
+                }
 
-            return Page();
+                return Page();
+            }
+            else
+            {
+                return BadRequest("Invalid user ID.");
+            }
         }
 
         public async Task<IActionResult> OnPostEditProfileAsync(UserProfileUpdateRequest request)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
             try
             {
-                await _userService.UpdateUserProfileAsync(request);
-                TempData["SuccessMessage"] = "Profile updated successfully.";
-            }
-            catch (System.Exception ex)
-            {
-                ModelState.AddModelError(string.Empty, ex.Message);
-                return Page();
-            }
+                if (!ModelState.IsValid)
+                {
+                    return Page();
+                }
 
-            return RedirectToPage();
-        }
+                var userIdString = User.FindFirstValue("UserId");
+                if (!int.TryParse(userIdString, out var userId))
+                {
+                    ModelState.AddModelError(string.Empty, "Invalid user ID.");
+                    return Page();
+                }
 
-        public async Task<IActionResult> OnPostChangePasswordAsync(int userId, string currentPassword, string newPassword, string confirmPassword)
-        {
-            if (!ModelState.IsValid || newPassword != confirmPassword)
-            {
-                ModelState.AddModelError(string.Empty, "Passwords do not match.");
-                return Page();
-            }
+                // Ensure UserProfileUpdateRequest is initialized
+                if (request == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Profile update request is null.");
+                    return Page();
+                }
 
-            try
-            {
-                var result = await _userService.ChangeUserPasswordAsync(userId, currentPassword, newPassword);
+                // Attach the userId to the request
+                request.UserId = userId;
+
+                // Log the request details
+                Console.WriteLine($"Updating profile for User ID: {userId}");
+
+                // Use the result to handle success or failure
+                bool result = await _userService.UpdateUserProfileAsync(request);
+
                 if (result)
                 {
-                    TempData["SuccessMessage"] = "Password changed successfully.";
+                    TempData["SuccessMessage"] = "Profile updated successfully.";
                 }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Failed to update profile.");
+                }
+
+                return RedirectToPage("/Accounts/Profile");
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                ModelState.AddModelError(string.Empty, ex.Message);
+                ModelState.AddModelError(string.Empty, $"Error updating profile: {ex.Message}");
                 return Page();
             }
+        }
+        public async Task<IActionResult> OnPostChangePasswordAsync(string currentPassword, string newPassword, string confirmPassword)
+        {
+            var userIdString = User.FindFirstValue("UserId");
+            if (int.TryParse(userIdString, out int userId))
+            {
+                if (!ModelState.IsValid || newPassword != confirmPassword)
+                {
+                    ModelState.AddModelError(string.Empty, "Passwords do not match.");
+                    return new JsonResult(new { success = false, error = "Passwords do not match." });
+                }
 
-            return RedirectToPage();
+                try
+                {
+                    var result = await _userService.ChangeUserPasswordAsync(userId, currentPassword, newPassword);
+                    if (result)
+                    {
+                        TempData["SuccessMessage"] = "Password changed successfully.";
+                        return new JsonResult(new { success = true });
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Current password is incorrect.");
+                        return new JsonResult(new { success = false, error = "Current password is incorrect." });
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                    return new JsonResult(new { success = false, error = ex.Message });
+                }
+            }
+            else
+            {
+                return BadRequest("Invalid user ID.");
+            }           
         }
     }
 }
