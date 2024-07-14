@@ -4,6 +4,7 @@ using System.Numerics;
 using System.Threading.Tasks;
 using AutoMapper;
 using Azure.Core;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using PRN221.ClinicDental.Business.DTO.Request.ClinicReqModel;
 using PRN221.ClinicDental.Business.DTO.Response.Clinic;
@@ -38,10 +39,6 @@ namespace PRN221.ClinicDental.Services
             }).ToList();
 
         }
-    
-
-       
-      
         public async Task<List<DistrictGroupModel>> GetClinicsGroupedByDistrict()
         {
             var clinics = await _unitOfWork.ClinicRepository.GetAllClinics();
@@ -113,7 +110,7 @@ namespace PRN221.ClinicDental.Services
 
         public async Task<PaginatedList<ClinicResponseModel>> SearchClinicByName(string keyword, int pageNumber, int pageSize)
         {
-            var clinics = await _unitOfWork.ClinicRepository.SearchClinics(x=>x.Name.Contains(keyword)); // This should return an IQueryable<Clinic>
+            var clinics = await _unitOfWork.ClinicRepository.SearchClinics(x=>x.Name.Contains(keyword)); 
             var clinicResponseModels = clinics.Select(c => new ClinicResponseModel
             {
                 ClinicId = c.ClinicId,
@@ -140,6 +137,30 @@ namespace PRN221.ClinicDental.Services
             }).AsQueryable();
 
             return PaginatedList<ClinicResponseModel>.Create(clinicResponseModels, pageNumber, pageSize);
+        }
+
+        public async Task<Clinic> GetClinicByClinicId(int? id)
+        {
+           return await _unitOfWork.ClinicRepository.GetClinicById(id);
+        }
+
+        public async Task<int> GetTotalClinicsAsync()
+        {
+            var clinics = await _unitOfWork.ClinicRepository.GetAllClinics();
+            return clinics.Count();
+        }
+
+        public async Task<bool> UpdateClinic(Clinic clinic, IFormFile imageURL)
+        {
+            if (imageURL != null)
+            {
+                var filePath = "Clinincs";
+                var imageUri = await _cloudStorage.UploadFile(imageURL, filePath);
+                clinic.ImageURL = imageUri;
+            }
+            var result =  _unitOfWork.ClinicRepository.UpdateAsync(clinic);
+            await _unitOfWork.CommitAsync();
+            return true;
         }
     }
 }

@@ -16,9 +16,16 @@ namespace PRN221.ClinicDental.Data.Repositories
             
         }
 
+        public async Task<Address> GetAddressById(int id)
+        {
+            return await _context.Addresses.FirstOrDefaultAsync(x=> x.AddressId == id);
+        }
+
         public async Task<List<Address>> GetAll()
         {
            return await _context.Addresses.ToListAsync();
         }
+
+        
     }
 }

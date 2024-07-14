@@ -13,9 +13,9 @@ namespace PRN221.ClinicDental.Data.Common.Interface
         Task<List<Clinic>> GetAllClinics();
         Task<List<Clinic>> GetClinicsByOnServiceId(int serviceId);
         Task<List<Clinic>> SearchClinics(Expression<Func<Clinic, bool>> predicate);
-
         Task<bool> AddNewClinic(Clinic clinic, List<Service> service);
         Task<List<Clinic>> GetClinicsByDistrict(string district);
+        Task<Clinic> GetClinicById(int? id);
 
     }
 }

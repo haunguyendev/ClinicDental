@@ -12,9 +12,12 @@ namespace PRN221.ClinicDental.Data.Common.Interface
     {
         Task<Appointment?> GetById(int id);
         Task<List<Appointment>> GetListAppointmentByCustomerIdAsync(int customerId);
+        Task<List<Appointment>> GetListAppointmentByDentistIdAsync(int dentistId);
         int GetAppointmentsCountForSlot(int clinicId, int dentistId, DateTime appointmentDate, int slot);
         bool CustomerHasAppointment(int customerId, int clinicId, DateTime appointmentDate, int slot);
         Task<bool> CancelAppointmentAsync(int appointmentId,string status);
+        Task<IEnumerable<Appointment>> GetAllAppointmentsAsync();
+
 
     }
 }

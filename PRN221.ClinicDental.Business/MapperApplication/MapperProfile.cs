@@ -4,6 +4,7 @@ using PRN221.ClinicDental.Business.DTO.Response;
 using PRN221.ClinicDental.Business.DTO.Response.Clinic;
 using PRN221.ClinicDental.Business.DTO.Response.Dentist;
 using PRN221.ClinicDental.Business.DTO.Response.ServiceResponse;
+using PRN221.ClinicDental.Business.DTO.Response.User;
 using PRN221.ClinicDental.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,9 @@ namespace PRN221.ClinicDental.Business.MapperApplication
                     District = x.District
                 }))
                 .ForMember(dest => dest.ClinicServices, src => src.MapFrom(x => x.Name));
+
+            CreateMap<User, UserResponseModel>()
+                .ForMember(dest => dest.Role, src => src.MapFrom(x => x.Role.RoleName));
 
         }
     }

@@ -34,7 +34,13 @@ namespace PRN221.ClinicDental.Data.Repositories
             .Any(a => a.CustomerId == customerId
                    && a.ClinicId == clinicId
                    && a.AppointmentTime.Date == appointmentDate.Date
-                   && a.Slot == slot);
+                   && a.Slot == slot
+                   && a.Status== "Scheduled");
+        }
+
+        public async Task<IEnumerable<Appointment>> GetAllAppointmentsAsync()
+        {
+            return await _context.Appointments.ToListAsync();
         }
 
         public int GetAppointmentsCountForSlot(int clinicId, int dentistId, DateTime appointmentDate, int slot)
@@ -64,6 +70,16 @@ namespace PRN221.ClinicDental.Data.Repositories
           .ToListAsync();
         }
 
-        
+        public async Task<List<Appointment>> GetListAppointmentByDentistIdAsync(int dentistId)
+        {
+          return await _context.Appointments
+         .Where(a => a.DentistId == dentistId)
+         .Include (a=>a.Customer)
+         .Include(a => a.Dentist)
+         .Include(a => a.Clinic)
+         .ThenInclude(x => x.Address)
+         .Include(a => a.Service)
+         .ToListAsync();
+        }
     }
 }

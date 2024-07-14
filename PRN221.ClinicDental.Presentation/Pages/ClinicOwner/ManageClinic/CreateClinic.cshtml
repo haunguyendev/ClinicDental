@@ -7,21 +7,15 @@
 
 <h1>CreateClinic</h1>
 
-<h4>Clinic</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="row m-lg-5 border border-secondary">
+    <div class="col-md-4 d-flex justify-content-between">
         <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Clinic.Name" class="control-label"></label>
                 <input asp-for="Clinic.Name" class="form-control" />
                 <span asp-validation-for="Clinic.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Clinic.Address" class="control-label"></label>
-                <input asp-for="Clinic.Address" class="form-control" />
-                <span asp-validation-for="Clinic.Address" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Clinic.ImageURL" class="control-label"></label>
@@ -35,14 +29,14 @@
             </div>
             <div class="form-group">
                 <label asp-for="Clinic.District" class="control-label"></label>
-                <input asp-for="Clinic.District" class="form-control" />
+                <select asp-for="Clinic.District" class="form-control" asp-items="ViewBag.Districts"></select>
                 <span asp-validation-for="Clinic.District" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Clinic.ServiceId" class="control-label"></label>
                 <select asp-for="Clinic.ServiceId" class="form-control" asp-items="ViewBag.Services" multiple="multiple"></select>
             </div>
-            <div class="form-group">
+            <div class="form-group mt-3">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>

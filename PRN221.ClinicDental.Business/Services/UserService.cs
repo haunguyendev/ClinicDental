@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using PRN221.ClinicDental.Business.Common.Interface;
 using PRN221.ClinicDental.Business.DTO.Request;
 using PRN221.ClinicDental.Business.DTO.Response;
+using PRN221.ClinicDental.Business.DTO.Response.User;
+using PRN221.ClinicDental.Business.Helper;
 using PRN221.ClinicDental.Data.Common.Interface;
 using PRN221.ClinicDental.Data.Models;
 using PRN221.ClinicDental.Data.Repositories;
@@ -44,10 +46,30 @@ namespace PRN221.ClinicDental.Services
             }
         }
 
+        public async Task<PaginatedList<UserResponseModel>> GetPaginatedUsersAsync(int pageNumber, int pageSize)
+        {
+            var query =  await _unitOfWork.UserRepository.GetAllUserAsync();
+            
+            var listUserResponseModel = _mapper.Map<List<UserResponseModel>>(query);
+            var listUserResponseModelQuery = listUserResponseModel.AsQueryable<UserResponseModel>(); 
+
+            var users = PaginatedList<UserResponseModel>.Create(listUserResponseModel.AsQueryable(), pageNumber, pageSize);
+            return users;
+        }
+        public async Task<PaginatedList<UserResponseModel>> SearchUsersAsync(string searchString, int pageNumber, int pageSize)
+        {
+            var query = await _unitOfWork.UserRepository.SearchUsersAsync(searchString);
+            var userResponseModels = _mapper.Map<List<UserResponseModel>>(query);
+            return PaginatedList<UserResponseModel>.Create(userResponseModels.AsQueryable(), pageNumber, pageSize);
+        }
+
+    
+
         public async Task RegisterUserAsync(UserRegisterRequest request)
         {
             var existingUser = await _unitOfWork.UserRepository.FindByUsernameAsync(request.Username);
             if (existingUser != null)
+
             {
                 throw new Exception("Username already exists.");
             }
@@ -110,6 +132,23 @@ namespace PRN221.ClinicDental.Services
             await _unitOfWork.CommitAsync();
 
             return true;
+        }
+        public async Task<int> GetTotalPatientsAsync()
+        {
+            var query = await _unitOfWork.UserRepository.GetAllUserAsync();
+            return query.Count(u => u.RoleId == 4);
+        }
+
+        public async Task<int> GetTotalClinicOwnersAsync()
+        {
+            var query = await _unitOfWork.UserRepository.GetAllUserAsync();
+            return query.Count(u => u.RoleId == 2);
+        }
+
+        public async Task<int> GetTotalDentistsAsync()
+        {
+            var query = await _unitOfWork.UserRepository.GetAllUserAsync();
+            return query.Count(u => u.RoleId == 3);
         }
     }
 }

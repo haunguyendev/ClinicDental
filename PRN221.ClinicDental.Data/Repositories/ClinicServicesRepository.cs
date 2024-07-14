@@ -1,4 +1,5 @@
-﻿using PRN221.ClinicDental.Data.Common.Interface;
+﻿using Microsoft.EntityFrameworkCore;
+using PRN221.ClinicDental.Data.Common.Interface;
 using PRN221.ClinicDental.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,11 @@ namespace PRN221.ClinicDental.Data.Repositories
     {
         public ClinicServicesRepository(ClinicDentalDbContext context) : base(context)
         {
+        }
+
+        public async Task<ClinicService?> GetClinicServiceByIdAndClinicIdAsync(int serviceId, int clinicId)
+        {
+            return await _context.ClinicServices.SingleOrDefaultAsync(x => x.ServiceId == serviceId && x.ClinicId == clinicId);
         }
     }
 }
