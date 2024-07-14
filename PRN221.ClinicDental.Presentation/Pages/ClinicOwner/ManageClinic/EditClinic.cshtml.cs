@@ -25,7 +25,7 @@ namespace PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageClinic
         }
 
         [BindProperty]
-        public ClinicReqModel Clinic { get; set; } = default!;
+        public ClinicUpdateReqModel Clinic { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -36,15 +36,13 @@ namespace PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageClinic
             var service = await _serviceService.GetAllListServices();
             var clinic = await _clinicService.GetClinicByClinicId(id);
 
-            Clinic = new ClinicReqModel();
+            Clinic = new ClinicUpdateReqModel();
+            Clinic.Id = clinic.ClinicId;
             Clinic.Name = clinic.Name;
             Clinic.StreetAddress = clinic.Address.StreetAddress;
             Clinic.District = clinic.Address.District;
-            Clinic.ClinicServices = clinic.ClinicServices.Select(x=> x.Service).ToList();
 
             ViewData["Districts"] = GetDistricts(Clinic.District);
-            ViewData["Services"] = GetService(Clinic.ClinicServices, service);
-
             if (clinic == null)
             {
                 return NotFound();
@@ -60,11 +58,31 @@ namespace PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageClinic
             {
                 var service = await _serviceService.GetAllListServices();
                 ViewData["Districts"] = GetDistricts(Clinic.District);
-                ViewData["Services"] = GetService(Clinic.ClinicServices, service);
+                //ViewData["Services"] = GetService(Clinic.ClinicServices, service);
+                
                 return Page();
             }
 
-     
+            var newClinic = await _clinicService.GetClinicByClinicId(Clinic.Id);
+            IFormFile imageUrl = null;
+            if (!string.IsNullOrWhiteSpace(Clinic.Name))
+            {
+                newClinic.Name = Clinic.Name;
+            }
+            if (!string.IsNullOrWhiteSpace(Clinic.StreetAddress))
+            {
+                newClinic.Address.StreetAddress = Clinic.StreetAddress;
+            }
+            if (!string.IsNullOrWhiteSpace(Clinic.District))
+            {
+                newClinic.Address.District = Clinic.District;
+            }
+            if(Clinic.ImageURL != null)
+            {
+                imageUrl = Clinic.ImageURL;
+            }
+            var result = await _clinicService.UpdateClinic(newClinic, imageUrl);
+
             return RedirectToPage("./Index");
         }
 
