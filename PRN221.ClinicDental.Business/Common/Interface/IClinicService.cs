@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using PRN221.ClinicDental.Business.DTO.Request.ClinicReqModel;
 using PRN221.ClinicDental.Business.DTO.Response.Clinic;
 using PRN221.ClinicDental.Business.Helper;
@@ -16,7 +17,7 @@ namespace PRN221.ClinicDental.Services.Interfaces
         Task<List<Clinic>> GetClinicsByClinicOwnerId(int userId);
         Task <bool> AddClinic (ClinicReqModel clinic, int customerId);
         Task<PaginatedList<ClinicResponseModel>> GetClinicsByDistrict(string district, int pageNumber, int pageSize);
-
+        Task<bool> UpdateClinic(Clinic clinic, IFormFile imageURL);
         Task<Clinic> GetClinicByClinicId(int? id);
         Task<int> GetTotalClinicsAsync();
     }
