@@ -193,7 +193,6 @@ namespace PRN221.ClinicDental.Services
 
         public async Task<Data.Models.ClinicService> GetServiceByClinicServiceId(int id)
         {
-            throw new NotImplementedException();
             var clinicServices = await _unitOfWork.ServiceRepository.GetServicesByClinicServiceId(id);
             //    //var serviceResponseModels = new ServiceResponseModel
             //    //{
