@@ -176,7 +176,27 @@
                 <strong>Error:</strong> User profile data is not available.
             </div>
         }
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+
+        @if (TempData["ErrorMessages"] != null)
+        {
+            var errorMessages = (string[])TempData["ErrorMessages"];
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                    @foreach (var error in errorMessages)
+                    {
+                        <li>@error</li>
+                    }
+                </ul>
+            </div>
+        }
     </div>
+
 
     <!-- Edit Profile Modal -->
     <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
@@ -211,18 +231,7 @@
                             <button type="submit" class="btn btn-primary">Save changes</button>
                         </div>
                     </form>
-                    @if (TempData["ErrorMessage"] != null)
-                {
-                    <div class="alert alert-danger" role="alert">
-                        @TempData["ErrorMessage"]
-                    </div>
-                }
-                @if (TempData["SuccessMessage"] != null)
-                {
-                    <div class="alert alert-success" role="alert">
-                        @TempData["SuccessMessage"]
-                    </div>
-                }
+                   
                 </div>
             </div>
         </div>
@@ -242,33 +251,24 @@
                     <form id="changePasswordForm" method="post" asp-page-handler="ChangePassword">
                         <div class="form-group">
                             <label for="currentPassword">Current Password</label>
-                            <input type="password" class="form-control" id="currentPassword" name="CurrentPassword" required>
+                            <input type="password" class="form-control" id="currentPassword" asp-for="ChangePasswordRequest.CurrentPassword" required>
+                            <span asp-validation-for="ChangePasswordRequest.CurrentPassword" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label for="newPassword">New Password</label>
-                            <input type="password" class="form-control" id="newPassword" name="NewPassword" required>
+                            <input type="password" class="form-control" id="newPassword" asp-for="ChangePasswordRequest.NewPassword" required>
+                            <span asp-validation-for="ChangePasswordRequest.NewPassword" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label for="confirmPassword">Confirm Password</label>
-                            <input type="password" class="form-control" id="confirmPassword" name="ConfirmPassword" required>
+                            <input type="password" class="form-control" id="confirmPassword" asp-for="ChangePasswordRequest.ConfirmPassword" required>
+                            <span asp-validation-for="ChangePasswordRequest.ConfirmPassword" class="text-danger"></span>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Change Password</button>
                         </div>
                     </form>
-                    @if (TempData["ErrorMessage"] != null)
-                    {
-                        <div class="alert alert-danger" role="alert">
-                            @TempData["ErrorMessage"]
-                        </div>
-                    }
-                    @if (TempData["SuccessMessage"] != null)
-                    {
-                        <div class="alert alert-success" role="alert">
-                            @TempData["SuccessMessage"]
-                        </div>
-                    }
                 </div>
             </div>
         </div>

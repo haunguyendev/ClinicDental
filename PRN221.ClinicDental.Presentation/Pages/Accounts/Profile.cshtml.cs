@@ -1,3 +1,5 @@
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PRN221.ClinicDental.Business.DTO.Request;
@@ -17,6 +19,8 @@ namespace PRN221.ClinicDental.Presentation.Pages.Accounts
         {
             _userService = userService;
         }
+        [BindProperty]
+        public ChangePasswordRequest ChangePasswordRequest { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -88,41 +92,51 @@ namespace PRN221.ClinicDental.Presentation.Pages.Accounts
                 return Page();
             }
         }
-        public async Task<IActionResult> OnPostChangePasswordAsync(string currentPassword, string newPassword, string confirmPassword)
+        public async Task<IActionResult> OnPostChangePasswordAsync()
         {
             var userIdString = User.FindFirstValue("UserId");
             if (int.TryParse(userIdString, out int userId))
             {
-                if (!ModelState.IsValid || newPassword != confirmPassword)
+                if (!ModelState.IsValid)
                 {
-                    ModelState.AddModelError(string.Empty, "Passwords do not match.");
-                    return new JsonResult(new { success = false, error = "Passwords do not match." });
+                    // Lưu trữ các thông báo lỗi vào TempData
+                    var errorMessages = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToArray();
+                    TempData["ErrorMessages"] = errorMessages;
+                    return RedirectToPage();
                 }
 
                 try
                 {
-                    var result = await _userService.ChangeUserPasswordAsync(userId, currentPassword, newPassword);
+                    var result = await _userService.ChangeUserPasswordAsync(userId, ChangePasswordRequest.CurrentPassword, ChangePasswordRequest.NewPassword);
                     if (result)
                     {
                         TempData["SuccessMessage"] = "Password changed successfully.";
-                        return new JsonResult(new { success = true });
+                        return RedirectToPage();
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, "Current password is incorrect.");
-                        return new JsonResult(new { success = false, error = "Current password is incorrect." });
+                        TempData["ErrorMessages"] = new string[] { "Current password is incorrect." };
+                        return RedirectToPage();
                     }
                 }
                 catch (System.Exception ex)
                 {
-                    ModelState.AddModelError(string.Empty, ex.Message);
-                    return new JsonResult(new { success = false, error = ex.Message });
+                    TempData["ErrorMessages"] = new string[] { ex.Message };
+                    return RedirectToPage();
                 }
             }
             else
             {
-                return BadRequest("Invalid user ID.");
-            }           
+                TempData["ErrorMessages"] = new string[] { "Invalid user ID." };
+                return RedirectToPage();
+            }
         }
+        public async Task<IActionResult> OnGetLogout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToPage("/Accounts/Login");
+        }
+
+
     }
 }
