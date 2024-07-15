@@ -6,9 +6,11 @@ using PRN221.ClinicDental.Business.DTO.Response.Clinic;
 using PRN221.ClinicDental.Business.Helper;
 using PRN221.ClinicDental.Services.Interfaces;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PRN221.ClinicDental.Presentation.Pages.Customer
 {
+    [Authorize(Roles = "Customer")]
     public class ClinicsModel : PageModel
     {
         private readonly IClinicService _clinicService;

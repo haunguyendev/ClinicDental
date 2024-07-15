@@ -25,11 +25,19 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         .AddCookie(options =>
         {
             options.LoginPath = "/Accounts/Login";
+            options.AccessDeniedPath = "/Accounts/AccessDenied";
         });
 builder.Services.AddDbContext<ClinicDentalDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("CustomerOnly", policy => policy.RequireRole("Customer"));
+    options.AddPolicy("ClinicOwnerOnly", policy => policy.RequireRole("ClinicOwner"));
+    options.AddPolicy("DentistOnly", policy => policy.RequireRole("Dentist"));
+    // Thêm các chính sách khác nếu cần
+});
 
 builder.Services.AddAuthorization(options =>
 {

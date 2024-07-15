@@ -63,10 +63,7 @@ namespace PRN221.ClinicDental.Presentation.Pages.Accounts
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                                           new ClaimsPrincipal(claimsIdentity),
                                           authProperties);
-            if (user.Role.Equals("ClinicOwner"))
-            {
-                return Redirect("/ClinicOwner/Index");
-            }
+           
             return Redirect("/Index");
         }
 

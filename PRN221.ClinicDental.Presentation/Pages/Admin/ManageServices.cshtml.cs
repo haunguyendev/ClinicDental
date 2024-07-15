@@ -1,12 +1,16 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PRN221.ClinicDental.Business.Common.Interface;
 using PRN221.ClinicDental.Business.DTO.Request.ServiceModel;
 using PRN221.ClinicDental.Business.DTO.Response.ServiceResponse;
 using PRN221.ClinicDental.Data.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PRN221.ClinicDental.Presentation.Pages.Admin
 {
+    [Authorize(Roles = "Admin")]
     public class ManageServicesModel : PageModel
     {
         private readonly IServiceService _serviceService;
@@ -100,6 +104,12 @@ namespace PRN221.ClinicDental.Presentation.Pages.Admin
                 ErrorMessage = ex.Message;
                 return RedirectToPage();
             }
+        }
+
+        public async Task<IActionResult> OnGetLogout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToPage("/Accounts/Login");
         }
 
 

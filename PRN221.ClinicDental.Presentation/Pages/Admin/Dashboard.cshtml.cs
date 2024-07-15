@@ -1,12 +1,16 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PRN221.ClinicDental.Business.DTO.Response.User;
 using PRN221.ClinicDental.Business.Helper;
 using PRN221.ClinicDental.Services;
 using PRN221.ClinicDental.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PRN221.ClinicDental.Presentation.Pages.Admin
 {
+    [Authorize(Roles = "Admin")]
     public class DashboardModel : PageModel
     {
         private readonly IUserService _userService;
@@ -50,6 +54,11 @@ namespace PRN221.ClinicDental.Presentation.Pages.Admin
             Users = await _userService.SearchUsersAsync(SearchString, pageNumber, pageSize);
             CurrentPage = Users.CurrentPage;
             TotalPages = Users.TotalPages;
+        }
+        public async Task<IActionResult> OnGetLogout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToPage("/Accounts/Login");
         }
     }
 }

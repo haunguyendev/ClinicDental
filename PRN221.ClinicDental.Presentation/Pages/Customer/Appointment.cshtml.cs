@@ -11,10 +11,11 @@ using PRN221.ClinicDental.Data.Models;
 using PRN221.ClinicDental.Services;
 using PRN221.ClinicDental.Services.Interfaces;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PRN221.ClinicDental.Presentation.Pages.Customer
 {
-
+    [Authorize(Roles = "Customer")]
     public class AppointmentModel : PageModel
     {
         private readonly IServiceService _serviceService;

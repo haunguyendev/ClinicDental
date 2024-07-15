@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,6 +17,7 @@ using PRN221.ClinicDental.Services.Interfaces;
 
 namespace PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageClinic
 {
+    [Authorize(Roles = "ClinicOwner")]
     public class CreateClinicModel : PageModel
     {
         private readonly IClinicService _clinicService;
