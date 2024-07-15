@@ -9,6 +9,8 @@ using PRN221.ClinicDental.Data.Repositories;
 using PRN221.ClinicDental.Data.UnitOfWork;
 using PRN221.ClinicDental.Presentation.Extensions;
 using System.Text;
+using PRN221.ClinicDental.Services.Interfaces;
+using PRN221.ClinicDental.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,6 +40,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("DentistOnly", policy => policy.RequireRole("Dentist"));
     // Thêm các chính sách khác nếu cần
 });
+builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddAuthorization(options =>
 {
@@ -54,7 +57,7 @@ builder.Services.AddTransient<IServiceRepository, ServiceRepository>();
 builder.Services.AddTransient<IRoleRepository, RoleRepository>();
 builder.Services.AddTransient<IDentistDetailRepository, DentistDetailRepository>();
 builder.Services.AddTransient<IAppointmentRepository, AppointmentRepository>();
-
+builder.Services.AddTransient<IUserService, UserService>();
 
 var app = builder.Build();
 

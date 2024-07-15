@@ -31,7 +31,16 @@ namespace PRN221.ClinicDental.Data.Repositories
         {
             throw new NotImplementedException();
         }
+        public async Task<User> GetUserByIdAsync(int userId)
+        {
+            return await _context.Users.FindAsync(userId);
+        }
 
+        public async Task UpdateUserAsync(User user)
+        {
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+        }
         public async Task<IEnumerable<User>> SearchUsersAsync(string searchString)
         {
             if (string.IsNullOrEmpty(searchString)) searchString = "";
@@ -41,3 +50,4 @@ namespace PRN221.ClinicDental.Data.Repositories
         }
     }
 }
+    
