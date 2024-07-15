@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using PRN221.ClinicDental.Business.Common.Interface;
+using PRN221.ClinicDental.Business.DTO.Request.ServiceModel;
 using PRN221.ClinicDental.Business.DTO.Response.Dentist;
 using PRN221.ClinicDental.Business.DTO.Response.ServiceResponse;
 using PRN221.ClinicDental.Data.Common.Interface;
@@ -29,6 +30,8 @@ namespace PRN221.ClinicDental.Services
             return _mapper.Map<List<ServiceResponseModel>>(listService);
 
         }
+
+
 
         public async Task<List<DentistResponseModel>> GetDentistsByServiceAndClinic(int serviceId, int clinicId)
         {
@@ -76,9 +79,80 @@ namespace PRN221.ClinicDental.Services
 
         }
 
-        public Task<ServiceResponseModel> GetServiceByIdAsync(int id)
+        public async Task<ServiceViewAdminResponse> GetServiceByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var service = await _unitOfWork.ServiceRepository.GetServiceById(id);
+            if (service == null)
+            {
+                return null;
+            }
+            return _mapper.Map<ServiceViewAdminResponse>(service);
+
+        }
+
+        public async Task<List<ServiceViewAdminResponse>> GetAllServicesAdminView()
+        {
+            var service = await _unitOfWork.ServiceRepository.GetAllServices();
+            return _mapper.Map<List<ServiceViewAdminResponse>>(service);
+        }
+
+
+        public async Task<ServiceViewAdminResponse> CreateServiceAsync(ServiceViewAdminRequest service)
+        {
+            var newService = new Service()
+            {
+                ServiceName = service.ServiceName,
+                Description = service.Description,
+                ImageURL = service.ImageURL,
+            };
+            await _unitOfWork.ServiceRepository.CreateAsync(newService);
+            await _unitOfWork.CommitAsync();
+            return _mapper.Map<ServiceViewAdminResponse>(newService);
+            
+
+        }
+
+        public async Task UpdateServiceAsync(ServiceViewAdminResponse service)
+        {
+            var serviceExist =await _unitOfWork.ServiceRepository.GetServiceById(service.ServiceId);
+            if (serviceExist == null)
+            {
+                throw new Exception($"Not found serviceId: {service.ServiceId} ");
+
+            }
+
+            serviceExist.Description = service.Description;
+            serviceExist.ImageURL = service.ImageURL;
+            serviceExist.ServiceName= service.ServiceName;
+
+            await _unitOfWork.ServiceRepository.UpdateAsync(serviceExist);
+            await _unitOfWork.CommitAsync();
+        }
+
+        public async Task<bool> DeleteServiceAsync(int serviceId)
+        {
+            var service = await _unitOfWork.ServiceRepository.GetServiceById(serviceId);
+            if (service == null)
+            {
+                return false;
+            }
+
+            // Check if any clinic is associated with this service
+            bool isServiceUsed = await _unitOfWork.ClinicServicesRepository.IsServiceUsedByAnyClinicAsync(serviceId);
+            if (isServiceUsed)
+            {
+                throw new InvalidOperationException("Cannot delete service because it is associated with one or more clinics.");
+            }
+
+            // Proceed with deleting the service
+            await _unitOfWork.ServiceRepository.DeleteAsync(service);
+            await _unitOfWork.CommitAsync();
+            return true;
+        }
+
+        public async Task<bool> ServiceNameExistsAsync(string serviceName)
+        {
+            return await _unitOfWork.ServiceRepository.ServiceNameExistsAsync(serviceName);
         }
     }
 }

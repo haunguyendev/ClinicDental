@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Google.Apis.Storage.v1.Data;
 using PRN221.ClinicDental.Business.DTO.Request.ClinicReqModel;
 using PRN221.ClinicDental.Business.DTO.Response;
 using PRN221.ClinicDental.Business.DTO.Response.Clinic;
@@ -39,6 +40,7 @@ namespace PRN221.ClinicDental.Business.MapperApplication
 
             CreateMap<User, UserResponseModel>()
                 .ForMember(dest => dest.Role, src => src.MapFrom(x => x.Role.RoleName));
+            CreateMap<Service, ServiceViewAdminResponse>();
 
         }
     }

@@ -52,5 +52,10 @@ namespace PRN221.ClinicDental.Data.Repositories
                 .Where(cs => cs.ClinicId == clinicId)
                 .ToListAsync();
         }
+
+        public async Task<bool> ServiceNameExistsAsync(string serviceName)
+        {
+            return await _context.Services.AnyAsync(s => s.ServiceName == serviceName);
+        }
     }
 }

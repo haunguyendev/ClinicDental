@@ -1,4 +1,4 @@
-using Google.Cloud.Storage.V1;
+﻿using Google.Cloud.Storage.V1;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +8,7 @@ using PRN221.ClinicDental.Data.Models;
 using PRN221.ClinicDental.Data.Repositories;
 using PRN221.ClinicDental.Data.UnitOfWork;
 using PRN221.ClinicDental.Presentation.Extensions;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,8 +65,27 @@ app.UseCookiePolicy();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.Use(async (context, next) =>
+{
+    Console.WriteLine($"Request: {context.Request.Method} {context.Request.Path}");
+    // Log body yêu cầu
+    if (context.Request.Method == "POST" || context.Request.Method == "PUT")
+    {
+        context.Request.EnableBuffering();
+        using var reader = new StreamReader(context.Request.Body, encoding: Encoding.UTF8, detectEncodingFromByteOrderMarks: false, leaveOpen: true);
+        var body = await reader.ReadToEndAsync();
+        context.Request.Body.Position = 0;
+        Console.WriteLine($"Request Body: {body}");
+    }
+
+    await next.Invoke();
+
+    // Log thông tin phản hồi
+    Console.WriteLine($"Response: {context.Response.StatusCode}");
+});
 
 
 app.MapRazorPages();
+
 
 app.Run();

@@ -14,6 +14,7 @@ namespace PRN221.ClinicDental.Data.Common.Interface
         Task<List<Service>> GetServiceByListId(List<int> ids);
         Task<List<ClinicService>> GetServicesByClinicId(int clinicId);
         Task<List<DentistDetail>> GetDentistsByServiceAndClinic(int serviceId, int clinicId);
+        Task<bool> ServiceNameExistsAsync(string serviceName);
 
     }
 }
