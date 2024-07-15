@@ -48,6 +48,13 @@ namespace PRN221.ClinicDental.Data.Repositories
                .Where(u => u.Username.Contains(searchString) || u.Name.Contains(searchString) || u.Email.Contains(searchString)||u.Role.RoleName.Contains(searchString))
                .ToListAsync();
         }
+
+        public async Task<User> GetDentistById(int id)
+        {
+            return await _context.Users
+                .Include(x => x.DentistDetail)
+                .Include(x => x.DentistDetail.DentistServices).FirstOrDefaultAsync(x => x.UserId == id);
+        }
     }
 }
     

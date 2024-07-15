@@ -6,6 +6,6 @@ namespace PRN221.ClinicDental.Services.Interfaces
 {
     public interface IRoleService
     {
-       
+        public Task<List<Role>> GetRolesAsync();
     }
 }

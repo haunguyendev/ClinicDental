@@ -68,10 +68,10 @@
                     <a asp-page="./EditClinic" asp-route-id="@item.ClinicId" class="btn btn-primary">Edit</a>
                 </td>
                 <td>
-                    <a asp-page="./" asp-route-id="@item.ClinicId" class="btn btn-warning">Manage</a>
+                    <a asp-page="./ManageClinicService/Index" asp-route-id="@item.ClinicId" class="btn btn-warning">Manage</a>
                 </td>
                 <td>
-                    <a asp-page="./ManageClinicDoctor" asp-route-id="@item.ClinicId" class="btn btn-info">Manage</a>
+                    <a asp-page="./ManageDoctor/ManageClinicDoctor" asp-route-id="@item.ClinicId" class="btn btn-info">Manage</a>
                 </td>
             </tr>
         }

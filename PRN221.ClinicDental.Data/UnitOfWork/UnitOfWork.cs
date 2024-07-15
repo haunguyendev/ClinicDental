@@ -1,5 +1,6 @@
 ﻿using PRN221.ClinicDental.Data.Common.Interface;
 using PRN221.ClinicDental.Data.Models;
+using PRN221.ClinicDental.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,7 @@ namespace PRN221.ClinicDental.Data.UnitOfWork
             IUserRepository userRepository,
             IClinicRepository clinicRepository,
             IDentistDetailRepository doctorDetailRepository,
-
-
+            IDentistServiceRepository dentistServiceRepository,
             IServiceRepository serviceRepository,
             IAppointmentRepository appointmentRepository,
             IClinicServicesRepository clinicServicesRepository)
@@ -29,10 +29,8 @@ namespace PRN221.ClinicDental.Data.UnitOfWork
             UserRepository = userRepository;
             ClinicRepository = clinicRepository;
             DentistDetailRepository = doctorDetailRepository;
-
-
+            DentistServiceRepository = dentistServiceRepository;
             ServiceRepository = serviceRepository;
-
             AppointmentRepository = appointmentRepository;
             ClinicServicesRepository = clinicServicesRepository;
         }
@@ -40,7 +38,7 @@ namespace PRN221.ClinicDental.Data.UnitOfWork
         public IRoleRepository RoleRepository { get; }
         public IUserRepository UserRepository { get; }
         public IClinicRepository ClinicRepository { get; }
-
+        public IDentistServiceRepository DentistServiceRepository { get; }
         public IClinicServicesRepository ClinicServicesRepository { get; }
         public IServiceRepository ServiceRepository { get; }
 

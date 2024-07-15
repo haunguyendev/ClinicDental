@@ -8,16 +8,11 @@ using System.Threading.Tasks;
 
 namespace PRN221.ClinicDental.Data.Repositories
 {
-    public class RoleRepository : RepositoryBase<Role>, IRoleRepository
+    public class DentistServiceRepository : RepositoryBase<DentistService>, IDentistServiceRepository
     {
-        public RoleRepository(ClinicDentalDbContext context) : base(context)
+        public DentistServiceRepository(ClinicDentalDbContext context) : base(context)
         {
 
-        }
-
-        public async Task<List<Role>> GetRoles()
-        {
-            return _context.Roles.ToList();
         }
     }
 }

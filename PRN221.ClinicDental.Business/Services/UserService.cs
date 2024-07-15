@@ -7,6 +7,7 @@ using BCrypt.Net;
 using Microsoft.EntityFrameworkCore;
 using PRN221.ClinicDental.Business.Common.Interface;
 using PRN221.ClinicDental.Business.DTO.Request;
+using PRN221.ClinicDental.Business.DTO.Request.Dentist;
 using PRN221.ClinicDental.Business.DTO.Response;
 using PRN221.ClinicDental.Business.DTO.Response.User;
 using PRN221.ClinicDental.Business.Helper;
@@ -149,6 +150,105 @@ namespace PRN221.ClinicDental.Services
         {
             var query = await _unitOfWork.UserRepository.GetAllUserAsync();
             return query.Count(u => u.RoleId == 3);
+        }
+
+        public async Task UpdateDentist(DentistUpdateReqModel Dentist)
+        {
+            var chosenDentist = await _unitOfWork.UserRepository.GetDentistById(Dentist.ID);
+            chosenDentist.Name = Dentist.FullName;
+            chosenDentist.PhoneNumber = Dentist.PhoneNumber;
+            chosenDentist.Address = Dentist.Address;
+            chosenDentist.DentistDetail.Certificate = Dentist.Certificate;
+            chosenDentist.DentistDetail.Qualification = Dentist.Qualification;
+            chosenDentist.DentistDetail.Experience = Dentist.Experience;
+            var listService = new List<DentistService>();
+
+            foreach (var item in Dentist.ServiceId)
+            {
+                listService.Add(new DentistService
+                {
+                    DentistId = Dentist.ID,
+                    ServiceId = item,
+                });
+            }
+            var serviceList = new List<DentistService>();
+            foreach (var item in Dentist.ServiceId)
+            {
+                serviceList.Add(new DentistService
+                {
+                    DentistId = Dentist.ID,
+                    ServiceId = item,
+                });
+            }
+
+            List<DentistService> existedList = chosenDentist.DentistDetail.DentistServices.ToList();
+
+            var removeList = existedList.Where(t => !serviceList.Contains(t)).ToList();
+            var addList = serviceList.Except(removeList).ToList();
+
+            foreach (var item in removeList)
+            {
+                chosenDentist.DentistDetail.DentistServices.Remove(item);
+            }
+            foreach (var item in addList)
+            {
+                chosenDentist.DentistDetail.DentistServices.Add(item);
+            }
+            await _unitOfWork.UserRepository.UpdateAsync(chosenDentist);
+            await _unitOfWork.CommitAsync();
+        }
+
+        public async Task<User> GetDentistById(int id)
+        {
+            return await _unitOfWork.UserRepository.GetDentistById(id);
+        }
+
+        public async Task<bool> CreateDentist(DentistReqModel dentist, int ClinicId)
+        {
+
+
+            var existingUser = await _unitOfWork.UserRepository.FindByUsernameAsync(dentist.Username);
+            if (existingUser != null)
+
+            {
+                throw new Exception("Username already exists.");
+            }
+
+            // Create new User entity
+            var newUser = new User
+            {
+                Username = dentist.Username,
+                PasswordHash = _authentication.Hash(dentist.Password), // Hash the password
+                Name = dentist.FullName,
+                Email = dentist.Email,
+                PhoneNumber = dentist.PhoneNumber,
+                Address = dentist.Address,
+                RoleId = 3, // Assuming 2 is the RoleID for 'Customer'
+            };
+
+            var listService = new List<DentistService>();
+
+            foreach (var item in dentist.ServiceId)
+            {
+                listService.Add(new DentistService
+                {
+                    DentistId = newUser.UserId,
+                    ServiceId = item,
+                });
+            }
+
+            var DentistDetail = new DentistDetail()
+            {
+                ClinicId = ClinicId,
+                Certificate = dentist.Certificate,
+                Qualification = dentist.Qualification,
+                Experience = dentist.Experience,
+                DentistServices = listService,
+            };
+            newUser.DentistDetail = DentistDetail;
+            await _unitOfWork.UserRepository.CreateAsync(newUser);
+            await _unitOfWork.CommitAsync();
+            return true;
         }
     }
 }

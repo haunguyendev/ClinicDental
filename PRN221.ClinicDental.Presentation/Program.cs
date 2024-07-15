@@ -58,6 +58,7 @@ builder.Services.AddTransient<IRoleRepository, RoleRepository>();
 builder.Services.AddTransient<IDentistDetailRepository, DentistDetailRepository>();
 builder.Services.AddTransient<IAppointmentRepository, AppointmentRepository>();
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IDentistServiceRepository, DentistServiceRepository>();
 
 var app = builder.Build();
 
