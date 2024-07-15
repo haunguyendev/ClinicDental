@@ -13,7 +13,8 @@ namespace PRN221.ClinicDental.Data.Common.Interface
         IUserRepository UserRepository { get; }
         IClinicRepository ClinicRepository { get; }
         IDentistDetailRepository DentistDetailRepository { get; }
-       
+
+        IDentistServiceRepository DentistServiceRepository { get; }
         IAddressRepository AddressRepository { get; }
         IServiceRepository ServiceRepository { get; }
        

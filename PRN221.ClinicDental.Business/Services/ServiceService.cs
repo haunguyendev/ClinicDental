@@ -60,6 +60,7 @@ namespace PRN221.ClinicDental.Services
             var clinicServices = await _unitOfWork.ServiceRepository.GetServicesByClinicId(clinicId);
             var serviceResponseModels = clinicServices.Select(cs => new ServiceResponseModel
             {
+                ClinicServiceId = cs.ClinicServiceId,
                 ServiceId = cs.Service.ServiceId,
                 ServiceName = cs.Service.ServiceName,
                 Description = cs.Service.Description,
@@ -153,6 +154,56 @@ namespace PRN221.ClinicDental.Services
         public async Task<bool> ServiceNameExistsAsync(string serviceName)
         {
             return await _unitOfWork.ServiceRepository.ServiceNameExistsAsync(serviceName);
+        }
+
+        public async Task<List<Service>> GetAllListServicesForCreate()
+        {
+            return await _unitOfWork.ServiceRepository.GetAllServices();
+        }
+
+        public async Task<bool> UpdatePriceClinicServices(Data.Models.ClinicService clinicService)
+        {
+            var newClinicService = await _unitOfWork.ServiceRepository.GetServicesByClinicServiceId(clinicService.ClinicServiceId);
+            newClinicService.Price = clinicService.Price;
+            await _unitOfWork.ClinicServicesRepository.UpdateAsync(newClinicService);
+            await _unitOfWork.CommitAsync();
+            return true;
+        }
+
+        public async Task<bool> DeleteClinicServices(int clinicServiceId)
+        {
+            var clinicService = await _unitOfWork.ServiceRepository.GetServicesByClinicServiceId(clinicServiceId);
+            await _unitOfWork.ClinicServicesRepository.DeleteAsync(clinicService);
+            await _unitOfWork.CommitAsync();
+            return true;
+        }
+
+        public async Task<bool> CreateClinicService(int serviceId, int clinicId, decimal price)
+        {
+            var clinicService = new Data.Models.ClinicService
+            {
+                ClinicId = clinicId,
+                ServiceId = serviceId,
+                Price = price
+            };
+            await _unitOfWork.ClinicServicesRepository.CreateAsync(clinicService);
+            await _unitOfWork.CommitAsync();
+            return true;
+        }
+
+        public async Task<Data.Models.ClinicService> GetServiceByClinicServiceId(int id)
+        {
+            throw new NotImplementedException();
+            var clinicServices = await _unitOfWork.ServiceRepository.GetServicesByClinicServiceId(id);
+            //    //var serviceResponseModels = new ServiceResponseModel
+            //    //{
+            //    //    ClinicServiceId = clinicServices.ClinicServiceId,
+            //    //    ServiceId = clinicServices.Service.ServiceId,
+            //    //    ServiceName = clinicServices.Service.ServiceName,
+            //    //    Description = clinicServices.Service.Description,
+            //    //    Price = clinicServices.Price
+            //    //};
+            return clinicServices;
         }
     }
 }

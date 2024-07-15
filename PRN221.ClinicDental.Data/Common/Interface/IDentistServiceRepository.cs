@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace PRN221.ClinicDental.Data.Common.Interface
 {
-    public interface IRoleRepository:IRepositoryBase<Role>
+    public interface IDentistServiceRepository : IRepositoryBase<DentistService>
     {
-        Task<List<Role>> GetRoles();
     }
 }

@@ -1,0 +1,63 @@
+﻿@page
+@model PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageClinic.ManangeClinicService.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="text-center my-4 display-4">Manage Clinic Service</h1>
+
+<p class="text-center">
+    <a asp-page="CreateClinicService" asp-route-id="@Model.Clinic.ClinicId" class="btn btn-primary">Create New Service</a>
+</p>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ClinicService[0].ServiceId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ClinicService[0].ServiceName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ClinicService[0].Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ClinicService[0].Description)
+                </th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ClinicService)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ServiceId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ServiceName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td class="text-center">
+                        <a asp-page="./EditClinicService" asp-route-id="@item.ClinicServiceId" class="btn btn-warning btn-sm mx-1">Edit</a>
+                        <a asp-page="./DeleteClinicService" asp-route-id="@item.ClinicServiceId" class="btn btn-danger btn-sm mx-1">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

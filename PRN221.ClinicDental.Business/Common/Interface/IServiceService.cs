@@ -28,8 +28,11 @@ namespace PRN221.ClinicDental.Business.Common.Interface
 
         Task<bool> ServiceNameExistsAsync(string serviceName);
 
-
-
+        Task<List<Service>> GetAllListServicesForCreate();
+        Task<bool> UpdatePriceClinicServices(ClinicService clinicService);
+        Task<bool> DeleteClinicServices(int clinicServiceId);
+        Task<bool> CreateClinicService(int serviceId, int clinicId, decimal price);
+        Task<ClinicService> GetServiceByClinicServiceId(int id);
 
     }
 }

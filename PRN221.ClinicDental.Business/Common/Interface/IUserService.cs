@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using PRN221.ClinicDental.Business.DTO.Request;
+using PRN221.ClinicDental.Business.DTO.Request.Dentist;
 using PRN221.ClinicDental.Business.DTO.Response;
 using PRN221.ClinicDental.Business.DTO.Response.User;
 using PRN221.ClinicDental.Business.Helper;
@@ -20,5 +21,9 @@ namespace PRN221.ClinicDental.Services.Interfaces
         Task<int> GetTotalPatientsAsync();
         Task<int> GetTotalClinicOwnersAsync();
         Task<int> GetTotalDentistsAsync();
+
+        Task UpdateDentist(DentistUpdateReqModel Dentist);
+        Task<User> GetDentistById(int id);
+        Task<bool> CreateDentist(DentistReqModel dentist, int ClinicId);
     }
 }
