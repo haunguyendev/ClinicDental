@@ -75,7 +75,7 @@ namespace PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageClinic
         
             ModelState.AddModelError(string.Empty, "Unable to retrieve user ID from cookies.");
 
-            return RedirectToPage(".ManageClinic/Index");
+            return Redirect("/ClinicOwner/ManageClinic");
         }
 
         private List<SelectListItem> GetDistricts()
