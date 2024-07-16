@@ -29,6 +29,8 @@ namespace PRN221.ClinicDental.Presentation.Pages.Customer
             _serviceService = serviceService;
             _appointmentService = appointmentService;
         }
+        [TempData]
+        public string ErrorMessage { get; set; }
 
         [BindProperty]
         public AppointmentRequestModel AppointmentRequest { get; set; }
@@ -80,8 +82,9 @@ namespace PRN221.ClinicDental.Presentation.Pages.Customer
                 if ( _appointmentService.CustomerHasAppointment(customerId, AppointmentRequest.ClinicId, AppointmentRequest.AppointmentDate, AppointmentRequest.Slot))
 
                 {
-                    var errorMessage = "You already have an appointment in this slot on the same date.";
-                    return RedirectToPage("/Customer/Appointment", new { clinicId = AppointmentRequest.ClinicId, serviceId = AppointmentRequest.ServiceId, error = errorMessage });
+
+                    ErrorMessage = "You already have an appointment in this slot on the same date.";
+                    return RedirectToPage("/Customer/Appointment", new { clinicId = AppointmentRequest.ClinicId, serviceId = AppointmentRequest.ServiceId });
                 }
 
                 await _appointmentService.CreateAppointmentAsync(AppointmentRequest, customerId);

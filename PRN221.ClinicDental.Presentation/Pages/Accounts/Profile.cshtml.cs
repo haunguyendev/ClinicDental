@@ -99,7 +99,7 @@ namespace PRN221.ClinicDental.Presentation.Pages.Accounts
             {
                 if (!ModelState.IsValid)
                 {
-                    // Lưu trữ các thông báo lỗi vào TempData
+                    
                     var errorMessages = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToArray();
                     TempData["ErrorMessages"] = errorMessages;
                     return RedirectToPage();

@@ -19,6 +19,13 @@
         { 10, "17:00 - 17:45" }
     };
 }
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger" role="alert">
+        @Model.ErrorMessage
+    </div>
+}
 <section class="appointment-area appointment-default-area mr-3" style="margin-right:18em">
     <div class="container" data-aos="fade-up">
         @if (!string.IsNullOrEmpty(errorMessage))

@@ -85,7 +85,7 @@ namespace PRN221.ClinicDental.Services
                 Email = request.Email,
                 PhoneNumber = request.PhoneNumber,
                 Address = request.Address,
-                RoleId = 2 // Assuming 2 is the RoleID for 'Customer'
+                RoleId = 4 
             };
 
             // Add the user to the repository

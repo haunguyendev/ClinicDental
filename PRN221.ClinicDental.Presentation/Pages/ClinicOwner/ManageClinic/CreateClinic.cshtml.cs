@@ -56,7 +56,7 @@ namespace PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageClinic
 
             var initClinic = new ClinicReqModel()
             {
-                Address = Clinic.Address,
+               
                 District = Clinic.District,
                 Name = Clinic.Name,
                 ClinicServices = selectedServices,
@@ -69,7 +69,7 @@ namespace PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageClinic
             {
                 var result = await _clinicService.AddClinic(Clinic, customerId);
                
-                return RedirectToPage("/ClinicOwner/Index");
+                return Redirect("/ClinicOwner/ManageClinic");
             }
             //error
         

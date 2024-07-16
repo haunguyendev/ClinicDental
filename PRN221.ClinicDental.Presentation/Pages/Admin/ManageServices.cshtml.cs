@@ -71,12 +71,7 @@ namespace PRN221.ClinicDental.Presentation.Pages.Admin
             {
                 return NotFound();
             }
-            bool serviceNameExists = await _serviceService.ServiceNameExistsAsync(ServiceRequest.ServiceName);
-            if (serviceNameExists)
-            {
-                ErrorMessage = "Service name already exists.";
-                return RedirectToPage();
-            }
+            
 
             service.ServiceName = ServiceRequest.ServiceName;
             service.Description = ServiceRequest.Description;
