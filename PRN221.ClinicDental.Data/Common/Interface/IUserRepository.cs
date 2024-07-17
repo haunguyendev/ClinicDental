@@ -14,6 +14,9 @@ namespace PRN221.ClinicDental.Data.Common.Interface
         Task<User> GetDentistById(int id);
         Task<User> FindByUsernameAsync(string username);
         Task<User> GetUserByIdAsync(int userId);
+
+        Task<User> FindByEmailAsync(string email);
+
         Task UpdateUserAsync(User user);
         Task<IEnumerable<User>> GetAllUserAsync();
         Task<IEnumerable<User>> SearchUsersAsync(string searchString);
