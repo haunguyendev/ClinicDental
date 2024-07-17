@@ -21,7 +21,8 @@ namespace PRN221.ClinicDental.Services.Interfaces
         Task<int> GetTotalPatientsAsync();
         Task<int> GetTotalClinicOwnersAsync();
         Task<int> GetTotalDentistsAsync();
-
+        Task<User> GetUserByEmail(string Email);
+        Task<User> GetUserByUserName(string username);
         Task UpdateDentist(DentistUpdateReqModel Dentist);
         Task<User> GetDentistById(int id);
         Task<bool> CreateDentist(DentistReqModel dentist, int ClinicId);

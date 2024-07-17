@@ -250,5 +250,15 @@ namespace PRN221.ClinicDental.Services
             await _unitOfWork.CommitAsync();
             return true;
         }
+
+        public async Task<User> GetUserByEmail(string Email)
+        {
+           return await _unitOfWork.UserRepository.FindByEmailAsync(Email);
+        }
+
+        public async Task<User> GetUserByUserName(string username)
+        {
+            return await _unitOfWork.UserRepository.FindByUsernameAsync(username);
+        }
     }
 }

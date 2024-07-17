@@ -55,6 +55,11 @@ namespace PRN221.ClinicDental.Data.Repositories
                 .Include(x => x.DentistDetail)
                 .Include(x => x.DentistDetail.DentistServices).FirstOrDefaultAsync(x => x.UserId == id);
         }
+
+        public async Task<User> FindByEmailAsync(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+        }
     }
 }
     

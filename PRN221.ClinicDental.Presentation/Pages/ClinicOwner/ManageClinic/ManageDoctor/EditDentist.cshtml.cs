@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using PRN221.ClinicDental.Business.Common.Interface;
 using PRN221.ClinicDental.Business.DTO.Request.Dentist;
+using PRN221.ClinicDental.Data.Models;
 using PRN221.ClinicDental.Services.Interfaces;
 
 namespace PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageDoctor
