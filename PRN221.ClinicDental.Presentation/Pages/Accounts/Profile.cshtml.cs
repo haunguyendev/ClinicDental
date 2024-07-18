@@ -13,6 +13,7 @@ namespace PRN221.ClinicDental.Presentation.Pages.Accounts
     public class ProfileModel : PageModel
     {
         private readonly IUserService _userService;
+        [BindProperty]
         public UserProfileResponse UserProfile { get; set; }
 
         public ProfileModel(IUserService userService)
@@ -30,6 +31,7 @@ namespace PRN221.ClinicDental.Presentation.Pages.Accounts
                 UserProfile = await _userService.GetUserProfileAsync(userId);
                 if (UserProfile == null)
                 {
+                    ModelState.AddModelError(string.Empty, "User profile data could not be retrieved.");
                     // Log the userId to verify it
                     Console.WriteLine($"User ID: {userId}");
                     return NotFound();
@@ -46,7 +48,7 @@ namespace PRN221.ClinicDental.Presentation.Pages.Accounts
         public async Task<IActionResult> OnPostEditProfileAsync(UserProfileUpdateRequest request)
         {
             try
-            {
+            {               
                 if (!ModelState.IsValid)
                 {
                     return Page();
@@ -78,10 +80,13 @@ namespace PRN221.ClinicDental.Presentation.Pages.Accounts
                 if (result)
                 {
                     TempData["SuccessMessage"] = "Profile updated successfully.";
+                    return RedirectToPage("/Accounts/Profile");
+
                 }
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Failed to update profile.");
+                    return Page();
                 }
 
                 return RedirectToPage("/Accounts/Profile");

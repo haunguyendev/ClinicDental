@@ -139,8 +139,7 @@
 </head>
 <body>
     <div class="container">
-        @if (Model.UserProfile != null)
-        {
+        
             <div class="profile-header">
                 <img src="https://via.placeholder.com/150" alt="User Image">
                 <h2 id="username">@Model.UserProfile.Username</h2>
@@ -169,13 +168,9 @@
                 <button class="btn btn-primary" data-toggle="modal" data-target="#editProfileModal"><i class="fas fa-edit"></i> Edit Profile</button>
                 <button class="btn btn-secondary" data-toggle="modal" data-target="#changePasswordModal"><i class="fas fa-key"></i> Change Password</button>
             </div>
-        }
-        else
-        {
-            <div class="alert alert-danger">
-                <strong>Error:</strong> User profile data is not available.
-            </div>
-        }
+       
+     
+        
         @if (TempData["SuccessMessage"] != null)
         {
             <div class="alert alert-success" role="alert">
@@ -197,7 +192,6 @@
         }
     </div>
 
-
     <!-- Edit Profile Modal -->
     <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -210,28 +204,33 @@
                 </div>
                 <div class="modal-body">
                     <form id="editProfileForm" method="post" asp-page-handler="EditProfile">
+                         <div class="form-group">
+                             <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" name="UserProfile.Name" asp-for="@Model.UserProfile.Name" required>
+                         </div>
+                         <div class="form-group">
+                             <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="UserProfile.Email" asp-for="@Model.UserProfile.Email" required>
+                         </div>
+                         <div class="form-group">
+                             <label for="phone">Phone</label>
+                            <input type="text" class="form-control" id="phone" name="UserProfile.PhoneNumber" asp-for="@Model.UserProfile.PhoneNumber" required>
+                         </div>
+                         <div class="form-group">
+                             <label for="address">Address</label>
+                            <input type="text" class="form-control" id="address" name="UserProfile.Address" asp-for="@Model.UserProfile.Address" required>
+                         </div>
                         <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" name="Name" value="@Model.UserProfile.Name" required>
+                            <input type="hidden" class="form-control" id="roleId" name="UserProfile.RoleId" asp-for="@Model.UserProfile.RoleId" required>
                         </div>
                         <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="Email" value="@Model.UserProfile.Email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Phone</label>
-                            <input type="text" class="form-control" id="phone" name="PhoneNumber" value="@Model.UserProfile.PhoneNumber" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="address">Address</label>
-                            <input type="text" class="form-control" id="address" name="Address" value="@Model.UserProfile.Address" required>
+                            <input type="hidden" class="form-control" id="userId" name="UserProfile.UserId" asp-for="@Model.UserProfile.UserId" required>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Save changes</button>
                         </div>
                     </form>
-                   
                 </div>
             </div>
         </div>
@@ -249,6 +248,27 @@
                 </div>
                 <div class="modal-body">
                     <form id="changePasswordForm" method="post" asp-page-handler="ChangePassword">
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="name" name="UserProfile.Name" asp-for="@Model.UserProfile.Name" >
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="email" name="UserProfile.Email" asp-for="@Model.UserProfile.Email" >
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="phone" name="UserProfile.PhoneNumber" asp-for="@Model.UserProfile.PhoneNumber" >
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="address" name="UserProfile.Address" asp-for="@Model.UserProfile.Address" >
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="roleId" name="UserProfile.RoleId" asp-for="@Model.UserProfile.RoleId" >
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="userId" name="UserProfile.UserId" asp-for="@Model.UserProfile.UserId" >
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="userName" name="UserProfile.Username" asp-for="@Model.UserProfile.Username" >
+                        </div>
                         <div class="form-group">
                             <label for="currentPassword">Current Password</label>
                             <input type="password" class="form-control" id="currentPassword" asp-for="ChangePasswordRequest.CurrentPassword" required>
