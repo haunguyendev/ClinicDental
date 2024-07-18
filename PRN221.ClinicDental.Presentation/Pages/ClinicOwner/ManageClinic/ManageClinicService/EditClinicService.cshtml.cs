@@ -25,6 +25,7 @@ namespace PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageClinic.Manage
 
         [BindProperty]
         public ClinicService ClinicService { get; set; } = default!;
+        
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

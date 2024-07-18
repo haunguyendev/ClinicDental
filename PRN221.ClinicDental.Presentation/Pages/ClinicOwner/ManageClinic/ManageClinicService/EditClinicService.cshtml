@@ -32,9 +32,9 @@
         </form>
     </div>
 </div>
-
+    
 <div class="text-center mt-3">
-    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+    <a asp-page="./Index" asp-route-id="@Model.ClinicService.ClinicId" class="btn btn-secondary">Back to List</a>
 </div>
 
 @section Scripts {
