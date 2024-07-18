@@ -223,7 +223,7 @@ namespace PRN221.ClinicDental.Services
                 Email = dentist.Email,
                 PhoneNumber = dentist.PhoneNumber,
                 Address = dentist.Address,
-                RoleId = 3, // Assuming 2 is the RoleID for 'Customer'
+                RoleId = 3, 
             };
 
             var listService = new List<DentistService>();

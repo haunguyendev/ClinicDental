@@ -15,6 +15,7 @@ namespace PRN221.ClinicDental.Business.Common.Interface
     public interface IServiceService
     {
         Task<List<ServiceResponseModel>> GetAllListServices();
+        Task<List<ServiceResponseModel>> GetServiceByClinicId(int clinicId);
 
         Task<ServiceViewAdminResponse> GetServiceByIdAsync(int id);
         Task<List<Service>> GetServiceByListIdAsync(List<int> ids);
@@ -33,6 +34,7 @@ namespace PRN221.ClinicDental.Business.Common.Interface
         Task<bool> DeleteClinicServices(int clinicServiceId);
         Task<bool> CreateClinicService(int serviceId, int clinicId, decimal price);
         Task<ClinicService> GetServiceByClinicServiceId(int id);
+        
 
     }
 }

@@ -204,5 +204,11 @@ namespace PRN221.ClinicDental.Services
             //    //};
             return clinicServices;
         }
+
+        public async Task<List<ServiceResponseModel>> GetServiceByClinicId(int clinicId)
+        {
+           var services = await _unitOfWork.ServiceRepository.GetServiceByClinicId(clinicId);
+            return _mapper.Map<List<ServiceResponseModel>>(services);
+        }
     }
 }

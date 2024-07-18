@@ -72,7 +72,6 @@ namespace PRN221.ClinicDental.Presentation.Pages.Customer
                     return Page();
                 }
 
-                // Ensure AppointmentRequest is initialized
                 if (AppointmentRequest == null)
                 {
                     ModelState.AddModelError(string.Empty, "Appointment request is null.");
