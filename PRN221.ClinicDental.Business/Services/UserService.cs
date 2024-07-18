@@ -24,35 +24,35 @@ namespace PRN221.ClinicDental.Services
         private readonly IUnitOfWork _unitOfWork;
         private IMapper _mapper;
         private IAuthentication _authentication;
-        public UserService(IUnitOfWork unitOfWork,IMapper mapper, IAuthentication authentication)
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper, IAuthentication authentication)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-            _authentication = authentication;  
+            _authentication = authentication;
         }
 
         public async Task<UserLoginResponse> Authenticate(string username, string password)
         {
             var user = await _unitOfWork.UserRepository.FindByUsernameAsync(username);
-            if(user == null)
+            if (user == null)
             {
                 return null;
             }
-            else { 
-            var check = _authentication.Verify(user.PasswordHash, password);
-            if(check == false) { 
-                return null;
-            }
-             return _mapper.Map<UserLoginResponse>(user);
+            else {
+                var check = _authentication.Verify(user.PasswordHash, password);
+                if (check == false) {
+                    return null;
+                }
+                return _mapper.Map<UserLoginResponse>(user);
             }
         }
 
         public async Task<PaginatedList<UserResponseModel>> GetPaginatedUsersAsync(int pageNumber, int pageSize)
         {
-            var query =  await _unitOfWork.UserRepository.GetAllUserAsync();
-            
+            var query = await _unitOfWork.UserRepository.GetAllUserAsync();
+
             var listUserResponseModel = _mapper.Map<List<UserResponseModel>>(query);
-            var listUserResponseModelQuery = listUserResponseModel.AsQueryable<UserResponseModel>(); 
+            var listUserResponseModelQuery = listUserResponseModel.AsQueryable<UserResponseModel>();
 
             var users = PaginatedList<UserResponseModel>.Create(listUserResponseModel.AsQueryable(), pageNumber, pageSize);
             return users;
@@ -64,7 +64,7 @@ namespace PRN221.ClinicDental.Services
             return PaginatedList<UserResponseModel>.Create(userResponseModels.AsQueryable(), pageNumber, pageSize);
         }
 
-    
+
 
         public async Task RegisterUserAsync(UserRegisterRequest request)
         {
@@ -85,7 +85,7 @@ namespace PRN221.ClinicDental.Services
                 Email = request.Email,
                 PhoneNumber = request.PhoneNumber,
                 Address = request.Address,
-                RoleId = 4 
+                RoleId = 4
             };
 
             // Add the user to the repository
@@ -223,7 +223,7 @@ namespace PRN221.ClinicDental.Services
                 Email = dentist.Email,
                 PhoneNumber = dentist.PhoneNumber,
                 Address = dentist.Address,
-                RoleId = 3, 
+                RoleId = 3,
             };
 
             var listService = new List<DentistService>();
@@ -253,12 +253,43 @@ namespace PRN221.ClinicDental.Services
 
         public async Task<User> GetUserByEmail(string Email)
         {
-           return await _unitOfWork.UserRepository.FindByEmailAsync(Email);
+            return await _unitOfWork.UserRepository.FindByEmailAsync(Email);
         }
 
         public async Task<User> GetUserByUserName(string username)
         {
             return await _unitOfWork.UserRepository.FindByUsernameAsync(username);
+        }
+
+        public async Task<bool> RegisterClinicOwnerAsync(ClinicOwnerRegisterRequest request)
+        {
+
+            var existingUser = await _unitOfWork.UserRepository.FindByUsernameAsync(request.Username);
+            if (existingUser != null)
+            {
+                throw new ArgumentException("Username already exists.");
+            }
+
+
+            var newUser = new User
+            {
+                Username = request.Username,
+                PasswordHash = _authentication.Hash("123456@a"),
+                Name = request.FullName,
+                Email = request.Email,
+                PhoneNumber = request.PhoneNumber,
+                Address = request.Address,
+                RoleId = 2
+            };
+
+
+
+
+            // Thêm người dùng mới vào repository và lưu thay đổi
+            await _unitOfWork.UserRepository.CreateAsync(newUser);
+            await _unitOfWork.CommitAsync();
+
+            return true;
         }
     }
 }

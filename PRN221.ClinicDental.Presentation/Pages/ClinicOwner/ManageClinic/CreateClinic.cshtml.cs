@@ -4,6 +4,8 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Azure;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -76,6 +78,11 @@ namespace PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageClinic
             ModelState.AddModelError(string.Empty, "Unable to retrieve user ID from cookies.");
 
             return Redirect("/ClinicOwner/ManageClinic");
+        }
+        public async Task<IActionResult> OnGetLogout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToPage("/Accounts/Login");
         }
 
         private List<SelectListItem> GetDistricts()

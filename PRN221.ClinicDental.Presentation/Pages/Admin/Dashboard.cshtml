@@ -64,19 +64,25 @@
             <div class="card-body">
                 <!-- Add New User Button -->
                 <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#addUserModal">
-                    <i class="fas fa-plus"></i> Add New User
+                    <i class="fas fa-plus"></i> Add New Clinic Owner
                 </button>
+
 
                 <!-- Search form -->
                 <form method="post" asp-page-handler="Search">
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Search..." name="searchString" value="@Model.SearchString">
+                        <input type="text" class="form-control" value="" placeholder="Search..." name="searchString" />
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="submit">Search</button>
                         </div>
                     </div>
                 </form>
-
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger">
+                        @TempData["ErrorMessage"]
+                    </div>
+                }
                 <!-- User Table -->
                 <table class="table table-striped">
                     <thead>
@@ -144,47 +150,48 @@
 </div>
 
 <!-- Add User Modal -->
+<!-- Add User Modal -->
 <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
+                <h5 class="modal-title" id="addUserModalLabel">Add New Clinic Owner</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="addUserForm">
+
+                <form method="post" asp-page-handler="AddClinicOwner">
+                    
                     <div class="form-group">
                         <label for="addUsername">Username</label>
-                        <input type="text" class="form-control" id="addUsername" required>
+                        <input type="text" class="form-control" id="addUsername" asp-for="NewClinicOwner.Username" required>
+                        <span asp-validation-for="NewClinicOwner.Username" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label for="addPassword">Password</label>
-                        <input type="password" class="form-control" id="addPassword" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="addName">Name</label>
-                        <input type="text" class="form-control" id="addName" required>
+                        <label for="addFullName">Full Name</label>
+                        <input type="text" class="form-control" id="addFullName" asp-for="NewClinicOwner.FullName" required>
+                        <span asp-validation-for="NewClinicOwner.FullName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="addEmail">Email</label>
-                        <input type="email" class="form-control" id="addEmail" required>
+                        <input type="email" class="form-control" id="addEmail" asp-for="NewClinicOwner.Email">
+                        <span asp-validation-for="NewClinicOwner.Email" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="addPhone">Phone</label>
-                        <input type="text" class="form-control" id="addPhone" required>
+                        <input type="text" class="form-control" id="addPhone" asp-for="NewClinicOwner.PhoneNumber">
+                        <span asp-validation-for="NewClinicOwner.PhoneNumber" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label for="addRole">Role</label>
-                        <select class="form-control" id="addRole" required>
-                            <option value="Admin">Admin</option>
-                            <option value="User">ClinicOwner</option>
-                        </select>
+                        <label for="addAddress">Address</label>
+                        <input type="text" class="form-control" id="addAddress" asp-for="NewClinicOwner.Address">
+                        <span asp-validation-for="NewClinicOwner.Address" class="text-danger"></span>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Add User</button>
+                        <button type="submit" class="btn btn-primary">Add Clinic Owner</button>
                     </div>
                 </form>
             </div>

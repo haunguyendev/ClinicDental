@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -47,6 +49,11 @@ namespace PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageClinic.Manage
             await _serviceService.CreateClinicService(ClinicService.Service.ServiceId, id.Value, ClinicService.Price);
 
             return Redirect("/ClinicOwner/ManageClinic");
+        }
+        public async Task<IActionResult> OnGetLogout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToPage("/Accounts/Login");
         }
     }
 }

@@ -26,5 +26,6 @@ namespace PRN221.ClinicDental.Services.Interfaces
         Task UpdateDentist(DentistUpdateReqModel Dentist);
         Task<User> GetDentistById(int id);
         Task<bool> CreateDentist(DentistReqModel dentist, int ClinicId);
+        Task<bool> RegisterClinicOwnerAsync(ClinicOwnerRegisterRequest request);
     }
 }

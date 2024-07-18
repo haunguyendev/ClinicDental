@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -62,7 +64,11 @@ namespace PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageDoctor
             await _userService.UpdateDentist(Dentist);
             return Redirect($"/ClinicOwner/ManageClinic/ManageDoctor/ManageClinicDoctor?id={clinicId}");
         }
-
+        public async Task<IActionResult> OnGetLogout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToPage("/Accounts/Login");
+        }
 
     }
 }

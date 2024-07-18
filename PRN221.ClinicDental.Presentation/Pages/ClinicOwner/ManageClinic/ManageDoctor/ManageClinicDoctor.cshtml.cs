@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PRN221.ClinicDental.Data.Models;
@@ -23,6 +25,11 @@ namespace PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageDoctor
         {
             DentalClinic = await _clinicService.GetClinicByClinicId(id);
             DentistDetail = await _dentistDetailService.GetDentistDetailsByClinicId(id);
+        }
+        public async Task<IActionResult> OnGetLogout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToPage("/Accounts/Login");
         }
     }
 }
