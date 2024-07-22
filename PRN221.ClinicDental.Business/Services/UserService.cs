@@ -285,7 +285,7 @@ namespace PRN221.ClinicDental.Services
 
 
 
-            // Thêm người dùng mới vào repository và lưu thay đổi
+            
             await _unitOfWork.UserRepository.CreateAsync(newUser);
             await _unitOfWork.CommitAsync();
 
