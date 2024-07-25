@@ -10,9 +10,11 @@ using PRN221.ClinicDental.Data.Models;
 using PRN221.ClinicDental.Services.Interfaces;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PRN221.ClinicDental.Presentation.Pages.Customer
 {
+    [Authorize(Roles = "Customer")]
     public class ViewAppointmentModel : PageModel
     {
         private readonly IAppointmentService _appointmentService;
@@ -66,7 +68,7 @@ namespace PRN221.ClinicDental.Presentation.Pages.Customer
 
                 int appointmentCount =   _appointmentService.GetAppointmentsCountForSlot(clinicIdExisted, dentistIdExisted, RescheduleModel.NewDate, RescheduleModel.NewSlot);
 
-                if (_appointmentService.CustomerHasAppointment(customerId, clinicIdExisted, RescheduleModel.NewDate, RescheduleModel.NewSlot))
+                if (_appointmentService.CustomerHasAppointment(customerId, RescheduleModel.NewDate, RescheduleModel.NewSlot))
                 {
                     TempData["ErrorMessage"] = "You already have an appointment in this slot on the same date.";
                     return RedirectToPage("./ViewAppointment");

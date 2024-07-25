@@ -1,0 +1,88 @@
+﻿
+@page "{clinicId:int}"
+@model PRN221.ClinicDental.Presentation.Pages.ClinicOwner.CreateDoctorModel
+
+@{
+    ViewData["Title"] = "CreateDoctor";
+}
+
+<h1 class="text-center my-4 display-4">Create Doctor</h1>
+<hr />
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form method="post" class="shadow p-4 rounded bg-light">
+            <input asp-for="ClinicId" value="@Model.ClinicId" hidden="true" class="form-control" />
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <div class="form-group">
+                <label asp-for="Dentist.Username" class="control-label font-weight-bold">Username</label>
+                <input asp-for="Dentist.Username" class="form-control" />
+                <span asp-validation-for="Dentist.Username" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Dentist.Password" class="control-label font-weight-bold">Password</label>
+                <input asp-for="Dentist.Password" class="form-control" type="password" />
+                <span asp-validation-for="Dentist.Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Dentist.FullName" class="control-label font-weight-bold">Full Name</label>
+                <input asp-for="Dentist.FullName" class="form-control" />
+                <span asp-validation-for="Dentist.FullName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Dentist.Email" class="control-label font-weight-bold">Email</label>
+                <input asp-for="Dentist.Email" class="form-control" />
+                <span asp-validation-for="Dentist.Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Dentist.PhoneNumber" class="control-label font-weight-bold">Phone Number</label>
+                <input asp-for="Dentist.PhoneNumber" class="form-control" />
+                <span asp-validation-for="Dentist.PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Dentist.Address" class="control-label font-weight-bold">Address</label>
+                <input asp-for="Dentist.Address" class="form-control" />
+                <span asp-validation-for="Dentist.Address" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Dentist.Certificate" class="control-label font-weight-bold">Certificate</label>
+                <input asp-for="Dentist.Certificate" class="form-control" />
+                <span asp-validation-for="Dentist.Certificate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Dentist.Qualification" class="control-label font-weight-bold">Qualification</label>
+                <input asp-for="Dentist.Qualification" class="form-control" />
+                <span asp-validation-for="Dentist.Qualification" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Dentist.Experience" class="control-label font-weight-bold">Experience</label>
+                <input asp-for="Dentist.Experience" class="form-control" />
+                <span asp-validation-for="Dentist.Experience" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Dentist.ServiceId" class="control-label"></label>
+                <select asp-for="Dentist.ServiceId" class="form-control" asp-items="ViewBag.Services" multiple="multiple"></select>
+            </div>
+            <div class="form-group text-center mt-4">
+                <input type="submit" value="Create" class="btn btn-primary btn-block" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="text-center mt-3">
+    <a asp-page="Index" class="btn btn-secondary">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

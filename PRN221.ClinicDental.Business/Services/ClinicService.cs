@@ -4,6 +4,7 @@ using System.Numerics;
 using System.Threading.Tasks;
 using AutoMapper;
 using Azure.Core;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using PRN221.ClinicDental.Business.DTO.Request.ClinicReqModel;
 using PRN221.ClinicDental.Business.DTO.Response.Clinic;
@@ -141,6 +142,25 @@ namespace PRN221.ClinicDental.Services
         public async Task<Clinic> GetClinicByClinicId(int? id)
         {
            return await _unitOfWork.ClinicRepository.GetClinicById(id);
+        }
+
+        public async Task<int> GetTotalClinicsAsync()
+        {
+            var clinics = await _unitOfWork.ClinicRepository.GetAllClinics();
+            return clinics.Count();
+        }
+
+        public async Task<bool> UpdateClinic(Clinic clinic, IFormFile imageURL)
+        {
+            if (imageURL != null)
+            {
+                var filePath = "Clinincs";
+                var imageUri = await _cloudStorage.UploadFile(imageURL, filePath);
+                clinic.ImageURL = imageUri;
+            }
+            var result =  _unitOfWork.ClinicRepository.UpdateAsync(clinic);
+            await _unitOfWork.CommitAsync();
+            return true;
         }
     }
 }

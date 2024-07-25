@@ -31,7 +31,16 @@ namespace PRN221.ClinicDental.Data.Repositories
         {
             throw new NotImplementedException();
         }
+        public async Task<User> GetUserByIdAsync(int userId)
+        {
+            return await _context.Users.FindAsync(userId);
+        }
 
+        public async Task UpdateUserAsync(User user)
+        {
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+        }
         public async Task<IEnumerable<User>> SearchUsersAsync(string searchString)
         {
             if (string.IsNullOrEmpty(searchString)) searchString = "";
@@ -39,5 +48,18 @@ namespace PRN221.ClinicDental.Data.Repositories
                .Where(u => u.Username.Contains(searchString) || u.Name.Contains(searchString) || u.Email.Contains(searchString)||u.Role.RoleName.Contains(searchString))
                .ToListAsync();
         }
+
+        public async Task<User> GetDentistById(int id)
+        {
+            return await _context.Users
+                .Include(x => x.DentistDetail)
+                .Include(x => x.DentistDetail.DentistServices).FirstOrDefaultAsync(x => x.UserId == id);
+        }
+
+        public async Task<User> FindByEmailAsync(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+        }
     }
 }
+    

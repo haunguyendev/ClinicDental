@@ -1,219 +1,300 @@
 ﻿@page
 @model PRN221.ClinicDental.Presentation.Pages.Accounts.ProfileModel
 @{
+    ViewData["Title"] = "User Profile";
 }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
 
-<div class="container">
-    <div class="profile-header">
-        <img src="https://via.placeholder.com/150" alt="User Image">
-        <h2 id="username">JohnDoe</h2>
+        .profile-header {
+            text-align: center;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+            .profile-header img {
+                width: 150px;
+                height: 150px;
+                border-radius: 50%;
+                border: 5px solid #007bff;
+            }
+
+            .profile-header h2 {
+                margin-top: 10px;
+                font-size: 24px;
+                color: #333;
+            }
+
+        .profile-info {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+            .profile-info .info-label {
+                font-weight: bold;
+                color: #007bff;
+            }
+
+            .profile-info .info-value {
+                color: #333;
+            }
+
+        .profile-actions {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+            .profile-actions button {
+                margin: 5px;
+            }
+
+        .card {
+            border: none;
+        }
+
+        .modal-header {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .modal-footer .btn-primary {
+            background-color: #007bff;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+            .modal-body .form-group {
+                margin-bottom: 1.5rem;
+            }
+
+            .modal-body label {
+                font-weight: bold;
+                color: #007bff;
+            }
+
+            .modal-body .form-control {
+                border-radius: 0.5rem;
+                padding: 0.75rem;
+                border: 1px solid #ced4da;
+            }
+
+                .modal-body .form-control:focus {
+                    border-color: #007bff;
+                    box-shadow: none;
+                }
+
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+        }
+
+        .success-message {
+            color: green;
+            font-size: 1em;
+        }
+
+        .modal-footer {
+            justify-content: center;
+        }
+
+        .btn {
+            border-radius: 30px;
+            padding: 0.5rem 2rem;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+        }
+
+            .btn-primary:hover,
+            .btn-secondary:hover {
+                opacity: 0.9;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+            <div class="profile-header">
+                <img src="https://via.placeholder.com/150" alt="User Image">
+                <h2 id="username">@Model.UserProfile.Username</h2>
+            </div>
+            <div class="row profile-info">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <p><span class="info-label">Name:</span> <span class="info-value" id="name">@Model.UserProfile.Name</span></p>
+                            <p><span class="info-label">Email:</span> <span class="info-value" id="email">@Model.UserProfile.Email</span></p>
+                            <p><span class="info-label">Phone:</span> <span class="info-value" id="phone">@Model.UserProfile.PhoneNumber</span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <p><span class="info-label">Address:</span> <span class="info-value" id="address">@Model.UserProfile.Address</span></p>
+                            <p><span class="info-label">Role:</span> <span class="info-value" id="role">@Model.UserProfile.RoleId</span></p>
+                            <p><span class="info-label">User ID:</span> <span class="info-value" id="userid">@Model.UserProfile.UserId</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-actions">
+                <button class="btn btn-primary" data-toggle="modal" data-target="#editProfileModal"><i class="fas fa-edit"></i> Edit Profile</button>
+                <button class="btn btn-secondary" data-toggle="modal" data-target="#changePasswordModal"><i class="fas fa-key"></i> Change Password</button>
+            </div>
+       
+     
+        
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success" role="alert">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+
+        @if (TempData["ErrorMessages"] != null)
+        {
+            var errorMessages = (string[])TempData["ErrorMessages"];
+            <div class="alert alert-danger" role="alert">
+                <ul>
+                    @foreach (var error in errorMessages)
+                    {
+                        <li>@error</li>
+                    }
+                </ul>
+            </div>
+        }
     </div>
-    <div class="row profile-info">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <p><span class="info-label">Name:</span> <span class="info-value" id="name">John Doe</span></p>
-                    <p>
-                        <span class="info-label">Email:</span> <span class="info-value"
-                                                                     id="email">john.doe@example.com</span>
-                    </p>
-                    <p>
-                        <span class="info-label">Phone:</span> <span class="info-value"
-                                                                     id="phone">123-456-7890</span>
-                    </p>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editProfileForm" method="post" asp-page-handler="EditProfile">
+                         <div class="form-group">
+                             <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" name="UserProfile.Name" asp-for="@Model.UserProfile.Name" required>
+                         </div>
+                         <div class="form-group">
+                             <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="UserProfile.Email" asp-for="@Model.UserProfile.Email" required>
+                         </div>
+                         <div class="form-group">
+                             <label for="phone">Phone</label>
+                            <input type="text" class="form-control" id="phone" name="UserProfile.PhoneNumber" asp-for="@Model.UserProfile.PhoneNumber" required>
+                         </div>
+                         <div class="form-group">
+                             <label for="address">Address</label>
+                            <input type="text" class="form-control" id="address" name="UserProfile.Address" asp-for="@Model.UserProfile.Address" required>
+                         </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="roleId" name="UserProfile.RoleId" asp-for="@Model.UserProfile.RoleId" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="userId" name="UserProfile.UserId" asp-for="@Model.UserProfile.UserId" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <p>
-                        <span class="info-label">Address:</span> <span class="info-value" id="address">
-                            123 Main St,
-                            Anytown, USA
-                        </span>
-                    </p>
-                    <p><span class="info-label">Role:</span> <span class="info-value" id="role">Admin</span></p>
-                    <p><span class="info-label">User ID:</span> <span class="info-value" id="userid">001</span></p>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="changePasswordForm" method="post" asp-page-handler="ChangePassword">
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="name" name="UserProfile.Name" asp-for="@Model.UserProfile.Name" >
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="email" name="UserProfile.Email" asp-for="@Model.UserProfile.Email" >
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="phone" name="UserProfile.PhoneNumber" asp-for="@Model.UserProfile.PhoneNumber" >
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="address" name="UserProfile.Address" asp-for="@Model.UserProfile.Address" >
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="roleId" name="UserProfile.RoleId" asp-for="@Model.UserProfile.RoleId" >
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="userId" name="UserProfile.UserId" asp-for="@Model.UserProfile.UserId" >
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="userName" name="UserProfile.Username" asp-for="@Model.UserProfile.Username" >
+                        </div>
+                        <div class="form-group">
+                            <label for="currentPassword">Current Password</label>
+                            <input type="password" class="form-control" id="currentPassword" asp-for="ChangePasswordRequest.CurrentPassword" required>
+                            <span asp-validation-for="ChangePasswordRequest.CurrentPassword" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">New Password</label>
+                            <input type="password" class="form-control" id="newPassword" asp-for="ChangePasswordRequest.NewPassword" required>
+                            <span asp-validation-for="ChangePasswordRequest.NewPassword" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input type="password" class="form-control" id="confirmPassword" asp-for="ChangePasswordRequest.ConfirmPassword" required>
+                            <span asp-validation-for="ChangePasswordRequest.ConfirmPassword" class="text-danger"></span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Change Password</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <div class="profile-actions">
-        <button class="btn btn-primary" data-toggle="modal" data-target="#editProfileModal">
-            <i class="fas fa-edit"></i> Edit Profile
-        </button>
-        <button class="btn btn-secondary" data-toggle="modal" data-target="#changePasswordModal">
-            <i class="fas fa-key"></i> Change Password
-        </button>
-    </div>
-</div>
 
-<!-- Edit Profile Modal -->
-<div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="editProfileForm">
-                    <div class="form-group">
-                        <label for="editName">Name</label>
-                        <input type="text" class="form-control" id="editName" required>
-                        <div class="error-message" id="editNameError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="editEmail">Email</label>
-                        <input type="email" class="form-control" id="editEmail" required>
-                        <div class="error-message" id="editEmailError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="editPhone">Phone</label>
-                        <input type="text" class="form-control" id="editPhone" required>
-                        <div class="error-message" id="editPhoneError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="editAddress">Address</label>
-                        <input type="text" class="form-control" id="editAddress" required>
-                        <div class="error-message" id="editAddressError"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>
-                </form>
-                <div class="success-message" id="editProfileSuccess"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Change Password Modal -->
-<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="changePasswordForm">
-                    <div class="form-group">
-                        <label for="currentPassword">Current Password</label>
-                        <input type="password" class="form-control" id="currentPassword" required>
-                        <div class="error-message" id="currentPasswordError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="newPassword">New Password</label>
-                        <input type="password" class="form-control" id="newPassword" required>
-                        <div class="error-message" id="newPasswordError"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="confirmPassword">Confirm Password</label>
-                        <input type="password" class="form-control" id="confirmPassword" required>
-                        <div class="error-message" id="confirmPasswordError"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Change Password</button>
-                    </div>
-                </form>
-                <div class="success-message" id="changePasswordSuccess"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-@section Scripts {
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <partial name="_ValidationScriptsPartial" />
-    <script>
-        $(document).ready(function () {
-            $('#editProfileForm').on('submit', function (e) {
-                e.preventDefault();
-
-                var isValid = true;
-                if ($('#editName').val() === '') {
-                    isValid = false;
-                    $('#editNameError').text('Name is required.');
-                } else {
-                    $('#editNameError').text('');
-                }
-                if ($('#editEmail').val() === '') {
-                    isValid = false;
-                    $('#editEmailError').text('Email is required.');
-                } else if (!validateEmail($('#editEmail').val())) {
-                    isValid = false;
-                    $('#editEmailError').text('Invalid email format.');
-                } else {
-                    $('#editEmailError').text('');
-                }
-                if ($('#editPhone').val() === '') {
-                    isValid = false;
-                    $('#editPhoneError').text('Phone is required.');
-                } else {
-                    $('#editPhoneError').text('');
-                }
-                if ($('#editAddress').val() === '') {
-                    isValid = false;
-                    $('#editAddressError').text('Address is required.');
-                } else {
-                    $('#editAddressError').text('');
-                }
-
-                if (isValid) {
-                    $('#editProfileSuccess').text('Profile updated successfully!').show();
-                    setTimeout(() => {
-                        $('#editProfileModal').modal('hide');
-                        $('#editProfileSuccess').hide();
-                    }, 2000);
-                }
-            });
-
-            $('#changePasswordForm').on('submit', function (e) {
-                e.preventDefault();
-
-                var isValid = true;
-                if ($('#currentPassword').val() === '') {
-                    isValid = false;
-                    $('#currentPasswordError').text('Current password is required.');
-                } else {
-                    $('#currentPasswordError').text('');
-                }
-                if ($('#newPassword').val() === '') {
-                    isValid = false;
-                    $('#newPasswordError').text('New password is required.');
-                } else {
-                    $('#newPasswordError').text('');
-                }
-                if ($('#confirmPassword').val() === '') {
-                    isValid = false;
-                    $('#confirmPasswordError').text('Confirm password is required.');
-                } else if ($('#newPassword').val() !== $('#confirmPassword').val()) {
-                    isValid = false;
-                    $('#confirmPasswordError').text('Passwords do not match.');
-                } else {
-                    $('#confirmPasswordError').text('');
-                }
-
-                if (isValid) {
-                    $('#changePasswordSuccess').text('Password changed successfully!').show();
-                    setTimeout(() => {
-                        $('#changePasswordModal').modal('hide');
-                        $('#changePasswordSuccess').hide();
-                    }, 2000);
-                }           
-        });
-
-    </script>
-}
+</body>
+</html>

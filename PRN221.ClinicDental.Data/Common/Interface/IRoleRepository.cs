@@ -9,5 +9,6 @@ namespace PRN221.ClinicDental.Data.Common.Interface
 {
     public interface IRoleRepository:IRepositoryBase<Role>
     {
+        Task<List<Role>> GetRoles();
     }
 }

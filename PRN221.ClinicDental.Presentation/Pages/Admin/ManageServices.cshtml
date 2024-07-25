@@ -1,0 +1,214 @@
+﻿@page
+@model PRN221.ClinicDental.Presentation.Pages.Admin.ManageServicesModel
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger" role="alert">
+        @Model.ErrorMessage
+    </div>
+}
+<div class="container">
+    <div class="header">
+        <h1 style="color:white">Clinic Service Management</h1>
+    </div>
+
+    <div class="management-container">
+        <div class="management-header">Services Overview</div>
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-cogs"></i> Clinic Services
+            </div>
+            <div class="card-body">
+                <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#serviceModal" onclick="clearForm()">
+                    Add Service
+                </button>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Service Name</th>
+                            <th>Description</th>
+                            <th>Image</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var service in Model.Services)
+                        {
+                            <tr>
+                                <td>@service.ServiceId</td>
+                                <td>@service.ServiceName</td>
+                                <td>@service.Description</td>
+                                <td>
+                                    @if (!string.IsNullOrEmpty(service.ImageURL))
+                                    {
+                                        <img src="@service.ImageURL" alt="@service.ServiceName" style="width: 100px; height: auto;">
+                                    }
+                                    else
+                                    {
+                                        <span>No image</span>
+                                    }
+                                </td>
+                                <td>
+                                    <button class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#serviceModalEdit" onclick="editService(@service.ServiceId)">Edit</button>
+                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteServiceModal" onclick="setDeleteServiceId(@service.ServiceId)">
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteServiceModal" tabindex="-1" role="dialog" aria-labelledby="deleteServiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteServiceModalLabel">Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this service?
+            </div>
+            <div class="modal-footer">
+                <form method="post" asp-page-handler="Delete">
+                    <input type="hidden" id="deleteServiceId" name="id" />
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Create-->
+<div class="modal fade" id="serviceModal" tabindex="-1" role="dialog" aria-labelledby="serviceModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="serviceModalLabel">Add Service</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-page-handler="Create">
+                    <input type="hidden" asp-for="ServiceRequest.ServiceId" />
+                    <div class="form-group">
+                        <label asp-for="ServiceRequest.ServiceName"></label>
+                        <input asp-for="ServiceRequest.ServiceName" class="form-control" required />
+                        <span asp-validation-for="ServiceRequest.ServiceName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ServiceRequest.Description"></label>
+                        <textarea asp-for="ServiceRequest.Description" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ServiceRequest.ImageURL"></label>
+                        <input asp-for="ServiceRequest.ImageURL" class="form-control" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Edit-->
+<div class="modal fade" id="serviceModalEdit" tabindex="-1" role="dialog" aria-labelledby="serviceModalEditLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="serviceModalEditLabel">Edit Service</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-page-handler="Edit">
+                    <input type="hidden" id="serviceId" asp-for="ServiceRequest.ServiceId" />
+                    <div class="form-group">
+                        <label asp-for="ServiceRequest.ServiceName"></label>
+                        <input asp-for="ServiceRequest.ServiceName" id="serviceName" class="form-control" required />
+                        <span asp-validation-for="ServiceRequest.ServiceName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ServiceRequest.Description"></label>
+                        <textarea asp-for="ServiceRequest.Description" id="description" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ServiceRequest.ImageURL"></label>
+                        <input asp-for="ServiceRequest.ImageURL" id="imageUrl" class="form-control" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast" id="serviceToast" style="position: absolute; top: 20px; right: 20px;">
+    <div class="toast-header">
+        <strong class="mr-auto">Notification</strong>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+    </div>
+    <div class="toast-body" id="toastBody">
+        <!-- Notification message will be injected here by JavaScript -->
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function clearForm() {
+            document.getElementById('ServiceRequest_ServiceId').value = '';
+            document.getElementById('ServiceRequest_ServiceName').value = '';
+            document.getElementById('ServiceRequest_Description').value = '';
+            document.getElementById('ServiceRequest_ImageURL').value = '';
+            document.getElementById('serviceModalEditLabel').textContent = 'Add Service';
+            $('#serviceModal').modal('show');
+        }
+
+        async function fetchServiceById(serviceId) {
+            const response = await fetch(`/Admin/ManageServices?handler=Service&id=${serviceId}`);
+            if (response.ok) {
+                return await response.json();
+            } else {
+                throw new Error('Failed to fetch service.');
+            }
+        }
+
+        async function editService(serviceId) {
+            try {
+                const service = await fetchServiceById(serviceId);
+                console.log(service);
+                document.getElementById('serviceId').value = service.serviceId;
+                document.getElementById('serviceName').value = service.serviceName;
+                document.getElementById('description').value = service.description;
+                document.getElementById('imageUrl').value = service.imageURL;
+                document.getElementById('serviceModalEditLabel').textContent = 'Edit Service';
+                $('#serviceModalEdit').modal('show');
+            } catch (error) {
+                showNotification('Failed to load service details.');
+            }
+        }
+
+        function setDeleteServiceId(serviceId) {
+            document.getElementById('deleteServiceId').value = serviceId;
+            $('#deleteServiceModal').modal('show');
+        }
+
+        function showNotification(message) {
+            document.getElementById('toastBody').textContent = message;
+            $('#serviceToast').toast({ delay: 3000 });
+            $('#serviceToast').toast('show');
+        }
+    </script>
+}

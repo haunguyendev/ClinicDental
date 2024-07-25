@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PRN221.ClinicDental.Business.Common.Interface;
 using PRN221.ClinicDental.Business.DTO.Response.ServiceResponse;
 using PRN221.ClinicDental.Data.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PRN221.ClinicDental.Presentation.Pages.Customer
 {
+    [Authorize(Roles = "Customer")]
     public class ServicesModel : PageModel
     {
         private readonly IServiceService _serviceService;

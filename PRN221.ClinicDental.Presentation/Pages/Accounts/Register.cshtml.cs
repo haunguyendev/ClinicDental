@@ -11,6 +11,8 @@ namespace PRN221.ClinicDental.Presentation.Pages.Accounts
 
         [BindProperty]
         public UserRegisterRequest RegisterRequest { get; set; }
+        [TempData]
+        public string ErrorMessage { get; set; }
 
         public RegisterModel(IUserService userService)
         {
@@ -35,7 +37,7 @@ namespace PRN221.ClinicDental.Presentation.Pages.Accounts
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError(string.Empty, ex.Message);
+                ErrorMessage = ex.Message;
                 return Page();
             }
         }

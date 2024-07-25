@@ -4,6 +4,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Azure;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,6 +19,7 @@ using PRN221.ClinicDental.Services.Interfaces;
 
 namespace PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageClinic
 {
+    [Authorize(Roles = "ClinicOwner")]
     public class CreateClinicModel : PageModel
     {
         private readonly IClinicService _clinicService;
@@ -54,7 +58,7 @@ namespace PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageClinic
 
             var initClinic = new ClinicReqModel()
             {
-                Address = Clinic.Address,
+               
                 District = Clinic.District,
                 Name = Clinic.Name,
                 ClinicServices = selectedServices,
@@ -67,13 +71,18 @@ namespace PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageClinic
             {
                 var result = await _clinicService.AddClinic(Clinic, customerId);
                
-                return RedirectToPage("/ClinicOwner/Index");
+                return Redirect("/ClinicOwner/ManageClinic");
             }
             //error
         
             ModelState.AddModelError(string.Empty, "Unable to retrieve user ID from cookies.");
 
-            return RedirectToPage(".ManageClinic/Index");
+            return Redirect("/ClinicOwner/ManageClinic");
+        }
+        public async Task<IActionResult> OnGetLogout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToPage("/Accounts/Login");
         }
 
         private List<SelectListItem> GetDistricts()

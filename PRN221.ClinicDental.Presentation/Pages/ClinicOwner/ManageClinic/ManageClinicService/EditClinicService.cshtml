@@ -1,0 +1,44 @@
+﻿@page
+@model PRN221.ClinicDental.Presentation.Pages.ClinicOwner.ManageClinic.ManageClinicService.EditClinicServiceModel
+
+@{
+    ViewData["Title"] = "EditClinicService";
+}
+
+<h1 class="text-center my-4 display-4">Edit Clinic Service</h1>
+
+<h4 class="mb-4">Clinic Service Details</h4>
+<hr />
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <form method="post" class="shadow p-4 rounded bg-light">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+            <input type="hidden" asp-for="ClinicService.ClinicServiceId" />
+            <div class="form-group">
+                <label asp-for="ClinicService.Service.ServiceName" class="control-label font-weight-bold">Service Name</label>
+                <input asp-for="ClinicService.Service.ServiceName" class="form-control" readonly />
+                <span asp-validation-for="ClinicService.Service.ServiceName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ClinicService.Price" class="control-label font-weight-bold">Price</label>
+                <input asp-for="ClinicService.Price" class="form-control" />
+                <span asp-validation-for="ClinicService.Price" class="text-danger"></span>
+            </div>
+
+            <div class="form-group text-center mt-4">
+                <input type="submit" value="Save" class="btn btn-primary btn-block" />
+            </div>
+        </form>
+    </div>
+</div>
+    
+<div class="text-center mt-3">
+    <a asp-page="./Index" asp-route-id="@Model.ClinicService.ClinicId" class="btn btn-secondary">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

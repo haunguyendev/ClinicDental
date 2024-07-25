@@ -12,6 +12,12 @@ namespace PRN221.ClinicDental.Data.Repositories
     {
         public RoleRepository(ClinicDentalDbContext context) : base(context)
         {
+
+        }
+
+        public async Task<List<Role>> GetRoles()
+        {
+            return _context.Roles.ToList();
         }
     }
 }

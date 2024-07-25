@@ -9,5 +9,8 @@ namespace PRN221.ClinicDental.Data.Common.Interface
 {
     public interface IClinicServicesRepository : IRepositoryBase<ClinicService>
     {
+        Task<ClinicService?> GetClinicServiceByIdAndClinicIdAsync(int serviceId, int clinicId);
+        Task<bool> IsServiceUsedByAnyClinicAsync(int serviceId);
+
     }
 }

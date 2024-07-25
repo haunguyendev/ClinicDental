@@ -16,8 +16,7 @@ namespace PRN221.ClinicDental.Business.DTO.Request.ClinicReqModel
         [Required]
         public string Name { get; set; }
 
-        [Required]
-        public string Address { get; set; }
+        
 
         [Required]
         [AllowedExtensions(new string[] { ".jpg", ".png" })]

@@ -11,10 +11,11 @@ using PRN221.ClinicDental.Data.Models;
 using PRN221.ClinicDental.Services;
 using PRN221.ClinicDental.Services.Interfaces;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PRN221.ClinicDental.Presentation.Pages.Customer
 {
-
+    [Authorize(Roles = "Customer")]
     public class AppointmentModel : PageModel
     {
         private readonly IServiceService _serviceService;
@@ -28,6 +29,8 @@ namespace PRN221.ClinicDental.Presentation.Pages.Customer
             _serviceService = serviceService;
             _appointmentService = appointmentService;
         }
+        [TempData]
+        public string ErrorMessage { get; set; }
 
         [BindProperty]
         public AppointmentRequestModel AppointmentRequest { get; set; }
@@ -69,18 +72,18 @@ namespace PRN221.ClinicDental.Presentation.Pages.Customer
                     return Page();
                 }
 
-                // Ensure AppointmentRequest is initialized
                 if (AppointmentRequest == null)
                 {
                     ModelState.AddModelError(string.Empty, "Appointment request is null.");
                     return Page();
                 }
                 
-                if ( _appointmentService.CustomerHasAppointment(customerId, AppointmentRequest.ClinicId, AppointmentRequest.AppointmentDate, AppointmentRequest.Slot))
+                if ( _appointmentService.CustomerHasAppointment(customerId, AppointmentRequest.AppointmentDate, AppointmentRequest.Slot))
 
                 {
-                    var errorMessage = "You already have an appointment in this slot on the same date.";
-                    return RedirectToPage("/Customer/Appointment", new { clinicId = AppointmentRequest.ClinicId, serviceId = AppointmentRequest.ServiceId, error = errorMessage });
+
+                    ErrorMessage = "You already have an appointment in this slot on the same date.";
+                    return RedirectToPage("/Customer/Appointment", new { clinicId = AppointmentRequest.ClinicId, serviceId = AppointmentRequest.ServiceId });
                 }
 
                 await _appointmentService.CreateAppointmentAsync(AppointmentRequest, customerId);

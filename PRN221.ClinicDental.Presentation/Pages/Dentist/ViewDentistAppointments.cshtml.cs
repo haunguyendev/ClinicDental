@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PRN221.ClinicDental.Business.DTO.Response.Appointment;
 using PRN221.ClinicDental.Services.Interfaces;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PRN221.ClinicDental.Presentation.Pages.Dentist
 {
+    [Authorize(Roles = "Dentist")]
     public class ViewAppointmentsModel : PageModel
     {
         private readonly IAppointmentService _appointmentService;

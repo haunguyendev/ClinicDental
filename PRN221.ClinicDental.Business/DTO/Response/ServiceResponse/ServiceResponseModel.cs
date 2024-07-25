@@ -9,6 +9,7 @@ namespace PRN221.ClinicDental.Business.DTO.Response.ServiceResponse
 {
     public class ServiceResponseModel
     {
+        public int ClinicServiceId { get; set; }
         public int ServiceId { get; set; }
 
        
