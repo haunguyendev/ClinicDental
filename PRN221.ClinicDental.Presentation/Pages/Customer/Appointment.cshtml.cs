@@ -78,7 +78,7 @@ namespace PRN221.ClinicDental.Presentation.Pages.Customer
                     return Page();
                 }
                 
-                if ( _appointmentService.CustomerHasAppointment(customerId, AppointmentRequest.ClinicId, AppointmentRequest.AppointmentDate, AppointmentRequest.Slot))
+                if ( _appointmentService.CustomerHasAppointment(customerId, AppointmentRequest.AppointmentDate, AppointmentRequest.Slot))
 
                 {
 

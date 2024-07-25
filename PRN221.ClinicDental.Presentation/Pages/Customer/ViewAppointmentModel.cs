@@ -68,7 +68,7 @@ namespace PRN221.ClinicDental.Presentation.Pages.Customer
 
                 int appointmentCount =   _appointmentService.GetAppointmentsCountForSlot(clinicIdExisted, dentistIdExisted, RescheduleModel.NewDate, RescheduleModel.NewSlot);
 
-                if (_appointmentService.CustomerHasAppointment(customerId, clinicIdExisted, RescheduleModel.NewDate, RescheduleModel.NewSlot))
+                if (_appointmentService.CustomerHasAppointment(customerId, RescheduleModel.NewDate, RescheduleModel.NewSlot))
                 {
                     TempData["ErrorMessage"] = "You already have an appointment in this slot on the same date.";
                     return RedirectToPage("./ViewAppointment");

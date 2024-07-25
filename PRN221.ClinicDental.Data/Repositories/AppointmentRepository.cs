@@ -28,11 +28,10 @@ namespace PRN221.ClinicDental.Data.Repositories
 
         }
 
-        public bool CustomerHasAppointment(int customerId, int clinicId, DateTime appointmentDate, int slot)
+        public bool CustomerHasAppointment(int customerId, DateTime appointmentDate, int slot)
         {
             return _context.Appointments
             .Any(a => a.CustomerId == customerId
-                   && a.ClinicId == clinicId
                    && a.AppointmentTime.Date == appointmentDate.Date
                    && a.Slot == slot
                    && a.Status== "Scheduled");

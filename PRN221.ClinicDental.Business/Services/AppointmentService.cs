@@ -45,9 +45,9 @@ namespace PRN221.ClinicDental.Services
 
         }
 
-        public bool CustomerHasAppointment(int customerId, int clinicId, DateTime appointmentDate, int slot)
+        public bool CustomerHasAppointment(int customerId, DateTime appointmentDate, int slot)
         {
-            return _unitOfWork.AppointmentRepository.CustomerHasAppointment(customerId, clinicId, appointmentDate, slot);
+            return _unitOfWork.AppointmentRepository.CustomerHasAppointment(customerId, appointmentDate, slot);
         }
 
         public int GetAppointmentsCountForSlot(int clinicId, int dentistId, DateTime appointmentDate, int slot)
